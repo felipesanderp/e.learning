@@ -2,9 +2,10 @@ import { PrismaAdapter } from "@next-auth/prisma-adapter"
 import { DefaultSession, NextAuthOptions } from "next-auth"
 import CredentialsProvider from 'next-auth/providers/credentials'
 import { ROLE, User } from '@prisma/client'
-import { compare } from 'bcrypt'
+import { compare, hash } from 'bcrypt'
 
 import { db } from "@/lib/db"
+import { userAuthSchema } from "./validations/auth"
 
 declare module "next-auth" {
   interface Session extends DefaultSession {
@@ -28,48 +29,53 @@ declare module "next-auth/jwt" {
 }
 
 export const authOptions: NextAuthOptions = {
-  adapter: PrismaAdapter(db),
+  adapter: PrismaAdapter(db as any),
   session: {
     strategy: "jwt",
     maxAge: 60 * 60 * 24 * 30,
   },
   pages: {
-    signIn: "/login",
+    signIn: '/'
   },
   providers: [
     CredentialsProvider({
-      name: "credentials",
       credentials: {
         email: {},
-        password: {},
+        password: {}
       },
       authorize: async (credentials, _) => {
         if (!credentials?.email || !credentials.password) return null;
 
+        const { email, password } = await userAuthSchema.parseAsync(credentials);
+
         const user: User | null = await db.user.findFirst({
           where: {
             email: {
-              equals: credentials?.email,
+              equals: email,
               mode: "insensitive",
             }
           }
         });
-
-        if (user) {
-          const passwordMatch = await compare(credentials.password, user.password);
-
-          if(!passwordMatch) {
-            return null
-          }
-
-          return user;
+        
+        if (!user) {
+          return null
         }
 
-        return null
+        const passwordMatch = await compare(password, user.password);
+
+        if (!passwordMatch) return null
+
+        return user
       }
     })
   ],
   callbacks: {
+    async signIn({ user, account, profile, email, credentials }) {
+      return true
+    },
+    async redirect({ url, baseUrl }) {
+      return baseUrl
+    },
     async session({ token, session }) {
       session.user.id = token.id
       session.user.name = token.name
@@ -80,14 +86,29 @@ export const authOptions: NextAuthOptions = {
 
     },
     async jwt({ token, user}) {
-      if (user) {
-        token.id = user.id
-        token.email = user.email
-        token.name = user.name
-        token.role = user.role
+      const dbUser = await db.user.findFirst({
+        where: {
+          email: token.email,
+        }
+      })
+
+      if (!dbUser) {
+        if (user) {
+          token.id = user?.id
+          token.role = user?.role
+        }
+
+        return token
       }
 
-      return token
-    }
-  }
+      return {
+        id: dbUser.id,
+        name: dbUser.name,
+        email: dbUser.name,
+        image: dbUser.image,
+        role: dbUser.role,
+      }
+    },
+  },
+  secret: process.env.NEXTAUTH_SECRET,
 }
