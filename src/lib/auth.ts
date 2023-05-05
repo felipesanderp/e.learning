@@ -1,11 +1,13 @@
-import { PrismaAdapter } from "@next-auth/prisma-adapter"
+import { NextApiRequest, NextApiResponse } from "next"
 import { DefaultSession, NextAuthOptions } from "next-auth"
 import CredentialsProvider from 'next-auth/providers/credentials'
 import { ROLE, User } from '@prisma/client'
-import { compare, hash } from 'bcrypt'
 
+import { compare } from 'bcrypt'
+import { PrismaAdapter } from '@/lib/adapters/prisma-adapter'
 import { db } from "@/lib/db"
 import { userAuthSchema } from "./validations/auth"
+
 
 declare module "next-auth" {
   interface Session extends DefaultSession {
@@ -28,87 +30,83 @@ declare module "next-auth/jwt" {
   }
 }
 
-export const authOptions: NextAuthOptions = {
-  adapter: PrismaAdapter(db as any),
-  session: {
-    strategy: "jwt",
-    maxAge: 60 * 60 * 24 * 30,
-  },
-  pages: {
-    signIn: '/'
-  },
-  providers: [
-    CredentialsProvider({
-      credentials: {
-        email: {},
-        password: {}
-      },
-      authorize: async (credentials, _) => {
-        if (!credentials?.email || !credentials.password) return null;
+export function authOptions(req: NextApiRequest, res: NextApiResponse): NextAuthOptions {
+  return {
+    adapter: PrismaAdapter(req, res),
+    session: {
+      strategy: "jwt",
+      maxAge: 60 * 60 * 24 * 30,
+    },
+    pages: {
+      signIn: '/'
+    },
+    providers: [
+      CredentialsProvider({
+        credentials: {
+          email: {},
+          password: {}
+        },
+        authorize: async (credentials, _) => {
+          if (!credentials?.email || !credentials.password) return null;
 
-        const { email, password } = await userAuthSchema.parseAsync(credentials);
+          const { email, password } = await userAuthSchema.parseAsync(credentials);
 
-        const user: User | null = await db.user.findFirst({
-          where: {
-            email: {
-              equals: email,
-              mode: "insensitive",
+          const user: User | null = await db.user.findFirst({
+            where: {
+              email: {
+                equals: email,
+                mode: "insensitive",
+              }
             }
-          }
-        });
+          });
         
-        if (!user) {
-          return null
-        }
+          if (!user) {
+            return null
+          }
 
-        const passwordMatch = await compare(password, user.password);
+          const passwordMatch = await compare(password, user.password);
 
-        if (!passwordMatch) return null
+          if (!passwordMatch) return null
 
-        return user
-      }
-    })
-  ],
-  callbacks: {
-    async signIn({ user, account, profile, email, credentials }) {
-      return true
-    },
-    async redirect({ url, baseUrl }) {
-      return baseUrl
-    },
-    async session({ token, session }) {
-      session.user.id = token.id
-      session.user.name = token.name
-      session.user.email = token.email
-      session.user.role = token.role
-
-      return session
-
-    },
-    async jwt({ token, user}) {
-      const dbUser = await db.user.findFirst({
-        where: {
-          email: token.email,
+          return user
         }
       })
+    ],
+    callbacks: {
+      async session({ token, session }) {
+        session.user.id = token.id
+        session.user.name = token.name
+        session.user.email = token.email
+        session.user.role = token.role
 
-      if (!dbUser) {
-        if (user) {
-          token.id = user?.id
-          token.role = user?.role
+        return session
+
+      },
+      async jwt({ token, user}) {
+        const dbUser = await db.user.findFirst({
+          where: {
+            email: token.email,
+          }
+        })
+
+        if (!dbUser) {
+          if (user) {
+            token.id = user?.id
+            token.role = user?.role
+          }
+
+          return token
         }
 
-        return token
-      }
-
-      return {
-        id: dbUser.id,
-        name: dbUser.name,
-        email: dbUser.name,
-        image: dbUser.image,
-        role: dbUser.role,
-      }
+        return {
+          id: dbUser.id,
+          name: dbUser.name,
+          email: dbUser.name,
+          image: dbUser.image,
+          role: dbUser.role,
+        }
+      },
     },
-  },
-  secret: process.env.NEXTAUTH_SECRET,
+    secret: process.env.NEXTAUTH_SECRET,
+  }
 }

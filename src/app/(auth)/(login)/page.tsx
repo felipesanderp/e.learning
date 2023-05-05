@@ -1,12 +1,20 @@
 import { Icons } from "@/components/icons";
 import { UserAuthForm } from "@/components/user-auth-form";
 import Image from "next/image";
+import { redirect } from "next/navigation"
+import { getCurrentUser } from "@/lib/session"
 
 export const metadata = {
   title: 'Login | e.learning',
 }
 
-export default function IndexPage() {
+export default async function IndexPage() {
+  const user = await getCurrentUser()
+
+  if (user) {
+    redirect("/dashboard")
+  }
+
   return (
     <div className="container grid h-screen w-screen flex-col items-center justify-center lg:max-w-none lg:grid-cols-2 lg:px-0">
       <div className="hidden h-full bg-purple-500 lg:flex items-center justify-center">

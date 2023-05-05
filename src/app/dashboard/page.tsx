@@ -7,7 +7,7 @@ export default async function DashboardPage() {
   const user = await getCurrentUser()
 
   if (!user) {
-    redirect(authOptions?.pages?.signIn || "/")
+    redirect("/")
   }
 
   return (
