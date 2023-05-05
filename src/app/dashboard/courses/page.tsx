@@ -3,6 +3,11 @@ import { DashboardHeader } from "@/components/header";
 import { DashboardShell } from "@/components/shell";
 import { CourseItem } from "@/components/courses";
 import { getCurrentUser } from "@/lib/session";
+import { CreateSheet } from "@/components/create-sheet";
+
+export const metadata = {
+  title: 'Courses | e.learning',
+}
 
 export interface Course {
   title: string
@@ -66,10 +71,7 @@ export default async function CoursesPage() {
         text={user?.role === "ADMIN" || user?.role === 'PROFESSOR' ? "Create and manage courses." : "See the available courses."}
       >
         {user?.role === 'ADMIN' || user?.role === 'PROFESSOR' ?
-          <CreateButton
-            title="Course"
-            href="/dashboard"
-          /> : ''
+          <CreateSheet title="Course" /> : ''
         }
       </DashboardHeader>
       
