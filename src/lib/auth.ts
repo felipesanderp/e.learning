@@ -1,10 +1,9 @@
-import { NextApiRequest, NextApiResponse } from "next"
+import { PrismaAdapter } from "@next-auth/prisma-adapter"
 import { DefaultSession, NextAuthOptions } from "next-auth"
 import CredentialsProvider from 'next-auth/providers/credentials'
 import { ROLE, User } from '@prisma/client'
 
 import { compare } from 'bcrypt'
-import { PrismaAdapter } from '@/lib/adapters/prisma-adapter'
 import { db } from "@/lib/db"
 import { userAuthSchema } from "./validations/auth"
 
@@ -30,9 +29,8 @@ declare module "next-auth/jwt" {
   }
 }
 
-export function authOptions(req: NextApiRequest, res: NextApiResponse): NextAuthOptions {
-  return {
-    adapter: PrismaAdapter(req, res),
+export const authOptions: NextAuthOptions = {
+    adapter: PrismaAdapter(db as any),
     session: {
       strategy: "jwt",
       maxAge: 60 * 60 * 24 * 30,
@@ -107,5 +105,4 @@ export function authOptions(req: NextApiRequest, res: NextApiResponse): NextAuth
       },
     },
     secret: process.env.NEXTAUTH_SECRET,
-  }
 }
