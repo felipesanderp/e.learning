@@ -18,7 +18,7 @@ export default async function IndexPage() {
   return (
     <div className="container grid h-screen w-screen flex-col items-center justify-center lg:max-w-none lg:grid-cols-2 lg:px-0">
       <div className="hidden h-full bg-purple-500 lg:flex items-center justify-center">
-        <div className="flex flex-col items-center">
+        {/* <div className="flex flex-col items-center">
           <Image src="/person.png" width={180} height={180} alt="" />
           <h2 className="text-rose-400 mt-8 text-3xl">
             Aprenda da melhor forma
@@ -28,7 +28,7 @@ export default async function IndexPage() {
             acesse cursos de diversas áreas
             de conhecimento.
           </span>
-        </div>
+        </div> */}
       </div>
       <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
         <div className="flex flex-col space-y-2 text-center">
