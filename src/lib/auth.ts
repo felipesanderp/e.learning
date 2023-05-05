@@ -42,6 +42,7 @@ export function authOptions(req: NextApiRequest, res: NextApiResponse): NextAuth
     },
     providers: [
       CredentialsProvider({
+        id: 'credentials',
         credentials: {
           email: {},
           password: {}
@@ -60,9 +61,7 @@ export function authOptions(req: NextApiRequest, res: NextApiResponse): NextAuth
             }
           });
         
-          if (!user) {
-            return null
-          }
+          if (!user) return null
 
           const passwordMatch = await compare(password, user.password);
 
@@ -101,7 +100,7 @@ export function authOptions(req: NextApiRequest, res: NextApiResponse): NextAuth
         return {
           id: dbUser.id,
           name: dbUser.name,
-          email: dbUser.name,
+          email: dbUser.email,
           image: dbUser.image,
           role: dbUser.role,
         }

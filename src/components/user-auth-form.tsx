@@ -32,12 +32,17 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
     try {
       setIsLoading(true);
 
+      const { email, password } = data;
+
       const signInResult = await signIn('credentials', {
         redirect: false,
-        email: data.email.toLowerCase(),
-        password: data.password,
-        callbackUrl: '/dashboard'
-      })
+        email,
+        password,
+      });
+
+      if (signInResult?.ok) {
+        window.location.replace('/dashboard')
+      }
 
       setIsLoading(false)
 
