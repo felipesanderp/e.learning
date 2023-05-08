@@ -19,12 +19,6 @@ export async function GET() {
       return new Response("Unauthorized", { status: 403 })
     }
 
-    const { user } = session
-
-    if (user.role !== 'ADMIN' && user.role !== 'PROFESSOR') {
-      return new Response("Unauthorized", { status: 403 })
-    }
-
     const courses = await db.courses.findMany({
       select: {
         id: true,
