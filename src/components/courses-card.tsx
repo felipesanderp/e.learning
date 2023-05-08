@@ -12,18 +12,18 @@ import { Button } from './ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 
 interface CoursesCardProps {
-  cover: string;
+  imageURL: string;
   title: string;
-  numberOfLessons: number;
+  description: string;
 }
 
-export function CoursesCard({ cover, title, numberOfLessons }: CoursesCardProps) {
+export function CoursesCard({ imageURL, title, description }: CoursesCardProps) {
   return (
     <Card className="w-[300px]">
       <CardHeader className="p-2">
         <div className="relative rounded-md border w-full h-[150px]">
           <Image 
-            src={cover}
+            src={imageURL}
             alt={title}
             fill
             quality={50}
@@ -35,12 +35,12 @@ export function CoursesCard({ cover, title, numberOfLessons }: CoursesCardProps)
         </CardTitle>
 
         <CardDescription>
-          {numberOfLessons} Lessons
+           Lessons
         </CardDescription>
       </CardHeader>
 
       <CardContent className="p-4">
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas nam pariatur tempore dolorum repudiandae distinctio iusto voluptatem debitis vel quaerat beatae aliquam vero quos ipsa, officia corporis! Dolor, et quisquam?</p>
+        <p>{description}</p>
       </CardContent>
 
       <CardFooter className="justify-between p-4">
