@@ -4,7 +4,7 @@ import { db } from "@/lib/db"
 import { DashboardHeader } from "@/components/header";
 import { DashboardShell } from "@/components/shell";
 import { getCurrentUser } from "@/lib/session";
-import { CreateSheet } from "@/components/create-sheet";
+import { CreateCourse } from "@/components/create-course";
 import { CoursesCard } from "@/components/courses-card";
 
 export const metadata = {
@@ -94,7 +94,7 @@ export default async function CoursesPage() {
         text={user?.role === "ADMIN" || user?.role === 'PROFESSOR' ? "Create and manage courses." : "See the available courses."}
       >
         {user?.role === 'ADMIN' || user?.role === 'PROFESSOR' ?
-          <CreateSheet title="Course" /> : ''
+          <CreateCourse /> : ''
         }
       </DashboardHeader>
       
