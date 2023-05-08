@@ -10,7 +10,7 @@ export function DashboardShell({
   ...props
 }: DashboardShellProps) {
   return (
-    <div className={cn("container space-y-4 pt-6 grid items-start gap-8")} {...props}>
+    <div className={cn("container space-y-4 mb-4 pt-6 grid items-start gap-8")} {...props}>
       {children}
     </div>
   )
