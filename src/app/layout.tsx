@@ -21,7 +21,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
     <html lang="en">
       <body
         className={cn(
-          "bg-zinc-50 font-sans antialiased",
+          "bg-background font-sans antialiased",
           fontSans.variable
         )}
       >
