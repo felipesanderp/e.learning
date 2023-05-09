@@ -47,7 +47,7 @@ export function UserAccountNav({ user }: UserAccountNavProps) {
 
         <DropdownMenuItem>
           <Icons.user className="mr-2 h-4 w-4" />
-          <Link href="/dashboard">Profile</Link>
+          <Link href="/dashboard/profile">Profile</Link>
         </DropdownMenuItem>
 
         <DropdownMenuSeparator />
