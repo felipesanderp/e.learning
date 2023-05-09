@@ -20,7 +20,7 @@ export default async function DashboardLayout({ children }: DashboardLayoutProps
 
   return (
     <div>
-      <div className="border-b">
+      <div className="border-b border-zinc-400">
         <div className="flex h-16 items-center px-4">
           <MainNav 
             user={{
