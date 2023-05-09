@@ -78,19 +78,31 @@ export function UserInfoForm({ user, className, ...props }: UserNameFormProps) {
     >
       <Card>
         <CardHeader>
-          <CardTitle>Your Name</CardTitle>
+          <CardTitle>Your Infos</CardTitle>
           <CardDescription>
-            Please enter your full name or a display name you are comfortable
-            with.
+            Please enter your new infos or what you are comfortable with. 
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="grid gap-1">
-            <Label className="sr-only" htmlFor="name">
+          <div className="flex flex-col gap-4">
+            <Label htmlFor="name">
               Name
             </Label>
             <Input
               id="name"
+              className="w-[400px]"
+              size={32}
+            />
+            {/* {errors?.name && (
+              <p className="px-1 text-xs text-red-600">{errors.name.message}</p>
+            )} */}
+
+            <Label htmlFor="name">
+              E-mail
+            </Label>
+            <Input
+              id="email"
+              type="email"
               className="w-[400px]"
               size={32}
             />
