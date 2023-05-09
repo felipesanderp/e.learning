@@ -6,6 +6,10 @@ import { DashboardHeader } from "@/components/header";
 import { DashboardShell } from "@/components/shell";
 import { UserInfoForm } from "@/components/user-info-form";
 
+export const metadata = {
+  title: 'Profile | e.learning',
+}
+
 export default async function Profile() {
   const user = await getCurrentUser()
 
