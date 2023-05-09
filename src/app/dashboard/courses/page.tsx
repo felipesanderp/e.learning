@@ -102,9 +102,7 @@ export default async function CoursesPage() {
         {courses.map((course) => (
           <CoursesCard 
             key={course.id}
-            imageURL={course.imageURL}
-            title={course.title}
-            description={course.description}
+            course={course}
           />
         ))}
       </div>

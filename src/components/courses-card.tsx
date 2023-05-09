@@ -10,28 +10,29 @@ import {
 } from "@/components/ui/card";
 import { Button } from './ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
+import Link from 'next/link';
+import { Courses } from '@prisma/client';
+
 
 interface CoursesCardProps {
-  imageURL: string;
-  title: string;
-  description: string;
+  course: Pick<Courses, "id" | "title" | "imageURL" | "description">
 }
 
-export function CoursesCard({ imageURL, title, description }: CoursesCardProps) {
+export function CoursesCard({ course }: CoursesCardProps) {
   return (
     <Card className="w-[300px]">
       <CardHeader className="p-2">
         <div className="relative rounded-md border w-full h-[150px]">
           <Image 
-            src={imageURL}
-            alt={title}
+            src={course.imageURL}
+            alt={course.title}
             fill
             quality={50}
           />
         </div>
 
         <CardTitle>
-          {title}
+          {course.title}
         </CardTitle>
 
         <CardDescription>
@@ -40,7 +41,7 @@ export function CoursesCard({ imageURL, title, description }: CoursesCardProps) 
       </CardHeader>
 
       <CardContent className="p-4">
-        <p>{description}</p>
+        <p>{course.description}</p>
       </CardContent>
 
       <CardFooter className="justify-between p-4">
@@ -53,9 +54,11 @@ export function CoursesCard({ imageURL, title, description }: CoursesCardProps) 
           </Avatar>
           Diego Shell
         </div>
-        <Button>
-          Acessar
-        </Button>
+        <Link href={`/dashboard/courses/${course.id}`}>
+          <Button>
+            Acessar
+          </Button>
+        </Link> 
       </CardFooter>
     </Card>
   )
