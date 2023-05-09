@@ -87,7 +87,7 @@ export function CreateCourse() {
             New Course
           </Button>
         </SheetTrigger>
-        <SheetContent position="right" size="default">
+        <SheetContent position="right" size="lg">
           <SheetHeader>
             <SheetTitle>Create Course</SheetTitle>
             <SheetDescription>
