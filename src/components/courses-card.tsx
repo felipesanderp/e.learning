@@ -12,7 +12,7 @@ import { Button } from './ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import Link from 'next/link';
 import { Courses } from '@prisma/client';
-import { ScrollArea } from '../../components/ui/scroll-area';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 
 interface CoursesCardProps {
