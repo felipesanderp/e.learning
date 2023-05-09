@@ -12,6 +12,7 @@ import { Button } from './ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import Link from 'next/link';
 import { Courses } from '@prisma/client';
+import { ScrollArea } from '../../components/ui/scroll-area';
 
 
 interface CoursesCardProps {
@@ -41,9 +42,11 @@ export function CoursesCard({ course }: CoursesCardProps) {
         </CardDescription>
       </CardHeader>
 
-      <CardContent className="p-4">
-        <p>{course.description}</p>
-      </CardContent>
+      <ScrollArea className="h-[72px]">
+        <CardContent>
+          <p>{course.description}</p>
+        </CardContent>
+      </ScrollArea>
 
       <CardFooter className="justify-between p-4">
         <div className="flex items-center gap-2">
