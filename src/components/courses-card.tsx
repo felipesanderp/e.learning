@@ -28,6 +28,7 @@ export function CoursesCard({ course }: CoursesCardProps) {
             alt={course.title}
             fill
             quality={50}
+            className="rounded-md"
           />
         </div>
 
