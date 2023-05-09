@@ -6,6 +6,10 @@ import { authOptions } from "@/lib/auth";
 import { DashboardHeader } from "@/components/header";
 import { DashboardShell } from "@/components/shell";
 
+export const metadata = {
+  title: 'Lessons | e.learning',
+}
+
 export default async function LessonsPage() {
   const user = await getCurrentUser()
 
