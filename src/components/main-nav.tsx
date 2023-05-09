@@ -2,89 +2,81 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation";
+import { User } from "@prisma/client";
 
 import { cn } from "@/lib/utils"
+import { Icons } from "@/components/icons";
+import { siteConfig } from "@/config/site";
 
-import { MainNavItem } from "@/types";
-
-interface MainNavProps extends React.HTMLAttributes<HTMLElement> {
-  items?: MainNavItem[];
-  children?: React.ReactNode;
-  className?: string;
+interface MainNavProps {
+  user: Pick<User, "id" | "role">
 }
 
-// export function MainNav({
-//   className,
-//   ...props
-// }: React.HTMLAttributes<HTMLElement>) {
-//   const pathname = usePathname();
-
-//   return (
-//     <nav
-//       className={cn("flex items-center space-x-4 lg:space-x-6", className)}
-//       {...props}
-//     >
-//       <Link
-//         href="/dashboard"
-//         className="text-sm font-medium transition-colors hover:text-primary"
-//       >
-//         Overview
-//       </Link>
-//       <Link
-//         href="/dashboard/courses"
-//         className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
-//       >
-//         Courses
-//       </Link>
-//       <Link
-//         href="/dashboard/lessons"
-//         className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
-//       >
-//         Lessons
-//       </Link>
-//       <Link
-//         href="/dashboard/users"
-//         className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
-//       >
-//         Users
-//       </Link>
-//       <Link
-//         href="/dashboard"
-//         className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
-//       >
-//         Settings
-//       </Link>
-//     </nav>
-//   )
-// }
-
-export function MainNav({ items, className, children, ...props }:MainNavProps ) {
-  const pathname = usePathname();
+export function MainNav({ user }: MainNavProps) {
+  const pathname = usePathname()
 
   return (
-    <>
-      {items?.length ? (
-        <nav
-          className={cn("flex items-center space-x-4 lg:space-x-6", className)}
-          {...props}
+    <nav
+      className={cn("flex items-center space-x4 lg:space-x-6")}
+    >
+      <Link href="/dashboard" className="hidden items-center space-x-2 md:flex">
+        <Icons.graduationCap className="stroke-purple-500" />
+          <span className="hidden font-bold sm:inline-block">
+          {siteConfig.name}
+        </span>
+      </Link>
+
+      <Link
+        href="/dashboard"
+        className={cn(
+          "text-md transition-colors hover:text-primary",
+          pathname === '/dashboard' ? "font-bold text-primary" : "text-foreground/60"
+        )}
+      >
+        Home
+      </Link>
+
+      <Link
+        href="/dashboard/courses"
+        className={cn(
+          "text-md transition-colors hover:text-primary",
+          pathname?.startsWith("/dashboard/courses") ? "font-bold text-primary" : "text-foreground/60"
+        )}
+      >
+        Courses
+      </Link>
+
+      {user.role === 'ADMIN' || user.role === 'PROFESSOR' ?
+        <Link
+          href="/dashboard/lessons"
+          className={cn(
+            "text-md transition-colors hover:text-primary",
+            pathname?.startsWith("/dashboard/lessons") ? "font-bold text-primary" : "text-foreground/60"
+          )}
         >
-          {items?.map((item, index) => (
-            <Link
-              key={index}
-              href={item.disabled ? "#" : item.href}
-              className={cn(
-                "text-sm transition-colors hover:text-primary",
-                item.disabled && "cursor-not-allowed opacity-80",
-                {
-                  "font-bold text-primary": pathname === item.href
-                }
-              )}
-            >
-              {item.title}
-            </Link>
-          ))}
-        </nav>
-      ): null}
-    </>
+          Lessons
+        </Link> : ''}
+
+      {user.role === 'ADMIN' || user.role === 'PROFESSOR' ? 
+        <Link
+          href="/dashboard/users"
+          className={cn(
+            "text-md transition-colors hover:text-primary",
+            pathname?.startsWith("/dashboard/users") ? "font-bold text-primary" : "text-foreground/60"
+          )}
+        >
+          Users
+        </Link> : ''}
+
+      <Link
+        href="/dashboard/profile"
+        className={cn(
+          "text-md transition-colors hover:text-primary",
+          pathname?.startsWith("/dashboard/profile") ? "font-bold text-primary" : "text-foreground/60"
+        )}
+      >
+        Profile
+      </Link>
+    </nav>
   )
 }
