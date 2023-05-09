@@ -13,7 +13,8 @@ import {
   Facebook,
   User,
   LogOut,
-  Home
+  Home,
+  AlertTriangle,
 } from "lucide-react"
 
 export type Icon = LucideIcon
@@ -32,5 +33,6 @@ export const Icons = {
   facebook: Facebook,
   user: User,
   logOut: LogOut,
-  home: Home
+  home: Home,
+  warning: AlertTriangle,
 }
