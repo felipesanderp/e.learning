@@ -4,11 +4,13 @@ import { ColumnDef } from "@tanstack/react-table"
 
 import { Badge } from "@/components/ui/badge"
 import { Checkbox } from "@/components/ui/checkbox"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
 import { roles, status } from "../data/data"
 import { User } from "../data/schema"
 import { DataTableColumnHeader } from "./data-table-column-header"
 import { DataTableRowActions } from "./data-table-row-actions"
+import { Icons } from "@/components/icons"
 
 export const columns: ColumnDef<User>[] = [
   {
@@ -37,7 +39,20 @@ export const columns: ColumnDef<User>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Name" />
     ),
-    cell: ({ row }) => <div className="w-[80px]">{row.getValue("name")}</div>,
+    cell: ({ row }) => {
+      return (
+        <div className="flex items-center gap-2">
+          <Avatar>
+            <AvatarImage alt="Picture" src={row.getValue("image")}/>
+            <AvatarFallback>
+              <span className="sr-only">{row.getValue("name")}</span>
+              <Icons.user className="h-4 w-4" />
+            </AvatarFallback>
+          </Avatar>
+          <span>{row.getValue("name")}</span>
+        </div>
+      )
+    },
     enableSorting: false,
     enableHiding: false,
   },
