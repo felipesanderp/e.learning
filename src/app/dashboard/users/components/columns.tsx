@@ -5,7 +5,7 @@ import { ColumnDef } from "@tanstack/react-table"
 import { Badge } from "@/components/ui/badge"
 import { Checkbox } from "@/components/ui/checkbox"
 
-import { roles } from "../data/data"
+import { roles, status } from "../data/data"
 import { User } from "../data/schema"
 import { DataTableColumnHeader } from "./data-table-column-header"
 import { DataTableRowActions } from "./data-table-row-actions"
@@ -59,9 +59,24 @@ export const columns: ColumnDef<User>[] = [
       return (
         <div className="flex space-x-2">
           {label && <Badge variant={"outline"}>{label.label}</Badge>}
-          <span className="max-w-[500px] truncate font-medium">
-            {row.getValue("title")}
-          </span>
+        </div>
+      )
+    },
+    filterFn: (row, id, value) => {
+      return value.includes(row.getValue(id))
+    },
+  },
+  {
+    accessorKey: "isActive",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Active" />
+    ),
+    cell: ({ row }) => {
+      const statuses = status.find((label) => label.value === row.original.isActive)
+
+      return (
+        <div className="flex space-x-2">
+          {statuses && <Badge variant={"outline"}>{statuses.label}</Badge>}
         </div>
       )
     },

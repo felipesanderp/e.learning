@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { DataTableViewOptions } from "@/app/dashboard/users/components/data-table-view-options"
 
-import { roles } from "../data/data"
+import { roles, status } from "../data/data"
 import { DataTableFacetedFilter } from "./data-table-faceted-filter"
 
 interface DataTableToolbarProps<TData> {
@@ -39,13 +39,13 @@ export function DataTableToolbar<TData>({
             options={roles}
           />
         )}
-        {/* {table.getColumn("active") && (
+        {table.getColumn("isActive") && (
           <DataTableFacetedFilter
-            column={table.getColumn("priority")}
-            title="Priority"
-            options={priorities}
+            column={table.getColumn("isActive")}
+            title="Status"
+            options={status}
           />
-        )} */}
+        )}
         {isFiltered && (
           <Button
             variant="ghost"

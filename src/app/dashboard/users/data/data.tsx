@@ -25,20 +25,15 @@ export const roles = [
   },
 ]
 
-export const priorities = [
+export const status = [
   {
-    label: "Low",
-    value: "low",
+    label: "Active",
+    value: 'true',
     icon: ArrowDownToLine,
   },
   {
-    label: "Medium",
-    value: "medium",
+    label: "Disabled",
+    value: 'false',
     icon: ArrowRightToLine,
-  },
-  {
-    label: "High",
-    value: "high",
-    icon: ArrowUpToLine,
   },
 ]

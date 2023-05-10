@@ -27,6 +27,7 @@ export default async function Users() {
       email: true,
       image: true,
       role: true,
+      isActive: true,
     }
   })
   
