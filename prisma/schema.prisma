@@ -43,6 +43,7 @@ model User {
   password      String
   emailVerified DateTime?
   image         String?
+  isActive      Boolean   @default(true)
   role          ROLE      @default(STUDENT)
 
   accounts    Account[]
