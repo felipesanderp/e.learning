@@ -6,7 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
 
-import { courseCreateSchema } from '@/lib/validations/course'
+import { createUserSchema } from '@/lib/validations/user'
 import { Button, buttonVariants } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -20,58 +20,71 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import { cn } from "@/lib/utils"
 import { Icons } from "./icons"
 
-type FormData = z.infer<typeof courseCreateSchema>
+type FormData = z.infer<typeof createUserSchema>
 
 export function CreateUser() {
   const router = useRouter()
-  // const [isSaving, setIsSaving] = React.useState<boolean>(false)
+  const [isSaving, setIsSaving] = React.useState<boolean>(false)
   
-  // const {
-  //   handleSubmit,
-  //   register,
-  //   formState: { errors },
-  //   reset,
-  // } = useForm<FormData>({
-  //   resolver: zodResolver(courseCreateSchema),
-  // })
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+    reset,
+  } = useForm<FormData>({
+    resolver: zodResolver(createUserSchema),
+  })
   
-  // async function onSubmit(data: FormData) {
-  //   setIsSaving(true)
+  async function onSubmit(data: FormData) {
+    setIsSaving(true)
+
+    console.log(data)
     
-  //   const response = await fetch('/api/courses', {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify({
-  //       title: data.title,
-  //       description: data.description,
-  //       imageURL: data.imageURL,
-  //     })
-  //   })
+    const response = await fetch('/api/users', {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: data.name,
+        email: data.email,
+        password: data.password,
+        image: data.image,
+        role: data.role,
+      })
+    })
     
-  //   reset()
-  //   setIsSaving(false)
+    reset()
+    setIsSaving(false)
+
+    console.log(response.status)
     
-  //   if (!response.ok) {
-  //     return toast({
-  //       title: "Something went wrong.",
-  //       description: "The course was not created! Please, try again.",
-  //       variant: "destructive"
-  //     })
-  //   }
+    if (!response.ok) {
+      return toast({
+        title: "Something went wrong.",
+        description: "The user was not created! Please, try again.",
+        variant: "destructive"
+      })
+    }
     
-  //   toast({
-  //     title: "Course created.",
-  //     description: "Your course was created! Check the courses page.",
-  //     variant: 'success'
-  //   })
+    toast({
+      title: "User created.",
+      description: "The was created! Check the users page.",
+      variant: 'success'
+    })
     
-  //   router.refresh()
-  // }
+    router.refresh()
+  }
   
   return (
     <Sheet>
@@ -92,54 +105,90 @@ export function CreateUser() {
           Create a new user!
         </SheetDescription>
       </SheetHeader>
-      <form>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="title" className="text-right">
-              Title
+            <Label htmlFor="name" className="text-right">
+              Name
             </Label>
             <Input 
-              id="title" 
+              id="name" 
               className="col-span-3"
+              {...register("name")}
             />
             {/* {errors?.title && (
               <p className="px-1 text-xs text-red-600">{errors.title.message}</p>
             )} */}
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="title" className="text-right">
-              Description
+            <Label htmlFor="email" className="text-right">
+              Email
             </Label>
             <Input 
-              id="title"
-              type="text"
+              id="email"
+              type="email"
               className="col-span-3"
+              {...register("email")}
             />
             {/* {errors?.description && (
               <p className="px-1 text-xs text-red-600">{errors.description.message}</p>
             )} */}
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="imageURL" className="text-right">
+            <Label htmlFor="password" className="text-right">
+              Password
+            </Label>
+            <Input 
+              id="password"
+              type="password"
+              className="col-span-3"
+              {...register("password")}
+            />
+            {/* {errors?.description && (
+              <p className="px-1 text-xs text-red-600">{errors.description.message}</p>
+            )} */}
+          </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="image" className="text-right">
               Image
             </Label>
             <Input 
-              id="imageURL"
+              id="image"
               className="col-span-3"
+              {...register("image")}
             />
             {/* {errors?.imageURL && (
               <p className="px-1 text-xs text-red-600">{errors.imageURL.message}</p>
             )} */}
+          </div>
+
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="role" className="text-right">
+              Role
+            </Label>
+            <Select
+              {...register("role")}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Select a role..." />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="ADMIN">Admin</SelectItem>
+                <SelectItem value="PROFESSOR">Professor</SelectItem>
+                <SelectItem value="STUDENT">Student</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
         </div>
         <SheetFooter>
           <button
             type="submit"
             className={cn(buttonVariants())}
+            disabled={isSaving}
           >
-          {/* {isSaving && (
+          {isSaving && (
             <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-          )} */}
+          )}
             Create
           </button>
         </SheetFooter>
