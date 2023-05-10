@@ -5,7 +5,7 @@ import { ColumnDef } from "@tanstack/react-table"
 import { Badge } from "@/components/ui/badge"
 import { Checkbox } from "@/components/ui/checkbox"
 
-import {  } from "../data/data"
+import { roles } from "../data/data"
 import { User } from "../data/schema"
 import { DataTableColumnHeader } from "./data-table-column-header"
 import { DataTableRowActions } from "./data-table-row-actions"
@@ -53,7 +53,21 @@ export const columns: ColumnDef<User>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Role" />
     ),
-    cell: ({ row }) => <div className="w-[80px]">{row.getValue("role")}</div>,
+    cell: ({ row }) => {
+      const label = roles.find((label) => label.value === row.original.role)
+
+      return (
+        <div className="flex space-x-2">
+          {label && <Badge variant={"outline"}>{label.label}</Badge>}
+          <span className="max-w-[500px] truncate font-medium">
+            {row.getValue("title")}
+          </span>
+        </div>
+      )
+    },
+    filterFn: (row, id, value) => {
+      return value.includes(row.getValue(id))
+    },
   },
   {
     id: "actions",
