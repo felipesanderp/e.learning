@@ -2,6 +2,7 @@ import { notFound } from "next/navigation"
 
 import { db } from "@/lib/db"
 import { Courses } from "@prisma/client"
+import { Video } from "@/components/video"
 
 async function getCourse(courseId: Courses["id"]) {
   return await db.courses.findFirst({
@@ -23,6 +24,6 @@ export default async function CoursePage({ params }:CoursePageProps) {
   }
 
   return (
-    <h1>{course.title}</h1>
+    <Video />
   )
 }
