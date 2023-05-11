@@ -3,7 +3,7 @@
 import * as React from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
+import { useForm, Controller } from "react-hook-form"
 import * as z from "zod"
 
 import { createUserSchema } from '@/lib/validations/user'
@@ -166,7 +166,12 @@ export function CreateUser() {
             <Label htmlFor="role" className="text-right">
               Role
             </Label>
-            <Select
+            <Input 
+              id="role"
+              className="col-span-3"
+              {...register("role")}
+            />
+            {/* <Select
               {...register("role")}
             >
               <SelectTrigger>
@@ -177,7 +182,7 @@ export function CreateUser() {
                 <SelectItem value="PROFESSOR">Professor</SelectItem>
                 <SelectItem value="STUDENT">Student</SelectItem>
               </SelectContent>
-            </Select>
+            </Select> */}
           </div>
         </div>
         <SheetFooter>
