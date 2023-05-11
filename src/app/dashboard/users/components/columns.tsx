@@ -43,11 +43,14 @@ export const columns: ColumnDef<User>[] = [
       return (
         <div className="flex items-center gap-2">
           <Avatar>
-            <AvatarImage alt="Picture" src={row.getValue("image")}/>
-            <AvatarFallback>
-              <span className="sr-only">{row.getValue("name")}</span>
-              <Icons.user className="h-4 w-4" />
-            </AvatarFallback>
+            {row.original.image ? (
+              <AvatarImage alt="Picture" src={row.original.image}/>
+            ) : (
+              <AvatarFallback>
+                <span className="sr-only">{row.getValue("name")}</span>
+                <Icons.user className="h-4 w-4" />
+              </AvatarFallback>
+            )}
           </Avatar>
           <span>{row.getValue("name")}</span>
         </div>
