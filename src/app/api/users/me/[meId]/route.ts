@@ -67,7 +67,6 @@ export async function PATCH(
       },
       data: {
         email: payload.email,
-        password: (await hash(payload.password!!, 10)),
         name: payload.name,
         image: payload.image,
       }
