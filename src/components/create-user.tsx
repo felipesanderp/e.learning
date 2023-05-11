@@ -3,7 +3,7 @@
 import * as React from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm, Controller } from "react-hook-form"
+import { useForm } from "react-hook-form"
 import * as z from "zod"
 
 import { createUserSchema } from '@/lib/validations/user'
@@ -32,15 +32,20 @@ import { Icons } from "./icons"
 
 type FormData = z.infer<typeof createUserSchema>
 
+const rolesEnum = z.enum(['ADMIN', 'PROFESSOR', 'STUDENT'])
+
+type roles = z.infer<typeof rolesEnum>
+
 export function CreateUser() {
   const router = useRouter()
   const [isSaving, setIsSaving] = React.useState<boolean>(false)
-  
+
   const {
     handleSubmit,
     register,
     formState: { errors },
     reset,
+    setValue,
   } = useForm<FormData>({
     resolver: zodResolver(createUserSchema),
   })
@@ -166,13 +171,9 @@ export function CreateUser() {
             <Label htmlFor="role" className="text-right">
               Role
             </Label>
-            <Input 
-              id="role"
-              className="col-span-3"
+            <Select
               {...register("role")}
-            />
-            {/* <Select
-              {...register("role")}
+              onValueChange={(value: roles) => setValue("role", value)}
             >
               <SelectTrigger>
                 <SelectValue placeholder="Select a role..." />
@@ -182,7 +183,7 @@ export function CreateUser() {
                 <SelectItem value="PROFESSOR">Professor</SelectItem>
                 <SelectItem value="STUDENT">Student</SelectItem>
               </SelectContent>
-            </Select> */}
+            </Select>
           </div>
         </div>
         <SheetFooter>
