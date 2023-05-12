@@ -29,6 +29,9 @@ export default async function Users() {
       image: true,
       role: true,
       isActive: true,
+    },
+    orderBy: {
+      name: 'asc',
     }
   })
   
