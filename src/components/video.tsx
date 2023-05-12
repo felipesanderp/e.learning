@@ -13,10 +13,11 @@ export function Video() {
     <div className="flex-1">
       <div className="bg-slate-400 flex justify-center">
         <div className="h-full w-full max-w-[1100px] max-h-[60vh] aspect-video">
-          <Youtube 
+          {/* <Youtube 
             videoId='zwQs4wXr9Bg'
             opts={opts}
-          />
+          /> */}
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/Znz2QXpJTXQ" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
         </div>
       </div>
 
