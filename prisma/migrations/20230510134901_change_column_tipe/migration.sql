@@ -1,3 +1,0 @@
--- AlterTable
-ALTER TABLE "User" ALTER COLUMN "isActive" SET DEFAULT 'TRUE',
-ALTER COLUMN "isActive" SET DATA TYPE TEXT;
