@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "prisma generate && prisma migrate deploy && next build",
+    "build": "prisma generate && prisma migrate deploy && prisma db seed && next build",
     "start": "next start",
     "lint": "next lint"
   },
@@ -61,9 +61,10 @@
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
     "@types/youtube-player": "^5.5.7",
-    "prisma": "^4.13.0"
+    "prisma": "^4.13.0",
+    "tsx": "^3.12.7"
   },
-  "prisma":{
-    "seed": "ts-node prisma/seed.ts"
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
   }
 }
