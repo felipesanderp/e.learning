@@ -3,6 +3,7 @@ import { notFound } from "next/navigation"
 import { db } from "@/lib/db"
 import { Courses } from "@prisma/client"
 import { Video } from "@/components/video"
+import { LessonsSidebar } from "@/components/lessons-sidebar"
 
 async function getCourse(courseId: Courses["id"]) {
   return await db.courses.findFirst({
@@ -24,6 +25,9 @@ export default async function CoursePage({ params }:CoursePageProps) {
   }
 
   return (
-    <Video />
+    <main className="flex flex-1">
+      <Video />
+      <LessonsSidebar />
+    </main>
   )
 }
