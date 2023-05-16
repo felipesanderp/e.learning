@@ -33,7 +33,7 @@ export const authOptions: NextAuthOptions = {
     adapter: PrismaAdapter(db as any),
     session: {
       strategy: "jwt",
-      maxAge: 60 * 60 * 1 // 1 hour,
+      maxAge: 60 * 60 * 30 * 1,
     },
     pages: {
       signIn: '/'
