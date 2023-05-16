@@ -1,5 +1,3 @@
-"use client"
-
 import { VideoPlayer } from '@/hooks/use-video'
 import { ArrowRight, File, Lightbulb, Slack } from 'lucide-react'
 import Image from 'next/image'
