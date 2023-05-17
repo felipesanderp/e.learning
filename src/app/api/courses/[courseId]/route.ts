@@ -12,6 +12,47 @@ const routeContextSchema = z.object({
   })
 })
 
+export async function GET(
+  req: Request,
+  context: z.infer<typeof routeContextSchema>
+) {
+  try {
+    const { params } = routeContextSchema.parse(context)
+    const session = await getServerSession(authOptions)
+
+    if (!session) {
+      return new Response("Unauthorized", { status: 403 })
+    }
+
+    const { user } = session
+
+    if (user.role !== 'ADMIN' && user.role !== 'PROFESSOR') {
+      return new Response("Unauthorized", { status: 403 })
+    }
+
+    const course = await db.courses.findFirst({
+      where: {
+        id: params.courseId as string,
+      },
+      select: {
+        title: true,
+        slug: true,
+        imageURL: true,
+        description: true,
+        lessons: {
+          select: {
+            name: true,
+          }
+        }
+      }
+    })
+
+    return new Response(JSON.stringify(course))
+  } catch (error) {
+    return new Response(null, { status: 500 })
+  }
+}
+
 export async function DELETE(
   req: Request,
   context: z.infer<typeof routeContextSchema>
