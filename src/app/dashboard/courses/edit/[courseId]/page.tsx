@@ -6,14 +6,16 @@ interface EditCoursePageProps {
   params: { courseId: string }
 }
 
-export default async function EditCoursePage({ params }:EditCoursePageProps) {
+export default async function EditCoursePage({ params }:EditCoursePageProps) {  
   return (
     <DashboardShell>
       <DashboardHeader 
         heading="Manage Course"
         text="Edit, delete and add new items to this course only."
       />
-      <EditCourseForm />
+      <EditCourseForm 
+        courseId={params.courseId}
+      />
     </DashboardShell>
   )
 }
