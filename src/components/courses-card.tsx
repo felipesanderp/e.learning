@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link';
-import { Courses } from '@prisma/client';
+import { Courses, User } from '@prisma/client';
 
 import { 
   Card, 
@@ -25,9 +25,10 @@ import { Icons } from './icons';
 
 interface CoursesCardProps {
   course: Pick<Courses, "id" | "title" | "imageURL" | "description">
+  user: Pick<User, "role">
 }
 
-export function CoursesCard({ course }: CoursesCardProps) {
+export function CoursesCard({ course, user }: CoursesCardProps) {
   return (
     <ContextMenu>
       <Card className="w-[300px]">
@@ -68,25 +69,35 @@ export function CoursesCard({ course }: CoursesCardProps) {
             </Avatar>
             Diego Shell
           </div>
-          <Link href={`/dashboard/courses/${course.id}`}>
-            <Button>
-              Acessar
-            </Button>
-          </Link> 
+          {user.role === 'ADMIN' || user.role === "PROFESSOR" ? (
+            <Link href={`/dashboard/courses/edit/${course.id}`}>
+              <Button>
+                Editar
+              </Button>
+            </Link> 
+          ): (
+            <Link href={`/dashboard/courses/${course.id}`}>
+              <Button>
+                Acessar
+              </Button>
+            </Link>
+          )}
         </CardFooter>
       </Card>
       
-      <ContextMenuContent>
-        <ContextMenuItem>
-          <Icons.pen className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
-          Edit
-        </ContextMenuItem>
-        <ContextMenuSeparator />
-        <ContextMenuItem className="text-red-500 focus:bg-red-200 focus:text-bg-500">
-          <Icons.trash className="mr-2 h-3.5 w-3.5 text-red-500" />
-          Delete
-        </ContextMenuItem>
-      </ContextMenuContent>
+      {user.role === "ADMIN" || user.role === 'PROFESSOR' ? (
+        <ContextMenuContent>
+          <ContextMenuItem>
+            <Icons.pen className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
+            Edit
+          </ContextMenuItem>
+          <ContextMenuSeparator />
+          <ContextMenuItem className="text-red-500 focus:bg-red-200 focus:text-bg-500">
+            <Icons.trash className="mr-2 h-3.5 w-3.5 text-red-500" />
+            Delete
+          </ContextMenuItem>
+        </ContextMenuContent>
+      ) : ''}
     </ContextMenu>
   )
 }

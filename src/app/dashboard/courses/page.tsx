@@ -44,6 +44,7 @@ export default async function CoursesPage() {
           <CoursesCard 
             key={course.id}
             course={course}
+            user={user}
           />
         ))}
       </div>
