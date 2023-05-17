@@ -1,3 +1,4 @@
+import { EditCourseForm } from "@/components/edit-course-form"
 import { DashboardHeader } from "@/components/header"
 import { DashboardShell } from "@/components/shell"
 
@@ -12,6 +13,7 @@ export default async function EditCoursePage({ params }:EditCoursePageProps) {
         heading="Manage Course"
         text="Edit, delete and add new items to this course only."
       />
+      <EditCourseForm />
     </DashboardShell>
   )
 }
