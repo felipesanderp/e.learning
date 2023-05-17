@@ -6,7 +6,7 @@ import { LessonsSidebar } from "@/components/lessons-sidebar"
 import { getCurrentUser } from "@/lib/session"
 import { db } from "@/lib/db"
 
-async function getCourse(courseId: Courses["id"]) {
+async function getCourse(courseSlug: Courses["slug"]) {
   const user = await getCurrentUser()
 
   if (!user) {
@@ -15,17 +15,17 @@ async function getCourse(courseId: Courses["id"]) {
 
   return await db.courses.findFirst({
     where: {
-      id: courseId,
+      slug: courseSlug,
     }
   })
 }
 
 interface CoursePageProps {
-  params: { courseId: string }
+  params: { courseSlug: string }
 }
 
 export default async function CoursePage({ params }:CoursePageProps) {
-  const course = await getCourse(params.courseId)
+  const course = await getCourse(params.courseSlug)
 
   if (!course) {
     notFound()

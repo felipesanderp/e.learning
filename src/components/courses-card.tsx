@@ -24,7 +24,7 @@ import { Icons } from './icons';
 
 
 interface CoursesCardProps {
-  course: Pick<Courses, "id" | "title" | "imageURL" | "description">
+  course: Pick<Courses, "id" | "title" | "imageURL" | "description" | "slug">
   user: Pick<User, "role">
 }
 
@@ -76,7 +76,7 @@ export function CoursesCard({ course, user }: CoursesCardProps) {
               </Button>
             </Link> 
           ): (
-            <Link href={`/dashboard/courses/${course.id}`}>
+            <Link href={`/dashboard/courses/${course.slug}`}>
               <Button>
                 Acessar
               </Button>
