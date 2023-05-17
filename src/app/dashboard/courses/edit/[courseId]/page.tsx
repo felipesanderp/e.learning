@@ -1,9 +1,17 @@
+import { DashboardHeader } from "@/components/header"
+import { DashboardShell } from "@/components/shell"
+
 interface EditCoursePageProps {
   params: { courseId: string }
 }
 
 export default async function EditCoursePage({ params }:EditCoursePageProps) {
   return (
-    <h1>{params.courseId}</h1>
+    <DashboardShell>
+      <DashboardHeader 
+        heading="Manage Course"
+        text="Edit, delete and add new items to this course only."
+      />
+    </DashboardShell>
   )
 }
