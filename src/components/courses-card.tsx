@@ -1,4 +1,6 @@
 import Image from 'next/image'
+import Link from 'next/link';
+import { Courses } from '@prisma/client';
 
 import { 
   Card, 
@@ -17,9 +19,8 @@ import {
 } from "@/components/ui/context-menu"
 import { Button } from './ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
-import Link from 'next/link';
-import { Courses } from '@prisma/client';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { Icons } from './icons';
 
 
 interface CoursesCardProps {
@@ -76,9 +77,13 @@ export function CoursesCard({ course }: CoursesCardProps) {
       </Card>
       
       <ContextMenuContent>
-        <ContextMenuItem>Edit</ContextMenuItem>
-        <ContextMenuSeparator />
         <ContextMenuItem>
+          <Icons.pen className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
+          Edit
+        </ContextMenuItem>
+        <ContextMenuSeparator />
+        <ContextMenuItem className="text-red-500 focus:bg-red-200 focus:text-bg-500">
+          <Icons.trash className="mr-2 h-3.5 w-3.5 text-red-500" />
           Delete
         </ContextMenuItem>
       </ContextMenuContent>

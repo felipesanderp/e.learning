@@ -15,6 +15,8 @@ import {
   LogOut,
   Home,
   AlertTriangle,
+  Trash,
+  Pen
 } from "lucide-react"
 
 export type Icon = LucideIcon
@@ -35,4 +37,6 @@ export const Icons = {
   logOut: LogOut,
   home: Home,
   warning: AlertTriangle,
+  trash: Trash,
+  pen: Pen,
 }
