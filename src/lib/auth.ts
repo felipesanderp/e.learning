@@ -25,6 +25,7 @@ declare module "next-auth" {
 declare module "next-auth/jwt" {
   interface JWT {
     id: string;
+    image: string | null
     role: ROLE;
   }
 }
@@ -73,6 +74,7 @@ export const authOptions: NextAuthOptions = {
         session.user.id = token.id
         session.user.name = token.name
         session.user.email = token.email
+        session.user.image = token.image
         session.user.role = token.role
 
         return session
@@ -88,6 +90,7 @@ export const authOptions: NextAuthOptions = {
         if (!dbUser) {
           if (user) {
             token.id = user?.id
+            token.picture = user?.image
             token.role = user?.role
           }
 
