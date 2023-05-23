@@ -25,20 +25,20 @@ export function DataTableToolbar<TData>({
     <div className="flex items-center justify-between">
       <div className="flex flex-1 items-center space-x-2">
         <Input
-          placeholder="Filter users..."
+          placeholder="Filter lessons..."
           value={table.getColumn("name")?.getFilterValue() as string}
           onChange={(event) =>
             table.getColumn("name")?.setFilterValue(event.target.value)
           }
           className="h-8 w-[150px] lg:w-[250px]"
         />
-        {table.getColumn("role") && (
+        {/* {table.getColumn("role") && (
           <DataTableFacetedFilter
             column={table.getColumn("role")}
             title="Role"
             options={roles}
           />
-        )}
+        )} */}
         {table.getColumn("isActive") && (
           <DataTableFacetedFilter
             column={table.getColumn("isActive")}

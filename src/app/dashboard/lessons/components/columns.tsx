@@ -13,95 +13,66 @@ import { DataTableRowActions } from "./data-table-row-actions"
 import { Icons } from "@/components/icons"
 
 export const columns: ColumnDef<User>[] = [
-  {
-    id: "select",
-    header: ({ table }) => (
-      <Checkbox
-        checked={table.getIsAllPageRowsSelected()}
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
-        className="translate-y-[2px]"
-      />
-    ),
-    cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
-        className="translate-y-[2px]"
-      />
-    ),
-    enableSorting: false,
-    enableHiding: false,
-  },
+  // {
+  //   id: "select",
+  //   header: ({ table }) => (
+  //     <Checkbox
+  //       checked={table.getIsAllPageRowsSelected()}
+  //       onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+  //       aria-label="Select all"
+  //       className="translate-y-[2px]"
+  //     />
+  //   ),
+  //   cell: ({ row }) => (
+  //     <Checkbox
+  //       checked={row.getIsSelected()}
+  //       onCheckedChange={(value) => row.toggleSelected(!!value)}
+  //       aria-label="Select row"
+  //       className="translate-y-[2px]"
+  //     />
+  //   ),
+  //   enableSorting: false,
+  //   enableHiding: false,
+  // },
   {
     accessorKey: "name",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Name" />
     ),
-    cell: ({ row }) => {
-      return (
-        <div className="flex items-center gap-2">
-          <Avatar>
-            {row.original.image ? (
-              <AvatarImage alt="Picture" src={row.original.image}/>
-            ) : (
-              <AvatarFallback>
-                <span className="sr-only">{row.getValue("name")}</span>
-                <Icons.user className="h-4 w-4" />
-              </AvatarFallback>
-            )}
-          </Avatar>
-          <span>{row.getValue("name")}</span>
-        </div>
-      )
-    },
-    enableSorting: false,
+    cell: ({ row }) => <div className="w-[80px]">{row.getValue("name")}</div>,
     enableHiding: false,
   },
   {
-    accessorKey: "email",
+    accessorKey: "duration",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Email" />
+      <DataTableColumnHeader column={column} title="Duration" />
     ),
-    cell: ({ row }) => <div className="w-[80px]">{row.getValue("email")}</div>,
+    cell: ({ row }) => <div className="w-[80px]">{row.getValue("duration")}</div>,
   },
   {
-    accessorKey: "role",
+    accessorKey: "description",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Role" />
+      <DataTableColumnHeader column={column} title="Description" />
     ),
-    cell: ({ row }) => {
-      const label = roles.find((label) => label.value === row.original.role)
-
-      return (
-        <div className="flex space-x-2">
-          {label && <Badge variant={"outline"}>{label.label}</Badge>}
-        </div>
-      )
-    },
-    filterFn: (row, id, value) => {
-      return value.includes(row.getValue(id))
-    },
   },
-  {
-    accessorKey: "isActive",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Active" />
-    ),
-    cell: ({ row }) => {
-      const statuses = status.find((label) => label.value === row.original.isActive)
+  // {
+  //   accessorKey: "isActive",
+  //   header: ({ column }) => (
+  //     <DataTableColumnHeader column={column} title="Active" />
+  //   ),
+  //   cell: ({ row }) => {
+  //     const statuses = status.find((label) => label.value === row.original.isActive)
 
-      return (
-        <div className="flex space-x-2">
-          {statuses && <Badge variant={"outline"}>{statuses.label}</Badge>}
-        </div>
-      )
-    },
-    filterFn: (row, id, value) => {
-      return value.includes(row.getValue(id))
-    },
-  },
+  //     return (
+  //       <div className="flex space-x-2">
+  //         {statuses && <Badge variant={"outline"}>{statuses.label}</Badge>}
+  //       </div>
+  //     )
+  //   },
+  //   filterFn: (row, id, value) => {
+  //     return value.includes(row.getValue(id))
+  //   },
+  // },
   {
     id: "actions",
     cell: ({ row }) => <DataTableRowActions row={row} />,
