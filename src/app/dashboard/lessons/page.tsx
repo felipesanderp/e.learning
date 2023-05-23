@@ -7,6 +7,7 @@ import { DashboardHeader } from "@/components/header";
 import { DashboardShell } from "@/components/shell";
 import { DataTable } from "./components/data-table";
 import { columns } from '@/app/dashboard/lessons/components/columns'
+import { CreateLesson } from "@/components/create-lesson";
 
 export const metadata = {
   title: 'Lessons | e.learning',
@@ -37,9 +38,9 @@ export default async function LessonsPage() {
         heading="Lessons"
         text='Create and manage lessons.'
       >
-        {/* {user?.role === 'ADMIN' || user?.role === 'PROFESSOR' ?
-          <CreateCourse /> : ''
-        } */}
+        {user?.role === 'ADMIN' || user?.role === 'PROFESSOR' ?
+          <CreateLesson /> : ''
+        }
       </DashboardHeader>
         <DataTable data={lessons} columns={columns}/>
       </DashboardShell>
