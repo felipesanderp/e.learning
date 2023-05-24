@@ -9,6 +9,7 @@ import { db } from "@/lib/db"
 import { columns } from '@/app/dashboard/users/components/columns'
 import { DataTable } from '@/app/dashboard/users/components/data-table'
 import { CreateUser } from "@/components/create-user";
+import { CreateUserForm } from "@/components/create-user-form";
 
 export const metadata = {
   title: 'Users | e.learning',
@@ -42,7 +43,7 @@ export default async function Users() {
         text='Create and manage users.'
       >
         {user?.role === 'ADMIN' || user?.role === 'PROFESSOR' ?
-          <CreateUser /> : ''
+          <CreateUserForm /> : ''
         }
       </DashboardHeader>
       <DataTable data={users} columns={columns} />
