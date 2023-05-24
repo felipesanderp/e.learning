@@ -19,6 +19,13 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import { Icons } from "./icons"
 import { cn } from "@/lib/utils"
 
@@ -35,11 +42,19 @@ export function CreateUserForm() {
   const {
     handleSubmit,
     register,
-    formState: { errors },
+    formState: { errors, isDirty, isValid },
     reset,
     setValue,
   } = useForm<FormData>({
     resolver: zodResolver(createUserSchema),
+    mode: 'onChange',
+    values: {
+      name: '',
+      email: '',
+      password: '',
+      image: '',
+      role: 'STUDENT'
+    }
   })
 
   const nextStep = () => {
@@ -54,37 +69,103 @@ export function CreateUserForm() {
     switch (step) {
       case 1:
         return (
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col space-y-6">
             <MultiStep size={5} currentStep={step} />
-            <div className="grid grid-cols-5 items-center gap-4">
+            <div className="flex flex-col items-start space-y-4">
+              <p className="text-md font-semibold text-slate-900 dark:text-slate-50">
+                Primeiro, vamos começar definindo um nome para esse usuário.
+              </p>
               <Label htmlFor="name" className="text-right">
-                Name
+                Nome
               </Label>
               <Input 
                 id="name" 
-                className="col-span-2"
                 {...register("name")}
               />
-              <Button onClick={nextStep}>Proximo passo</Button>
+              {errors?.name && (
+                <p className="px-1 text-xs text-red-600">{errors.name.message}</p>
+              )}
+              <Button type='button' onClick={nextStep}>Avançar</Button>
             </div>
           </div>
         )
       case 2:
         return (
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col space-y-6">
             <MultiStep size={5} currentStep={step} />
-            <div className="grid grid-cols-5 items-center gap-4">
-              <Label htmlFor="name" className="text-right">
+            <div className="flex flex-col items-start space-y-4">
+              <p className="text-md font-semibold text-slate-900 dark:text-slate-50">
+                Agora, defina um e-mail.
+              </p>
+              <Label htmlFor="email" className="text-right">
                 Email
               </Label>
               <Input 
                 id="email"
                 type="email" 
-                className="col-span-2"
                 {...register("email")}
               />
-              <Button onClick={prevStep}>Voltar</Button>
-              <Button onClick={nextStep}>Proximo passo</Button>
+              {errors?.email&& (
+                <p className="px-1 text-xs text-red-600">{errors.email.message}</p>
+              )}
+              <div className="flex items-center gap-4">
+                <Button onClick={prevStep}>Voltar</Button>
+                <Button onClick={nextStep}>Avançar</Button>
+              </div>
+            </div>
+          </div>
+        )
+      case 3:
+        return (
+          <div className="flex flex-col space-y-6">
+            <MultiStep size={5} currentStep={step} />
+            <div className="flex flex-col items-start space-y-4">
+              <p className="text-md font-semibold text-slate-900 dark:text-slate-50">
+                Estamos quase lá! Defina uma senha para esse usuário.
+              </p>
+              <Label htmlFor="password" className="text-right">
+                Senha
+              </Label>
+              <Input 
+                id="password"
+                type="password"
+                {...register("password")}
+              />
+              <div className="flex items-center gap-4">
+                <Button onClick={prevStep}>Voltar</Button>
+                <Button onClick={nextStep}>Avançar</Button>
+              </div>
+            </div>
+          </div>
+        )
+      case 4:
+        return (
+          <div className="flex flex-col space-y-6">
+            <MultiStep size={5} currentStep={step} />
+            <div className="flex flex-col items-start space-y-4">
+              <p className="text-md font-semibold text-slate-900 dark:text-slate-50">
+                Por último, qual o papel desse usuário no sistema?
+              </p>
+              <Label htmlFor="role" className="text-right">
+                Role
+              </Label>
+              <Select
+                {...register("role")}
+                onValueChange={(value: roles) => setValue("role", value)}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Select a role..." />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="ADMIN">Admin</SelectItem>
+                  <SelectItem value="PROFESSOR">Professor</SelectItem>
+                  <SelectItem value="STUDENT">Student</SelectItem>
+                </SelectContent>
+              </Select>
+              <div className="flex items-center gap-4">
+                <Button onClick={prevStep}>Voltar</Button>
+                <Button onClick={nextStep}>Avançar</Button>
+              </div>
             </div>
           </div>
         )
@@ -105,14 +186,16 @@ export function CreateUserForm() {
           New User
         </Button>
       </SheetTrigger>
-      <SheetContent position="right" size="lg">
+      <SheetContent position="right" size="default">
         <SheetHeader className="mb-4">
           <SheetTitle>Create User</SheetTitle>
           <SheetDescription>
             Create a new user!
           </SheetDescription>
         </SheetHeader>
-        {formStep()}
+        <form>
+          {formStep()}
+        </form>
       </SheetContent>
     </Sheet>
   )
