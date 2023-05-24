@@ -42,7 +42,7 @@ export function CreateUserForm() {
   const {
     handleSubmit,
     register,
-    formState: { errors, isDirty, isValid },
+    formState: { errors },
     reset,
     setValue,
   } = useForm<FormData>({
@@ -85,7 +85,7 @@ export function CreateUserForm() {
               {errors?.name && (
                 <p className="px-1 text-xs text-red-600">{errors.name.message}</p>
               )}
-              <Button type='button' onClick={nextStep}>Avançar</Button>
+              <Button type='button' disabled={!!errors.name} onClick={nextStep}>Avançar</Button>
             </div>
           </div>
         )
@@ -110,7 +110,7 @@ export function CreateUserForm() {
               )}
               <div className="flex items-center gap-4">
                 <Button onClick={prevStep}>Voltar</Button>
-                <Button onClick={nextStep}>Avançar</Button>
+                <Button disabled={!!errors.email} onClick={nextStep}>Avançar</Button>
               </div>
             </div>
           </div>
