@@ -45,6 +45,7 @@ export function CreateUserForm() {
     formState: { errors },
     reset,
     setValue,
+    getValues
   } = useForm<FormData>({
     resolver: zodResolver(createUserSchema),
     mode: 'all',
@@ -193,7 +194,7 @@ export function CreateUserForm() {
         )
       case 5:
         return (
-          <h1>ultimo passo</h1>
+          <h1>{getValues('name')}</h1>
         )
       default:
         return null
