@@ -47,13 +47,11 @@ export function CreateUserForm() {
     setValue,
   } = useForm<FormData>({
     resolver: zodResolver(createUserSchema),
-    mode: 'onChange',
-    values: {
-      name: '',
-      email: '',
-      password: '',
-      image: '',
-      role: 'STUDENT'
+    mode: 'all',
+    defaultValues: {
+      name: "",
+      email: "",
+      password: "",
     }
   })
 
@@ -85,7 +83,13 @@ export function CreateUserForm() {
               {errors?.name && (
                 <p className="px-1 text-xs text-red-600">{errors.name.message}</p>
               )}
-              <Button type='button' disabled={!!errors.name} onClick={nextStep}>Avançar</Button>
+              <Button
+                type="button" 
+                disabled={errors.name && errors.name ? true : false} 
+                onClick={nextStep}
+              >
+                Avançar
+              </Button>
             </div>
           </div>
         )
@@ -110,7 +114,13 @@ export function CreateUserForm() {
               )}
               <div className="flex items-center gap-4">
                 <Button onClick={prevStep}>Voltar</Button>
-                <Button disabled={!!errors.email} onClick={nextStep}>Avançar</Button>
+                <Button 
+                  type="button"
+                  disabled={errors.email && errors.email ? true : false} 
+                  onClick={nextStep}
+                >
+                  Avançar
+                </Button>
               </div>
             </div>
           </div>
@@ -133,7 +143,13 @@ export function CreateUserForm() {
               />
               <div className="flex items-center gap-4">
                 <Button onClick={prevStep}>Voltar</Button>
-                <Button onClick={nextStep}>Avançar</Button>
+                <Button
+                  type="button"
+                  disabled={errors.password && errors.password ? true : false} 
+                  onClick={nextStep}
+                >
+                  Avançar
+                </Button>
               </div>
             </div>
           </div>
@@ -164,10 +180,20 @@ export function CreateUserForm() {
               </Select>
               <div className="flex items-center gap-4">
                 <Button onClick={prevStep}>Voltar</Button>
-                <Button onClick={nextStep}>Avançar</Button>
+                <Button 
+                  type="button" 
+                  disabled={errors.role && errors.role ? true : false} 
+                  onClick={nextStep}
+                >
+                  Avançar
+                </Button>
               </div>
             </div>
           </div>
+        )
+      case 5:
+        return (
+          <h1>ultimo passo</h1>
         )
       default:
         return null
