@@ -48,6 +48,7 @@ export function CreateUser() {
     setValue,
   } = useForm<FormData>({
     resolver: zodResolver(createUserSchema),
+    mode: 'onChange'
   })
   
   async function onSubmit(data: FormData) {
@@ -121,9 +122,9 @@ export function CreateUser() {
               className="col-span-3"
               {...register("name")}
             />
-            {/* {errors?.title && (
-              <p className="px-1 text-xs text-red-600">{errors.title.message}</p>
-            )} */}
+            {errors?.name && (
+              <p className="px-1 text-xs text-red-600">{errors.name.message}</p>
+            )}
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="email" className="text-right">
