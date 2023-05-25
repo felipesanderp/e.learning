@@ -29,6 +29,7 @@ import {
 } from "@/components/ui/select"
 import { cn } from "@/lib/utils"
 import { Icons } from "./icons"
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "./ui/form"
 
 type FormData = z.infer<typeof createUserSchema>
 
@@ -40,21 +41,19 @@ export function CreateUser() {
   const router = useRouter()
   const [isSaving, setIsSaving] = React.useState<boolean>(false)
 
-  const {
-    handleSubmit,
-    register,
-    formState: { errors },
-    reset,
-    setValue,
-  } = useForm<FormData>({
+  const form = useForm<FormData>({
     resolver: zodResolver(createUserSchema),
-    mode: 'onChange'
+    defaultValues: {
+      name: '',
+      email: '',
+      password: '',
+      role: 'STUDENT',
+    }
   })
   
   async function onSubmit(data: FormData) {
-    setIsSaving(true)
-
     console.log(data)
+    setIsSaving(true)
     
     const response = await fetch('/api/users', {
       method: "POST",
@@ -65,15 +64,12 @@ export function CreateUser() {
         name: data.name,
         email: data.email,
         password: data.password,
-        image: data.image,
         role: data.role,
       })
     })
     
-    reset()
+    form.reset()
     setIsSaving(false)
-
-    console.log(response.status)
     
     if (!response.ok) {
       return toast({
@@ -111,7 +107,75 @@ export function CreateUser() {
           Create a new user!
         </SheetDescription>
       </SheetHeader>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          <FormField
+            control={form.control}
+            name="name"
+            render={({ field }) => (
+              <FormItem className="flex flex-col items-start">
+                <FormLabel className="text-right">Name</FormLabel>
+                <FormControl>
+                  <Input  {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField 
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Email</FormLabel>
+                <FormControl>
+                  <Input type="email" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField 
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Password</FormLabel>
+                <FormControl>
+                  <Input type="password" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField 
+            control={form.control}
+            name="role"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Role</FormLabel>
+                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="select a role..." />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value="ADMIN">Admin</SelectItem>
+                    <SelectItem value="PROFESSOR">Professor</SelectItem>
+                    <SelectItem value="STUDENT">Student</SelectItem>
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+
+      {/* <form onSubmit={form.handleSubmit(onSubmit)}>
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="name" className="text-right">
@@ -136,9 +200,9 @@ export function CreateUser() {
               className="col-span-3"
               {...register("email")}
             />
-            {/* {errors?.description && (
+            {errors?.description && (
               <p className="px-1 text-xs text-red-600">{errors.description.message}</p>
-            )} */}
+            )}
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="password" className="text-right">
@@ -150,22 +214,9 @@ export function CreateUser() {
               className="col-span-3"
               {...register("password")}
             />
-            {/* {errors?.description && (
+            {errors?.description && (
               <p className="px-1 text-xs text-red-600">{errors.description.message}</p>
-            )} */}
-          </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="image" className="text-right">
-              Image
-            </Label>
-            <Input 
-              id="image"
-              className="col-span-3"
-              {...register("image")}
-            />
-            {/* {errors?.imageURL && (
-              <p className="px-1 text-xs text-red-600">{errors.imageURL.message}</p>
-            )} */}
+            )}
           </div>
 
           <div className="grid grid-cols-4 items-center gap-4">
@@ -186,7 +237,7 @@ export function CreateUser() {
               </SelectContent>
             </Select>
           </div>
-        </div>
+        </div> */}
         <SheetFooter>
           <button
             type="submit"
@@ -199,7 +250,8 @@ export function CreateUser() {
             Create
           </button>
         </SheetFooter>
-      </form>
+        </form>
+      </Form>
     </SheetContent>
   </Sheet>            
   )

@@ -43,7 +43,7 @@ export default async function Users() {
         text='Create and manage users.'
       >
         {user?.role === 'ADMIN' || user?.role === 'PROFESSOR' ?
-          <CreateUserForm /> : ''
+          <CreateUser /> : ''
         }
       </DashboardHeader>
       <DataTable data={users} columns={columns} />

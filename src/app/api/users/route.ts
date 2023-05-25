@@ -9,7 +9,6 @@ const userCreateSchema = z.object({
   email: z.string(),
   password: z.string(),
   name: z.string(),
-  image: z.string(),
   role: z.enum(['ADMIN', 'PROFESSOR', 'STUDENT'])
 })
 
@@ -66,7 +65,6 @@ export async function POST(req: Request) {
       data: {
         email: body.email,
         name: body.name,
-        image: body.image,
         password: passwordHash,
         role: body.role,
       },

@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
@@ -26,7 +27,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { Icons } from "./icons"
+import { toast } from "@/hooks/use-toast"
+import { Icons } from "@/components/icons"
 import { cn } from "@/lib/utils"
 
 type FormData = z.infer<typeof createUserSchema>
@@ -36,6 +38,8 @@ const rolesEnum = z.enum(['ADMIN', 'PROFESSOR', 'STUDENT'])
 type roles = z.infer<typeof rolesEnum>
 
 export function CreateUserForm() {
+  const router = useRouter()
+
   const [step, setStep] = useState(1)
   const [isSaving, setIsSaving] = useState<boolean>(false)
 
@@ -53,6 +57,7 @@ export function CreateUserForm() {
       name: "",
       email: "",
       password: "",
+      role: 'STUDENT'
     }
   })
 
@@ -62,6 +67,47 @@ export function CreateUserForm() {
 
   const prevStep= () => {
     setStep(step - 1)
+  }
+
+  async function onSubmit(data: FormData) {
+    setIsSaving(true)
+
+    console.log(data)
+    
+    const response = await fetch('/api/users', {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: data.name,
+        email: data.email,
+        password: data.password,
+        role: data.role,
+      })
+    })
+    
+    setStep(1)
+    reset()
+    setIsSaving(false)
+  
+    console.log(response.status)
+    
+    if (!response.ok) {
+      return toast({
+        title: "Something went wrong.",
+        description: "The user was not created! Please, try again.",
+        variant: "destructive"
+      })
+    }
+    
+    toast({
+      title: "User created.",
+      description: "The was created! Check the users page.",
+      variant: 'success'
+    })
+    
+    router.refresh()
   }
 
   const formStep = () => {
@@ -194,7 +240,22 @@ export function CreateUserForm() {
         )
       case 5:
         return (
-          <h1>{getValues('name')}</h1>
+          <div>
+            <h1>{getValues('name')}</h1>
+            <h1>{getValues('email')}</h1>
+            <h1>{getValues('password')}</h1>
+            <h1>{getValues('role')}</h1>
+            <Button 
+              type="submit"
+              disabled={isSaving}
+            >
+              {isSaving && (
+                <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+              )}
+              Enviar
+            </Button>
+          </div>
+          
         )
       default:
         return null
@@ -220,7 +281,7 @@ export function CreateUserForm() {
             Create a new user!
           </SheetDescription>
         </SheetHeader>
-        <form>
+        <form onSubmit={handleSubmit(onSubmit)}>
           {formStep()}
         </form>
       </SheetContent>
