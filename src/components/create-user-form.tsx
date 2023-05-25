@@ -71,44 +71,42 @@ export function CreateUserForm() {
   }
 
   async function onSubmit(data: FormData) {
-    // setIsSaving(true)
-
-    console.log(data)
+    setIsSaving(true)
     
-    // const response = await fetch('/api/users', {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify({
-    //     name: data.name,
-    //     email: data.email,
-    //     password: data.password,
-    //     role: data.role,
-    //   })
-    // })
+    const response = await fetch('/api/users', {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: data.name,
+        email: data.email,
+        password: data.password,
+        role: data.role,
+      })
+    })
     
-    // setStep(1)
-    // form.reset()
-    // setIsSaving(false)
+    setStep(1)
+    form.reset()
+    setIsSaving(false)
   
-    // console.log(response.status)
+    console.log(response.status)
     
-    // if (!response.ok) {
-    //   return toast({
-    //     title: "Something went wrong.",
-    //     description: "The user was not created! Please, try again.",
-    //     variant: "destructive"
-    //   })
-    // }
+    if (!response.ok) {
+      return toast({
+        title: "Something went wrong.",
+        description: "The user was not created! Please, try again.",
+        variant: "destructive"
+      })
+    }
     
-    // toast({
-    //   title: "User created.",
-    //   description: "The was created! Check the users page.",
-    //   variant: 'success'
-    // })
+    toast({
+      title: "User created.",
+      description: "The was created! Check the users page.",
+      variant: 'success'
+    })
     
-    // router.refresh()
+    router.refresh()
   }
 
   const formStep = () => {
@@ -121,7 +119,18 @@ export function CreateUserForm() {
               <p className="text-md font-semibold text-slate-900 dark:text-slate-50">
                 Primeiro, vamos começar definindo um nome para esse usuário.
               </p>
-              <FormField 
+              <Label htmlFor="name" className="text-right">
+                Nome
+              </Label>
+              <Input
+                {...form.register('name')}
+              />
+              {form.formState.errors.name && (
+                <p className="text-sm font-medium text-destructive">
+                  {form.formState.errors.name.message}
+                </p>
+              )}
+              {/* <FormField 
                 control={form.control}
                 name="name"
                 render={({ field }) => (
@@ -133,7 +142,7 @@ export function CreateUserForm() {
                     <FormMessage />
                   </FormItem>
                 )}
-              />
+              /> */}
               <Button
                 type="button"
                 disabled={form.formState.errors.name ? true : false} 
@@ -152,7 +161,19 @@ export function CreateUserForm() {
               <p className="text-md font-semibold text-slate-900 dark:text-slate-50">
                 Agora, defina um e-mail.
               </p>
-              <FormField 
+              <Label htmlFor="email" className="text-right">
+                Email
+              </Label>
+              <Input
+                type="email"
+                {...form.register('email', { required: true })}
+              />
+              {form.formState.errors.email && (
+                <p className="text-sm font-medium text-destructive">
+                  {form.formState.errors.email.message}
+                </p>
+              )}
+              {/* <FormField 
                 control={form.control}
                 name="email"
                 render={({ field }) => (
@@ -164,7 +185,7 @@ export function CreateUserForm() {
                     <FormMessage />
                   </FormItem>
                 )}
-              />
+              /> */}
               <div className="flex items-center gap-4">
                 <Button onClick={prevStep}>Voltar</Button>
                 <Button
@@ -186,7 +207,20 @@ export function CreateUserForm() {
               <p className="text-md font-semibold text-slate-900 dark:text-slate-50">
                 Estamos quase lá! Defina uma senha para esse usuário.
               </p>
-              <FormField 
+              <Label htmlFor="password" className="text-right">
+                Senha
+              </Label>
+              <Input
+                type="password"
+                autoFocus
+                {...form.register('password')}
+              />
+              {form.formState.errors.password && (
+                <p className="text-sm font-medium text-destructive">
+                  {form.formState.errors.password.message}
+                </p>
+              )}
+              {/* <FormField 
                 control={form.control}
                 name="password"
                 render={({ field }) => (
@@ -198,12 +232,12 @@ export function CreateUserForm() {
                     <FormMessage />
                   </FormItem>
                 )}
-              />
+              /> */}
               <div className="flex items-center gap-4">
                 <Button onClick={prevStep}>Voltar</Button>
                 <Button
                   type="button"
-                  disabled={form.formState.errors.password ? true : false} 
+                  disabled={form.formState.errors.password ? true : false}
                   onClick={nextStep}
                 >
                   Avançar
