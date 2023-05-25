@@ -70,6 +70,26 @@ export function CreateLessonForm() {
     console.log(data)
   }
 
+  const formStep = () => {
+    switch (step) {
+      case 1:
+        return (
+          <div className="flex flex-col space-y-6">
+            <MultiStep size={5} currentStep={step} />
+            <div className="flex flex-col items-start space-y-4">
+              <p className="text-md font-semibold text-slate-900 dark:text-slate-50">
+                Vamos começar definindo o titulo dessa aula.
+              </p>
+              <Label htmlFor="name" className="text-right">Titulo</Label>
+              <Input 
+                {...form.register('name')}
+              />
+            </div>
+          </div>
+        )
+    }
+  }
+
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -89,6 +109,11 @@ export function CreateLessonForm() {
             Create a new lesson!
           </SheetDescription>
         </SheetHeader>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)}>
+            {formStep()}
+          </form>
+        </Form>
       </SheetContent>
     </Sheet>
   )
