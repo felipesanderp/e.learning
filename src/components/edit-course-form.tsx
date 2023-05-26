@@ -10,15 +10,21 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Separator } from "@/components/ui/separator";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { Courses } from "@prisma/client";
 
 interface EditCourseFormProps {
   courseId: string
 }
 
+interface Course extends Courses {
+  lessons: {
+    name: string,
+  }[]
+}
+
 export function EditCourseForm({ courseId }: EditCourseFormProps) {
-  const [course, setCourse] = useState<Courses>()
+  const [course, setCourse] = useState<Course>()
 
   async function getCourseDetails() {
     const response = await fetch(`/api/courses/${courseId}`, {
@@ -65,15 +71,34 @@ export function EditCourseForm({ courseId }: EditCourseFormProps) {
             </div>
             <div className="space-y-2">
               <Label>Description</Label>
-              <Textarea />
+              <Textarea 
+                placeholder={course?.description}
+              />
             </div>
           </section>
 
           <Separator className="my-8" />
 
           <section>
-            <CardTitle>Lessons</CardTitle>
+            <CardTitle className="mb-4">Lessons</CardTitle>
           </section>
+          <div className="mb-2 space-y-4">
+            {course?.lessons.length ? (
+              <div>
+                {course?.lessons.map((lesson, index) => (
+                  <Fragment key={index}>
+                    <div className="flex items-center gap-4">
+                      <div className="grow">
+                        <h2>{lesson.name}</h2>
+                      </div>
+                    </div>
+                  </Fragment>
+                ))}
+              </div>
+            ) : (
+              <h2>No lessons.</h2>
+            )}
+          </div>
         </CardContent>
       </Card>
     </form>
