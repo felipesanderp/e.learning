@@ -100,7 +100,10 @@ export function EditCourseForm({ courseId }: EditCourseFormProps) {
                           {lesson.name}
                         </Link>
                       </div>
-                      <EditCourseLessonOperations lesson={{ id: lesson.id, name: lesson.name }} />
+                      <EditCourseLessonOperations 
+                        lesson={{ id: lesson.id, name: lesson.name }}
+                        course={course.id} 
+                      />
                     </div>
                   </div>
                 ))}

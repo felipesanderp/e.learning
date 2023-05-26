@@ -3,7 +3,7 @@
 import * as React from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { Lessons } from '@prisma/client'
+import { Courses, Lessons } from '@prisma/client'
 
 import {
   AlertDialog,
@@ -25,8 +25,15 @@ import {
 import { Icons } from "@/components/icons"
 import { Button } from '@/components/ui/button'
 
+async function removeLessonFromCourse(courseId: string, lessonId: string) {
+  const response = await fetch(`/api/courses/${courseId}/remove-lesson/${lessonId}`, {
+    method: 'PATCH',
+  })
+}
+
 interface EditCourseLessonOperationsProps {
   lesson: Pick<Lessons, "id" | "name">
+  course: Pick<Courses, "id">
 }
 
 export function EditCourseLessonOperations(
@@ -58,7 +65,7 @@ export function EditCourseLessonOperations(
             onSelect={() => setShowDeleteAlert(true)}
           >
             <Icons.trash className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
-            Delete
+            Remove
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
