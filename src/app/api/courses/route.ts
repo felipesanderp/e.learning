@@ -54,28 +54,48 @@ export async function POST(req: Request) {
     const json = await req.json()
     const body = courseCreateSchema.parse(json)
 
-    const course = await db.courses.create({
-      data: {
-        title: body.title,
-        description: body.description,
-        slug: slugify(body.title, { lower: true }),
-        imageURL: body.imageURL,
-        lessons: {
-          connect: {
-            id: body.lessonId
+    if (body.lessonId !== undefined) {
+      const course = await db.courses.create({
+        data: {
+          title: body.title,
+          description: body.description,
+          slug: slugify(body.title, { lower: true }),
+          imageURL: body.imageURL,
+          lessons: {
+            connect: {
+              id: body.lessonId
+            }
           }
+        },
+        select: {
+          id: true,
+          title: true,
+          description: true,
+          imageURL: true,
+          slug: true,
         }
-      },
-      select: {
-        id: true,
-        title: true,
-        description: true,
-        imageURL: true,
-        slug: true,
-      }
-    })
+      })
 
-    return new Response(JSON.stringify(course))
+      return new Response(JSON.stringify(course))
+    } else {
+      const course = await db.courses.create({
+        data: {
+          title: body.title,
+          description: body.description,
+          slug: slugify(body.title, { lower: true }),
+          imageURL: body.imageURL,
+        },
+        select: {
+          id: true,
+          title: true,
+          description: true,
+          imageURL: true,
+          slug: true,
+        }
+      })
+
+      return new Response(JSON.stringify(course))
+    }
   } catch (error) {
     if (error instanceof z.ZodError) {
       return new Response(JSON.stringify(error.issues), { status: 422 })

@@ -75,36 +75,64 @@ export function CreateCourseForm({ lessons }: CreateCourseFormProps) {
   async function onSubmit(data: FormData) {
     setIsSaving(true)
 
-    const response = await fetch('/api/courses', {
-      method: 'POST',
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        title: data.title,
-        description: data.description,
-        imageURL: data.imageURL,
-        lessonId: data.lessonId,
+    if (data.lessonId !== undefined) {
+      const response = await fetch('/api/courses', {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title: data.title,
+          description: data.description,
+          imageURL: data.imageURL,
+          lessonId: data.lessonId,
+        })
       })
-    })
+
+      if (!response.ok) {
+        return toast({
+          title: "Something went wrong.",
+          description: "The course was not created! Please, try again.",
+          variant: "destructive"
+        })
+      }
+
+      toast({
+        title: "Course created.",
+        description: "The course was created! Check the lessons page.",
+        variant: 'success'
+      })
+    } else {
+      const response = await fetch('/api/courses', {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title: data.title,
+          description: data.description,
+          imageURL: data.imageURL,
+        })
+      })
+
+      if (!response.ok) {
+        return toast({
+          title: "Something went wrong.",
+          description: "The course was not created! Please, try again.",
+          variant: "destructive"
+        })
+      }
+
+      toast({
+        title: "Course created.",
+        description: "The course was created! Check the lessons page.",
+        variant: 'success'
+      })
+    }
 
     setStep(1)
     form.reset()
     setIsSaving(false)
-
-    if (!response.ok) {
-      return toast({
-        title: "Something went wrong.",
-        description: "The course was not created! Please, try again.",
-        variant: "destructive"
-      })
-    }
-    
-    toast({
-      title: "Course created.",
-      description: "The course was created! Check the lessons page.",
-      variant: 'success'
-    })
     
     router.refresh()
   }
