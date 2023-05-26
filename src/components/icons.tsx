@@ -16,7 +16,8 @@ import {
   Home,
   AlertTriangle,
   Trash,
-  Pen
+  Pen,
+  MoreHorizontal
 } from "lucide-react"
 
 export type Icon = LucideIcon
@@ -39,4 +40,5 @@ export const Icons = {
   warning: AlertTriangle,
   trash: Trash,
   pen: Pen,
+  moreDots: MoreHorizontal
 }

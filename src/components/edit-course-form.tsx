@@ -1,5 +1,9 @@
 'use client'
 
+import Link from "next/link";
+import { Fragment, useState } from "react";
+import { Courses } from "@prisma/client";
+
 import { 
   Card, 
   CardContent, 
@@ -10,8 +14,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Separator } from "@/components/ui/separator";
-import { Fragment, useState } from "react";
-import { Courses } from "@prisma/client";
+import { EditCourseLessonOperations } from "./edit-course-lesson-operations";
 
 interface EditCourseFormProps {
   courseId: string
@@ -19,6 +22,7 @@ interface EditCourseFormProps {
 
 interface Course extends Courses {
   lessons: {
+    id: string
     name: string,
   }[]
 }
@@ -86,13 +90,19 @@ export function EditCourseForm({ courseId }: EditCourseFormProps) {
             {course?.lessons.length ? (
               <div>
                 {course?.lessons.map((lesson, index) => (
-                  <Fragment key={index}>
-                    <div className="flex items-center gap-4">
-                      <div className="grow">
-                        <h2>{lesson.name}</h2>
+                  <div key={index} className="divide-y divide-border rounded-md border">
+                    <div  className="flex items-center justify-between p-2">
+                      <div className="grid gap-1">
+                        <Link
+                          href="/dashboard/lessons"
+                          className="font-semibold hover:underline"
+                        >
+                          {lesson.name}
+                        </Link>
                       </div>
+                      <EditCourseLessonOperations lesson={{ id: lesson.id, name: lesson.name }} />
                     </div>
-                  </Fragment>
+                  </div>
                 ))}
               </div>
             ) : (
