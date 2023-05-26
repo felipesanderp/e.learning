@@ -10,6 +10,7 @@ import { lessonCreateSchema } from '@/lib/validations/lesson'
 import { MultiStep } from '@ignite-ui/react'
 import { Button, buttonVariants } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import {
   Sheet,
@@ -53,7 +54,6 @@ export function CreateLessonForm() {
     defaultValues: {
       name: '',
       description: '',
-      duration: 0,
       video_id: '',
     }
   })
@@ -75,7 +75,7 @@ export function CreateLessonForm() {
       case 1:
         return (
           <div className="flex flex-col space-y-6">
-            <MultiStep size={5} currentStep={step} />
+            <MultiStep size={4} currentStep={step} />
             <div className="flex flex-col items-start space-y-4">
               <p className="text-md font-semibold text-slate-900 dark:text-slate-50">
                 Vamos começar definindo o titulo dessa aula.
@@ -84,9 +84,100 @@ export function CreateLessonForm() {
               <Input 
                 {...form.register('name')}
               />
+              {form.formState.errors.name && (
+                <p className="text-sm font-medium text-destructive">
+                  {form.formState.errors.name.message}
+                </p>
+              )}
+              <Button
+                type="button"
+                disabled={form.formState.errors.name ? true : false} 
+                onClick={nextStep}
+              >
+                Avançar
+              </Button>
             </div>
           </div>
         )
+      case 2:
+        return (
+          <div className="flex flex-col space-y-6">
+            <MultiStep size={4} currentStep={step} />
+            <div className="flex flex-col items-start space-y-4">
+              <p className="text-md font-semibold text-slate-900 dark:text-slate-50">
+                Adicione uma descrição para essa aula.
+              </p>
+              <Label htmlFor="description" className="text-right">Descrição</Label>
+              <Textarea  
+                {...form.register('description')}
+              />
+              {form.formState.errors.description && (
+                <p className="text-sm font-medium text-destructive">
+                  {form.formState.errors.description.message}
+                </p>
+              )}
+              <div className="flex items-center gap-4">
+                <Button onClick={prevStep}>Voltar</Button>
+                <Button
+                  type="button"
+                  disabled={form.formState.errors.description ? true : false} 
+                  onClick={nextStep}
+                >
+                  Avançar
+                </Button>
+              </div>
+            </div>
+          </div>
+        )
+      case 3:
+        return (
+          <div className="flex flex-col space-y-6">
+            <MultiStep size={4} currentStep={step}/>
+            <div className="flex flex-col items-start space-y-4">
+              <p className="text-md font-semibold text-slate-900 dark:text-slate-50">
+                Qual o link do vídeo dessa aula?
+              </p>
+              <Label htmlFor="video_id" className="text-right">Link</Label>
+              <Input
+                {...form.register('video_id')}
+              />
+              {form.formState.errors.video_id && (
+                <p className="text-sm font-medium text-destructive">
+                  {form.formState.errors.video_id.message}
+                </p>
+              )}
+              <div className="flex items-center gap-4">
+                <Button onClick={prevStep}>Voltar</Button>
+                <Button
+                  type="button"
+                  disabled={form.formState.errors.video_id ? true : false} 
+                  onClick={nextStep}
+                >
+                  Avançar
+                </Button>
+              </div>
+            </div>
+          </div>
+        )
+      case 4:
+        return (
+          <div>
+            <h1>{form.getValues('name')}</h1>
+            <h1>{form.getValues('description')}</h1>
+            <h1>{form.getValues('video_id')}</h1>
+            <Button 
+              type="submit"
+              disabled={isSaving}
+            >
+              {isSaving && (
+                <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+              )}
+              Enviar
+            </Button>
+          </div>
+        )
+      default:
+        return null
     }
   }
 
