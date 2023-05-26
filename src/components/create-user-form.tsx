@@ -89,8 +89,6 @@ export function CreateUserForm() {
     setStep(1)
     form.reset()
     setIsSaving(false)
-  
-    console.log(response.status)
     
     if (!response.ok) {
       return toast({
