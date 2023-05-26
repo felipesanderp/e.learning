@@ -7,12 +7,12 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
 import { roles, status } from "../data/data"
-import { User } from "../data/schema"
+import { Lesson } from "../data/schema"
 import { DataTableColumnHeader } from "./data-table-column-header"
 import { DataTableRowActions } from "./data-table-row-actions"
 import { Icons } from "@/components/icons"
 
-export const columns: ColumnDef<User>[] = [
+export const columns: ColumnDef<Lesson>[] = [
   // {
   //   id: "select",
   //   header: ({ table }) => (
@@ -41,13 +41,6 @@ export const columns: ColumnDef<User>[] = [
     ),
     cell: ({ row }) => <div className="w-[80px]">{row.getValue("name")}</div>,
     enableHiding: false,
-  },
-  {
-    accessorKey: "duration",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Duration" />
-    ),
-    cell: ({ row }) => <div className="w-[80px]">{row.getValue("duration")}</div>,
   },
   {
     accessorKey: "description",
