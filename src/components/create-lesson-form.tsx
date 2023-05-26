@@ -67,7 +67,39 @@ export function CreateLessonForm() {
   }
 
   async function onSubmit(data: FormData) {
-    console.log(data)
+    setIsSaving(true)
+
+    const response = await fetch('/api/lessons', {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: data.name,
+        description: data.description,
+        video_id: data.video_id,
+      })
+    })
+
+    setStep(1)
+    form.reset()
+    setIsSaving(false)
+
+    if (!response.ok) {
+      return toast({
+        title: "Something went wrong.",
+        description: "The lesson was not created! Please, try again.",
+        variant: "destructive"
+      })
+    }
+    
+    toast({
+      title: "Lesson created.",
+      description: "The lesson was created! Check the lessons page.",
+      variant: 'success'
+    })
+    
+    router.refresh()
   }
 
   const formStep = () => {
