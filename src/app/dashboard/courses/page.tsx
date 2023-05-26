@@ -6,6 +6,7 @@ import { DashboardShell } from "@/components/shell";
 import { getCurrentUser } from "@/lib/session";
 import { CreateCourse } from "@/components/create-course";
 import { CoursesCard } from "@/components/courses-card";
+import { CreateCourseForm } from "@/components/create-course-form";
 
 export const metadata = {
   title: 'Courses | e.learning',
@@ -27,6 +28,13 @@ export default async function CoursesPage() {
       slug: true,
     },
   })
+
+  const lessons = await db.lessons.findMany({
+    select: {
+      id: true,
+      name: true,
+    }
+  })
   
   return (
     <DashboardShell>
@@ -35,7 +43,9 @@ export default async function CoursesPage() {
         text={user?.role === "ADMIN" || user?.role === 'PROFESSOR' ? "Create and manage courses." : "See the available courses."}
       >
         {user?.role === 'ADMIN' || user?.role === 'PROFESSOR' ?
-          <CreateCourse /> : ''
+          <CreateCourseForm 
+            lessons={lessons}
+          /> : ''
         }
       </DashboardHeader>
       

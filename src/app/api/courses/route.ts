@@ -9,6 +9,7 @@ const courseCreateSchema = z.object({
   title: z.string(),
   description: z.string(),
   imageURL: z.string(),
+  lessonId: z.string().optional()
 })
 
 export async function GET() {
@@ -59,6 +60,11 @@ export async function POST(req: Request) {
         description: body.description,
         slug: slugify(body.title, { lower: true }),
         imageURL: body.imageURL,
+        lessons: {
+          connect: {
+            id: body.lessonId
+          }
+        }
       },
       select: {
         id: true,
