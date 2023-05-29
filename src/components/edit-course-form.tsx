@@ -93,7 +93,7 @@ export function EditCourseForm({ courseId }: EditCourseFormProps) {
             </section>
             <div className="mb-2 space-y-4">
               {course?.lessons.length ? (
-                <div>
+                <div className="space-y-2">
                   {course?.lessons.map((lesson, index) => (
                     <div key={index} className="divide-y divide-border rounded-md border">
                       <div  className="flex items-center justify-between p-2">
