@@ -15,6 +15,8 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Separator } from "@/components/ui/separator";
 import { EditCourseLessonOperations } from "./edit-course-lesson-operations";
+import { Button } from "@/components/ui/button";
+import { Icons } from "@/components/icons";
 
 interface EditCourseFormProps {
   courseId: string
@@ -112,6 +114,14 @@ export function EditCourseForm({ courseId }: EditCourseFormProps) {
               <h2>No lessons.</h2>
             )}
           </div>
+          <Button
+            type="button"
+            variant="link"
+            className="border-none text-blue-600"
+          >
+            <Icons.add className="h-4 w-4" />
+            Add item
+          </Button>
         </CardContent>
       </Card>
     </form>
