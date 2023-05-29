@@ -70,16 +70,15 @@ export function CoursesCard({ course, user }: CoursesCardProps) {
 
   return (
     <ContextMenu>
-      <Card className="w-[300px]">
+      <Card className="mx-auto flex w-[25rem] flex-col overflow-hidden rounded-xl shadow-xl shadow-gray-400 transition-all duration-300 hover:scale-[1.05] hover:shadow-2xl dark:shadow-black">
         <CardHeader className="p-2">
         <ContextMenuTrigger>
-          <div className="relative rounded-md border w-full h-[150px]">
+          <div className="relative h-60">
             <Image 
               src={course.imageURL}
               alt={course.title}
               fill
-              quality={50}
-              className="rounded-md"
+              style={{ objectFit: 'cover' }}
             />
           </div>
         </ContextMenuTrigger>

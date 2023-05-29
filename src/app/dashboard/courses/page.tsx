@@ -49,7 +49,7 @@ export default async function CoursesPage() {
         }
       </DashboardHeader>
       
-      <div className="container grid gap-y-4 w-full lg:grid-cols-4">
+      <div className="container grid w-full grid-cols-1 gap-x-4 gap-y-32 md:grid-cols-3 xl:grid-cols-3">
         {courses.map((course) => (
           <CoursesCard 
             key={course.id}
