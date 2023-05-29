@@ -36,9 +36,7 @@ export async function PATCH(
       },
       data: {
         lessons: {
-          disconnect: {
-            id: params.lessonId,
-          },
+          disconnect: [{ id: params.lessonId }]
         }
       }
     })

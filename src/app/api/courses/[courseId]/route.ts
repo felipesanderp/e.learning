@@ -41,6 +41,7 @@ export async function GET(
         description: true,
         lessons: {
           select: {
+            id: true,
             name: true,
           }
         }

@@ -27,7 +27,7 @@ import { Button } from '@/components/ui/button'
 import { toast } from '@/hooks/use-toast'
 
 async function removeLessonFromCourse(courseId: string, lessonId: string) {
-  const response = await fetch(`/api/courses/${courseId}/remove-lesson/${lessonId}`, {
+  const response = await fetch(`/api/courses/${courseId}/remove-lesson/${lessonId}/`, {
     method: 'PATCH',
   })
 
@@ -43,7 +43,7 @@ async function removeLessonFromCourse(courseId: string, lessonId: string) {
 }
 
 interface EditCourseLessonOperationsProps {
-  lesson: Pick<Lessons, "id" | "name">
+  lesson: Pick<Lessons, "id" | 'name'>
   courseId: string
 }
 
