@@ -1,7 +1,7 @@
 'use client'
 
 import Link from "next/link";
-import { Fragment, useState } from "react";
+import { useState } from "react";
 import { Courses } from "@prisma/client";
 
 import { 
@@ -17,6 +17,7 @@ import { Separator } from "@/components/ui/separator";
 import { EditCourseLessonOperations } from "./edit-course-lesson-operations";
 import { Button } from "@/components/ui/button";
 import { Icons } from "@/components/icons";
+import { AddLessonToCourse } from "./add-lesson-to-course-form";
 
 interface EditCourseFormProps {
   courseId: string
@@ -31,6 +32,7 @@ interface Course extends Courses {
 
 export function EditCourseForm({ courseId }: EditCourseFormProps) {
   const [course, setCourse] = useState<Course>()
+  const [showAddLessonAlert, setShowAddLessonAlert] = useState<boolean>(false)
 
   async function getCourseDetails() {
     const response = await fetch(`/api/courses/${courseId}`, {
@@ -45,85 +47,94 @@ export function EditCourseForm({ courseId }: EditCourseFormProps) {
   getCourseDetails()
 
   return (
-    <form className="grid grid-cols-1 gap-4 md:grid-cols-6">
-      <Card className="md:col-span-6">
-        <CardHeader>
-          <CardTitle>Details</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <section className="space-y-4">
-            <div className="grid grid-cols-2 items-end gap-6">
+    <>
+      <form className="grid grid-cols-1 gap-4 md:grid-cols-6">
+        <Card className="md:col-span-6">
+          <CardHeader>
+            <CardTitle>Details</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <section className="space-y-4">
+              <div className="grid grid-cols-2 items-end gap-6">
+                <div className="space-y-2">
+                  <Label>Title</Label>
+                  <Input 
+                    type="text"
+                    placeholder={course?.title}
+                  />
+                </div>
+                <div className="grid gap-1 space-y-2">
+                  <Label>Slug</Label>
+                  <Input 
+                    disabled
+                    placeholder={course?.slug}
+                  />
+                </div>
+              </div>
               <div className="space-y-2">
-                <Label>Title</Label>
+                <Label>Image</Label>
                 <Input 
                   type="text"
-                  placeholder={course?.title}
+                  placeholder={course?.imageURL}
                 />
               </div>
-              <div className="grid gap-1 space-y-2">
-                <Label>Slug</Label>
-                <Input 
-                  disabled
-                  placeholder={course?.slug}
+              <div className="space-y-2">
+                <Label>Description</Label>
+                <Textarea 
+                  placeholder={course?.description}
                 />
               </div>
-            </div>
-            <div className="space-y-2">
-              <Label>Image</Label>
-              <Input 
-                type="text"
-                placeholder={course?.imageURL}
-              />
-            </div>
-            <div className="space-y-2">
-              <Label>Description</Label>
-              <Textarea 
-                placeholder={course?.description}
-              />
-            </div>
-          </section>
+            </section>
 
-          <Separator className="my-8" />
+            <Separator className="my-8" />
 
-          <section>
-            <CardTitle className="mb-4">Lessons</CardTitle>
-          </section>
-          <div className="mb-2 space-y-4">
-            {course?.lessons.length ? (
-              <div>
-                {course?.lessons.map((lesson, index) => (
-                  <div key={index} className="divide-y divide-border rounded-md border">
-                    <div  className="flex items-center justify-between p-2">
-                      <div className="grid gap-1">
-                        <Link
-                          href="/dashboard/lessons"
-                          className="font-semibold hover:underline"
-                        >
-                          {lesson.name}
-                        </Link>
+            <section>
+              <CardTitle className="mb-4">Lessons</CardTitle>
+            </section>
+            <div className="mb-2 space-y-4">
+              {course?.lessons.length ? (
+                <div>
+                  {course?.lessons.map((lesson, index) => (
+                    <div key={index} className="divide-y divide-border rounded-md border">
+                      <div  className="flex items-center justify-between p-2">
+                        <div className="grid gap-1">
+                          <Link
+                            href="/dashboard/lessons"
+                            className="font-semibold hover:underline"
+                          >
+                            {lesson.name}
+                          </Link>
+                        </div>
+                        <EditCourseLessonOperations 
+                          lesson={{ id: lesson.id, name: lesson.name }}
+                          courseId={courseId} 
+                        />
                       </div>
-                      <EditCourseLessonOperations 
-                        lesson={{ id: lesson.id, name: lesson.name }}
-                        courseId={courseId} 
-                      />
                     </div>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <h2>No lessons.</h2>
-            )}
-          </div>
-          <Button
-            type="button"
-            variant="link"
-            className="border-none text-blue-600"
-          >
-            <Icons.add className="h-4 w-4" />
-            Add item
-          </Button>
-        </CardContent>
-      </Card>
-    </form>
+                  ))}
+                </div>
+              ) : (
+                <h2>No lessons.</h2>
+              )}
+            </div>
+            <Button
+              type="button"
+              variant="link"
+              className="border-none text-blue-600"
+              onClick={() => setShowAddLessonAlert(true)}
+            >
+              <Icons.add className="h-4 w-4" />
+              Add Lesson
+            </Button>
+          </CardContent>
+        </Card>
+      </form>
+      
+      <AddLessonToCourse 
+        courseId={courseId}
+        setShowAddLessonAlert={setShowAddLessonAlert}
+        showAddLessonAlert={showAddLessonAlert}
+      />
+    </>
   )
 }

@@ -1,16 +1,14 @@
 "use client"
 
 import * as React from 'react'
-import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { Courses, Lessons } from '@prisma/client'
+import { Lessons } from '@prisma/client'
 
 import {
   AlertDialog,
   AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
-  AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
@@ -81,6 +79,7 @@ export function EditCourseLessonOperations(
         </DropdownMenuContent>
       </DropdownMenu>
 
+    {/* alert dialog to remove lesson from course*/}
       <AlertDialog open={showRemoveAlert} onOpenChange={setShowRemoveAlert}>
         <AlertDialogContent>
           <AlertDialogHeader>
