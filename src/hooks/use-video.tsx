@@ -5,7 +5,7 @@ import videojs from 'video.js';
 import 'video.js/dist/video-js.css';
 import 'videojs-youtube';
 
-export const VideoPlayer: React.FC<{ videoUrl: string }> = ({ videoUrl }) => {
+export const VideoPlayer: React.FC<{ videoUrl: string | undefined }> = ({ videoUrl }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
