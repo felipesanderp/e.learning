@@ -41,40 +41,40 @@ export async function GET(
   }
 }
 
-// export async function DELETE(
-//   req: Request,
-//   context: z.infer<typeof routeContextSchema>
-// ) {
-//   try {
-//     const { params } = routeContextSchema.parse(context)
+export async function DELETE(
+  req: Request,
+  context: z.infer<typeof routeContextSchema>
+) {
+  try {
+    const { params } = routeContextSchema.parse(context)
 
-//     const session = await getServerSession(authOptions)
+    const session = await getServerSession(authOptions)
 
-//     if (!session) {
-//       return new Response("Unauthorized", { status: 403 })
-//     }
+    if (!session) {
+      return new Response("Unauthorized", { status: 403 })
+    }
 
-//     const { user } = session
+    const { user } = session
 
-//     if (user.role !== 'ADMIN' && user.role !== 'PROFESSOR') {
-//       return new Response("Unauthorized", { status: 403 })
-//     }
+    if (user.role !== 'ADMIN' && user.role !== 'PROFESSOR') {
+      return new Response("Unauthorized", { status: 403 })
+    }
+    
+    await db.lessons.delete({
+      where: {
+        slug: params.lessonSlug,
+      },
+    })
 
-//     await db.courses.delete({
-//       where: {
-//         id: params.courseId as string,
-//       },
-//     })
+    return new Response(null, { status: 204 })
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      return new Response(JSON.stringify(error.issues), { status: 422 })
+    }
 
-//     return new Response(null, { status: 204 })
-//   } catch (error) {
-//     if (error instanceof z.ZodError) {
-//       return new Response(JSON.stringify(error.issues), { status: 422 })
-//     }
-
-//     return new Response(null, { status: 500 })
-//   }
-// }
+    return new Response(null, { status: 500 })
+  }
+}
 
 // export async function PATCH(
 //   req: Request,

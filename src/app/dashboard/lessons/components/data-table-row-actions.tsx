@@ -25,8 +25,8 @@ import {
 import { toast } from '@/hooks/use-toast'
 import { Icons } from '@/components/icons'
 
-async function deleteLesson(lessonId: string) {
-  const response = await fetch(`/api/lesson/${lessonId}`, {
+async function deleteLesson(lessonSlug: string) {
+  const response = await fetch(`/api/lessons/${lessonSlug}`, {
     method: 'DELETE',
   })
 
@@ -103,7 +103,7 @@ export function DataTableRowActions<TData>({
                 setIsDeleteLoading(true)
             
                 // @ts-expect-error
-                const deleted = await deleteLesson(row.original.id)
+                const deleted = await deleteLesson(row.original.slug)
 
                 if(deleted) {
                   setIsDeleteLoading(false)

@@ -26,6 +26,7 @@ export default async function LessonsPage() {
       id: true,
       name: true,
       description: true,
+      slug: true,
     },
     orderBy: {
       name: 'asc',
