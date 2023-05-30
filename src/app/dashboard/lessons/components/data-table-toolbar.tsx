@@ -39,13 +39,13 @@ export function DataTableToolbar<TData>({
             options={roles}
           />
         )} */}
-        {table.getColumn("isActive") && (
+        {/* {table.getColumn("isActive") && (
           <DataTableFacetedFilter
             column={table.getColumn("isActive")}
             title="Status"
             options={status}
           />
-        )}
+        )} */}
         {isFiltered && (
           <Button
             variant="ghost"
