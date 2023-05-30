@@ -6,6 +6,7 @@ import { Overview } from "@/components/overview";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { AdminAnalytics } from "@/components/admin/analytics";
+import { LatestCreatedUsers } from "@/components/admin/latest-created-users";
 
 export const metadata = {
   title: 'Dashboard | e.learning',
@@ -47,16 +48,20 @@ export default async function DashboardPage() {
                 <Overview />
               </CardContent>
             </Card>
-            <Card className="col-span-3">
-              <CardHeader>
-                <CardTitle>
-                  My Courses
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <MyCourses />
-              </CardContent>
-            </Card>
+
+            {user.role === 'ADMIN' || user.role === 'PROFESSOR' ? (
+              <Card className="col-span-3">
+                <CardHeader>
+                  <CardTitle>
+                    Latest created users
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <LatestCreatedUsers />
+                </CardContent>
+              </Card>
+            ): ''}
+
           </div>
 
         </TabsContent>
