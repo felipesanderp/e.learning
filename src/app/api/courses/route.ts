@@ -27,6 +27,11 @@ export async function GET() {
         description: true,
         imageURL: true,
         slug: true,
+        lessons: {
+          select: {
+            id: true,
+          }
+        }
       }
     })
 

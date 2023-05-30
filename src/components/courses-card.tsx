@@ -4,7 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { Courses, User } from '@prisma/client';
+import { Courses, Lessons, User } from '@prisma/client';
 
 import { 
   Card, 
@@ -60,10 +60,11 @@ async function deleteCourse(courseId: string) {
 
 interface CoursesCardProps {
   course: Pick<Courses, "id" | "title" | "imageURL" | "description" | "slug">
+  lesson: Pick<Lessons, "id">[]
   user: Pick<User, "role">
 }
 
-export function CoursesCard({ course, user }: CoursesCardProps) {
+export function CoursesCard({ course, lesson, user }: CoursesCardProps) {
   const router = useRouter()
   const [showDeleteAlert, setShowDeleteAlert] = useState<boolean>(false)
   const [isDeleteLoading, setIsDeleteLoading] = useState<boolean>(false)
@@ -87,7 +88,7 @@ export function CoursesCard({ course, user }: CoursesCardProps) {
           </CardTitle>
 
           <CardDescription>
-            Lessons
+            {lesson.length} Lessons
           </CardDescription>
         </CardHeader>
 

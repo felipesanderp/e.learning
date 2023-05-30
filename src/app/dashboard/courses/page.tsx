@@ -26,6 +26,11 @@ export default async function CoursesPage() {
       description: true,
       imageURL: true,
       slug: true,
+      lessons: {
+        select: {
+          id: true
+        }
+      }
     },
   })
 
@@ -54,6 +59,7 @@ export default async function CoursesPage() {
           <CoursesCard 
             key={course.id}
             course={course}
+            lesson={course.lessons}
             user={user}
           />
         ))}
