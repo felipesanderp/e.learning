@@ -1,11 +1,39 @@
+'use client'
+
+import { useState, useEffect } from 'react'
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-interface AdminAnalyticsProps {
-  totalStudents: number
-  totalProfessors: number
-}
+export function AdminAnalytics() {
+  const [totalStudents, setTotalStudents] = useState()
+  const [totalProfessors, setTotalProfessors] = useState()
 
-export function AdminAnalytics({ totalStudents, totalProfessors }:AdminAnalyticsProps ) {
+  useEffect(() => {
+    async function getTotalStudents() {
+      const response = await fetch('/api/users/total-students', {
+        method: 'GET',
+        next: { revalidate: 3600 }
+      })
+
+      setTotalStudents(await response.json())
+    }
+
+    getTotalStudents()
+  }, [])
+
+  useEffect(() => {
+    async function getTotalProfessors() {
+      const response = await fetch('/api/users/total-professors', {
+        method: 'GET',
+        next: { revalidate: 3600 }
+      })
+
+      setTotalProfessors(await response.json())
+    }
+
+    getTotalProfessors()
+  }, [])
+
   return (
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
       <Card>

@@ -6,7 +6,6 @@ import { Overview } from "@/components/overview";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { AdminAnalytics } from "@/components/admin/analytics";
-import { db } from "@/lib/db";
 
 export const metadata = {
   title: 'Dashboard | e.learning',
@@ -18,18 +17,6 @@ export default async function DashboardPage() {
   if (!user) {
     redirect("/")
   }
-
-  const totalStudents = await db.user.count({
-    where: {
-      role: 'STUDENT'
-    }
-  })
-
-  const totalProfessors = await db.user.count({
-    where: {
-      role: 'PROFESSOR'
-    }
-  })
 
   return (
     <div className="flex-1 space-y-4 p-8 pt-6">
@@ -45,10 +32,7 @@ export default async function DashboardPage() {
         <TabsContent value="overview" className="space-y-4">
           <div>
             {user.role === "ADMIN" || user.role === "PROFESSOR" ? (
-              <AdminAnalytics
-              totalStudents={totalStudents}
-              totalProfessors={totalProfessors}
-              />
+              <AdminAnalytics />
             ): ''}
           </div>
 
