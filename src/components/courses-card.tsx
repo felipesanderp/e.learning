@@ -93,12 +93,12 @@ export function CoursesCard({ course, lesson, user }: CoursesCardProps) {
         </CardHeader>
 
         <ScrollArea className="h-[72px]">
-          <CardContent>
+          <CardContent className='p-2'>
             <p>{course.description}</p>
           </CardContent>
         </ScrollArea>
 
-        <CardFooter className="justify-between p-4">
+        <CardFooter className="justify-between p-2">
           <div className="flex items-center gap-2">
             <Avatar>
               <AvatarImage alt="" src='https://github.com/diego3g.png'/>
