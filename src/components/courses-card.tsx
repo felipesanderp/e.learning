@@ -114,7 +114,7 @@ export function CoursesCard({ course, user }: CoursesCardProps) {
               </Button>
             </Link> 
           ): (
-            <Link href={`/dashboard/courses/${course.slug}`}>
+            <Link href={`/dashboard/courses/${course.id}`}>
               <Button>
                 Acessar
               </Button>
