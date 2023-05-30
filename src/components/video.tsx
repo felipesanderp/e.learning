@@ -79,13 +79,16 @@ export function Video({ lessonSlug }: VideoProps) {
         </div>
 
         <div className="gap-8 mt-20 grid grid-cols-2">
-          <a href="#" className="bg-gray-700 rounded overflow-hidden flex items-stretch gap-6 hover:bg-gray-600 transition-colors">
+          <a 
+            href="#" 
+            className="bg-accent rounded overflow-hidden flex items-stretch gap-6 transition-colors border border-accent-foreground hover:bg-card"
+          >
             <div className="bg-green-700 h-full p-6 flex items-center">
-              <File />
+              <File className="stroke-accent" />
             </div>
             <div className="py-6 leading-relaxed">
-              <strong className="text-2xl text-secondary">Material Complementar</strong>
-              <p className="text-sm text-gray-200 mt-2">
+              <strong className="text-2xl text-primary">Material Complementar</strong>
+              <p className="text-sm text-primary/80 mt-2">
                 Acesse o material complementar para acelerar o seu desenvolvimento
               </p>
             </div>
@@ -94,13 +97,16 @@ export function Video({ lessonSlug }: VideoProps) {
             </div>
           </a>
 
-          <a href="#" className="bg-gray-700 rounded overflow-hidden flex items-stretch gap-6 hover:bg-gray-600 transition-colors">
+          <a 
+            href="#" 
+            className="bg-accent rounded overflow-hidden flex items-stretch gap-6 transition-colors border border-accent-foreground hover:bg-card"
+          >
             <div className="bg-green-700 h-full p-6 flex items-center">
-              <File />
+              <File className="stroke-accent" />
             </div>
             <div className="py-6 leading-relaxed">
-              <strong className="text-2xl text-secondary">Material Complementar</strong>
-              <p className="text-sm text-gray-200 mt-2">
+              <strong className="text-2xl text-primary">Material Complementar</strong>
+              <p className="text-sm text-primary/80 mt-2">
                 Acesse o material complementar para acelerar o seu desenvolvimento
               </p>
             </div>
