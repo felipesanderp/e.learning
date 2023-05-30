@@ -90,6 +90,7 @@ model Lessons {
   id String @id @default(cuid())
 
   name        String @unique
+  slug        String @unique
   description String
   video_id    String
 

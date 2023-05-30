@@ -1,5 +1,6 @@
 import { getServerSession } from 'next-auth/next'
 import * as z from 'zod'
+import slugify from 'slugify'
 
 import { lessonCreateSchema } from "@/lib/validations/lesson"
 import { authOptions } from '@/lib/auth'
@@ -23,6 +24,7 @@ export async function GET() {
       select: {
         id: true,
         name: true,
+        slug: true,
         description: true,
         video_id: true,
       }
@@ -54,12 +56,14 @@ export async function POST(req: Request) {
     const lesson = await db.lessons.create({
       data: {
         name: body.name,
+        slug: slugify(body.slug, { lower: true }),
         description: body.description,
         video_id: body.video_id,
       },
       select: {
         id: true,
         name: true,
+        slug: true,
         description: true,
         video_id: true,
       }
