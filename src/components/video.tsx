@@ -1,13 +1,41 @@
-import { VideoPlayer } from '@/hooks/use-video'
-import { ArrowRight, File, Lightbulb, Slack } from 'lucide-react'
+'use client'
+
+import { useEffect, useState } from 'react'
 import Image from 'next/image'
 
-export function Video() {
+import { VideoPlayer } from '@/hooks/use-video'
+import { ArrowRight, File, Lightbulb, Slack } from 'lucide-react'
+
+type Lesson = {
+  id: string
+  name: string
+  description: string
+  video_id: string
+}
+
+interface VideoProps {
+  lessonSlug: string
+}
+
+export function Video({ lessonSlug }: VideoProps) {
+  const [lesson, setLesson] = useState<Lesson>()
+
+  useEffect(() => {
+    async function getLesson() {
+      const response = await fetch(`/api/lessons/${lessonSlug}`, {
+        method: 'GET',
+      })
+        
+     setLesson(await response.json())
+    }
+    getLesson()
+  }, [lessonSlug])
+
   return (
     <div className="flex-1">
       <div className="flex justify-center">
         <div className="h-full w-full max-w-[1100px] max-h-[60vh] aspect-video">
-          <VideoPlayer key="1" videoUrl="https://www.youtube.com/watch?v=3He7tLmtyrg" />
+          {lesson && <VideoPlayer key="1" videoUrl={lesson.video_id} />}
         </div>
       </div>
 
@@ -15,10 +43,10 @@ export function Video() {
         <div className="flex items-start gap-16">
           <div className="flex-1">
             <h1 className="text-2xl font-bold">
-              ReactJS
+              {lesson?.name}
             </h1>
             <p className="mt-4 text-primary leading-relaxed">
-              ReactJS Course for people who want to dominate the new tools of the front-end development.
+              {lesson?.description}
             </p>
 
             <div className="flex items-center gap-4 mt-6">

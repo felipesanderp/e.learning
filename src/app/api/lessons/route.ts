@@ -56,7 +56,7 @@ export async function POST(req: Request) {
     const lesson = await db.lessons.create({
       data: {
         name: body.name,
-        slug: slugify(body.slug, { lower: true }),
+        slug: slugify(body.name, { lower: true }),
         description: body.description,
         video_id: body.video_id,
       },

@@ -1,10 +1,24 @@
-import { Circle } from "lucide-react";
-import Link from "next/link";
+'use client'
 
-export function LessonCard() {
+import { Circle } from "lucide-react";
+import { useRouter } from "next/navigation";
+
+interface LessonCard {
+  name: string
+  slug: string
+  courseId: string
+}
+
+export function LessonCard({ name, slug, courseId }: LessonCard) {
+  const router = useRouter()
+  
+  const handleClick = (courseId: string, slug: string) => {
+    router.push(`/dashboard/courses/${courseId}/${slug}`)
+  }
+
   return (
     <div>
-      <Link href='#' className="group">
+      <button className="group" onClick={() => handleClick(courseId, slug)}>
         <div className="rounded border border-gray-500 p-4 mt-2 group-hover:border-green-500">
           <header className="flex items-center justify-between">
             <span className="text-sm font-medium flex items-center gap-2">
@@ -14,10 +28,10 @@ export function LessonCard() {
           </header>
 
           <strong className="mt-5 block">
-            Titulo da Aula
+            {name}
           </strong>
         </div>
-      </Link>
+      </button>
     </div>
   )
 }
