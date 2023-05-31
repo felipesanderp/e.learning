@@ -44,10 +44,16 @@ export function UserInfoForm({ user, className, ...props }: UserInfoFormProps) {
     defaultValues: {
       name: user?.name || "",
       email: user?.email || "",
-      image: user?.image || "",
+      image: user?.image || ''
     },
   })
   const [isSaving, setIsSaving] = React.useState<boolean>(false)
+
+  async function handleFile(e: React.ChangeEvent<HTMLInputElement>) {
+    if (e.target.files) {
+      console.log(e.target.files[0])
+    }
+  }
 
   async function onSubmit(data: FormData) {
     setIsSaving(true)
@@ -60,7 +66,7 @@ export function UserInfoForm({ user, className, ...props }: UserInfoFormProps) {
       body: JSON.stringify({
         name: data.name,
         email: data.email,
-        image: data.image,
+        image: data.image
       }),
     })
 
@@ -128,10 +134,10 @@ export function UserInfoForm({ user, className, ...props }: UserInfoFormProps) {
             </Label>
             <Input
               id="image"
-              type="text"
+              type="file"
               className="w-[400px]"
               size={32}
-              {...register("image")}
+              onChange={(e) => handleFile(e)}
             />
             {/* {errors?.name && (
               <p className="px-1 text-xs text-red-600">{errors.name.message}</p>
