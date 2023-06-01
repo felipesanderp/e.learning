@@ -49,12 +49,6 @@ export function UserInfoForm({ user, className, ...props }: UserInfoFormProps) {
   })
   const [isSaving, setIsSaving] = React.useState<boolean>(false)
 
-  async function handleFile(e: React.ChangeEvent<HTMLInputElement>) {
-    if (e.target.files) {
-      console.log(e.target.files[0])
-    }
-  }
-
   async function onSubmit(data: FormData) {
     setIsSaving(true)
 
@@ -134,10 +128,10 @@ export function UserInfoForm({ user, className, ...props }: UserInfoFormProps) {
             </Label>
             <Input
               id="image"
-              type="file"
+              type="text"
               className="w-[400px]"
               size={32}
-              onChange={(e) => handleFile(e)}
+              {...register('image')}
             />
             {/* {errors?.name && (
               <p className="px-1 text-xs text-red-600">{errors.name.message}</p>
