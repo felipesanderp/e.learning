@@ -53,12 +53,19 @@ export async function POST(req: Request) {
     const json = await req.json()
     const body = lessonCreateSchema.parse(json)
 
+    console.log(body)
+
     const lesson = await db.lessons.create({
       data: {
         name: body.name,
         slug: slugify(body.name, { lower: true }),
         description: body.description,
         video_id: body.video_id,
+        user: {
+          connect: {
+            id: body.user_id
+          }
+        }
       },
       select: {
         id: true,
@@ -66,6 +73,12 @@ export async function POST(req: Request) {
         slug: true,
         description: true,
         video_id: true,
+        user: {
+          select: {
+            id: true,
+            image: true,
+          }
+        }
       }
     })
 

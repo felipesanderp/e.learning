@@ -32,6 +32,16 @@ export default async function LessonsPage() {
       name: 'asc',
     }
   })
+
+  const professors = await db.user.findMany({
+    where: {
+      role: 'PROFESSOR',
+    },
+    select: {
+      id: true,
+      name: true,
+    }
+  })
   
   return (
     <DashboardShell>
@@ -40,7 +50,9 @@ export default async function LessonsPage() {
         text='Create and manage lessons.'
       >
         {user?.role === 'ADMIN' || user?.role === 'PROFESSOR' ?
-          <CreateLessonForm /> : ''
+          <CreateLessonForm 
+            professors={professors}
+          /> : ''
         }
       </DashboardHeader>
         <DataTable data={lessons} columns={columns}/>
