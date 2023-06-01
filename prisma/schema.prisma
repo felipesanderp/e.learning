@@ -50,9 +50,10 @@ model User {
   isActive      String    @default("true")
   role          ROLE      @default(STUDENT)
 
-  accounts    Account[]
-  sessions    Session[]
-  enrollments Enrollment[]
+  accounts        Account[]
+  sessions        Session[]
+  enrollments     Enrollment[]
+  lessonProfessor Lessons[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
@@ -100,10 +101,14 @@ model Lessons {
   course   Courses? @relation(fields: [courseId], references: [id], onDelete: Cascade)
   courseId String?
 
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
 
   @@index([courseId])
+  @@index([userId])
   @@map("lessons")
 }
 
