@@ -117,7 +117,7 @@ export async function PATCH(
       },
       data: {
         title: body.title,
-        slug: slugify(body.title!!),
+        slug: slugify(body.title!!, { lower: true }),
         description: body.description,
         imageURL: body.imageURL,
       }
