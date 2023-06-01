@@ -31,7 +31,13 @@ export async function GET(
         name: true,
         slug: true,
         description: true,
-        video_id: true
+        video_id: true,
+        user: {
+          select: {
+            name: true,
+            image: true,
+          }
+        }
       }
     })
 
