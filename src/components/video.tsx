@@ -1,16 +1,21 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import Image from 'next/image'
 
 import { VideoPlayer } from '@/hooks/use-video'
 import { ArrowRight, File, Lightbulb, Slack } from 'lucide-react'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { Icons } from '@/components/icons'
 
 type Lesson = {
   id: string
   name: string
   description: string
   video_id: string
+  user: {
+    name: string
+    image: string
+  }
 }
 
 interface VideoProps {
@@ -50,17 +55,19 @@ export function Video({ lessonSlug }: VideoProps) {
             </p>
 
             <div className="flex items-center gap-4 mt-6">
-              <Image 
-                src="https://github.com/diego3g.png"
-                height='64'
-                width='64'
-                alt="professor"
-                className='rounded-full border-2 border-blue-500'
-              />
+              <Avatar>
+                {lesson?.user.image ? (
+                  <AvatarImage alt="Picture" src={lesson.user.image} />
+                ): (
+                  <AvatarFallback>
+                    <span className="sr-only">{lesson?.user.name}</span>
+                    <Icons.user className="h-4 w-4" />
+                  </AvatarFallback>
+                )}
+              </Avatar>
 
               <div className="flex flex-col leading-relaxed">
-                <strong>Diego Fernandes</strong>
-                <span>founder founder founder</span>
+                <strong>{lesson?.user.name}</strong>
               </div>
             </div>
           </div>
