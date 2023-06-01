@@ -26,6 +26,7 @@ export default async function CoursesPage() {
       description: true,
       imageURL: true,
       slug: true,
+      createdAt: true,
       lessons: {
         select: {
           id: true

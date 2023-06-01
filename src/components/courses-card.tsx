@@ -36,6 +36,7 @@ import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Icons } from './icons';
 import { toast } from '@/hooks/use-toast';
+import { formatDate } from '@/lib/utils';
 
 async function deleteCourse(courseId: string) {
   const response = await fetch(`/api/courses/${courseId}`, {
@@ -59,7 +60,7 @@ async function deleteCourse(courseId: string) {
 }
 
 interface CoursesCardProps {
-  course: Pick<Courses, "id" | "title" | "imageURL" | "description" | "slug">
+  course: Pick<Courses, "id" | "title" | "imageURL" | "description" | "slug" | 'createdAt'>
   lesson: Pick<Lessons, "id">[]
   user: Pick<User, "role">
 }
@@ -99,14 +100,8 @@ export function CoursesCard({ course, lesson, user }: CoursesCardProps) {
         </ScrollArea>
 
         <CardFooter className="justify-between p-2">
-          <div className="flex items-center gap-2">
-            <Avatar>
-              <AvatarImage alt="" src='https://github.com/diego3g.png'/>
-              <AvatarFallback>
-                <span className="sr-only">Diego S.</span>
-              </AvatarFallback>
-            </Avatar>
-            Diego Shell
+          <div className="text-muted-foreground">
+            {formatDate(course.createdAt.toISOString())}
           </div>
           {user.role === 'ADMIN' || user.role === "PROFESSOR" ? (
             <Link href={`/dashboard/courses/edit/${course.id}`}>
@@ -126,11 +121,6 @@ export function CoursesCard({ course, lesson, user }: CoursesCardProps) {
       
       {user.role === "ADMIN" || user.role === 'PROFESSOR' ? (
         <ContextMenuContent>
-          <ContextMenuItem>
-            <Icons.pen className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
-            Edit
-          </ContextMenuItem>
-          <ContextMenuSeparator />
           <ContextMenuItem 
             onSelect={() => setShowDeleteAlert(true)}
             className="text-red-500 focus:bg-red-200 focus:text-bg-500"
