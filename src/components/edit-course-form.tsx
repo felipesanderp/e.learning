@@ -1,8 +1,12 @@
 'use client'
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Courses } from "@prisma/client";
+import * as z from 'zod'
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 import { 
   Card, 
@@ -18,6 +22,8 @@ import { EditCourseLessonOperations } from "./edit-course-lesson-operations";
 import { Button } from "@/components/ui/button";
 import { Icons } from "@/components/icons";
 import { AddLessonToCourse } from "./add-lesson-to-course-form";
+import { coursePatchSchema } from "@/lib/validations/course";
+import { toast } from "@/hooks/use-toast";
 
 interface EditCourseFormProps {
   courseId: string
@@ -30,9 +36,24 @@ interface Course extends Courses {
   }[]
 }
 
+type FormData = z.infer<typeof coursePatchSchema>
+
 export function EditCourseForm({ courseId }: EditCourseFormProps) {
+  const router = useRouter()
+  
   const [course, setCourse] = useState<Course>()
   const [showAddLessonAlert, setShowAddLessonAlert] = useState<boolean>(false)
+  const [isSaving, setIsSaving] = useState<boolean>(false)
+
+  const form = useForm<FormData>({
+    resolver: zodResolver(coursePatchSchema),
+    mode: 'onChange',
+    values: {
+      title: course?.title,
+      description: course?.description,
+      imageURL: course?.imageURL,
+    }
+  })
 
   async function getCourseDetails() {
     const response = await fetch(`/api/courses/${courseId}`, {
@@ -46,9 +67,44 @@ export function EditCourseForm({ courseId }: EditCourseFormProps) {
   }
   getCourseDetails()
 
+  async function onSubmit(data: FormData) {
+    setIsSaving(true)
+
+    const response = await fetch(`/api/courses/${courseId}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        title: data.title,
+        description: data.description,
+        imageURL: data.imageURL,
+      })
+    })
+
+    setIsSaving(false)
+
+    if (!response?.ok) {
+      return toast({
+        title: "Something went wrong.",
+        description: "The course was not updated. Please try again.",
+        variant: "destructive",
+      })
+    }
+
+    toast({
+      description: "The course has been updated.",
+    })
+
+    router.refresh()
+  }
+
   return (
     <>
-      <form className="grid grid-cols-1 gap-4 md:grid-cols-6">
+      <form 
+        onSubmit={form.handleSubmit(onSubmit)} 
+        className="grid grid-cols-1 gap-4 md:grid-cols-6"
+      >
         <Card className="md:col-span-6">
           <CardHeader>
             <CardTitle>Details</CardTitle>
@@ -60,8 +116,13 @@ export function EditCourseForm({ courseId }: EditCourseFormProps) {
                   <Label>Title</Label>
                   <Input 
                     type="text"
-                    placeholder={course?.title}
+                    {...form.register('title')}
                   />
+                  {form.formState.errors.title && (
+                    <p className="text-sm font-medium text-destructive">
+                      {form.formState.errors.title.message}
+                    </p>
+                  )}
                 </div>
                 <div className="grid gap-1 space-y-2">
                   <Label>Slug</Label>
@@ -75,14 +136,24 @@ export function EditCourseForm({ courseId }: EditCourseFormProps) {
                 <Label>Image</Label>
                 <Input 
                   type="text"
-                  placeholder={course?.imageURL}
+                  {...form.register('imageURL')}
                 />
+                {form.formState.errors.imageURL && (
+                  <p className="text-sm font-medium text-destructive">
+                    {form.formState.errors.imageURL.message}
+                  </p>
+                )}
               </div>
               <div className="space-y-2">
                 <Label>Description</Label>
                 <Textarea 
-                  placeholder={course?.description}
+                  {...form.register('description')}
                 />
+                {form.formState.errors.description && (
+                  <p className="text-sm font-medium text-destructive">
+                    {form.formState.errors.description.message}
+                  </p>
+                )}
               </div>
             </section>
 
@@ -128,6 +199,17 @@ export function EditCourseForm({ courseId }: EditCourseFormProps) {
             </Button>
           </CardContent>
         </Card>
+        <div>
+          <Button
+            disabled={isSaving}
+            type="submit"
+          >
+            {isSaving && (
+              <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+            )}
+            Update Course
+          </Button>
+        </div>
       </form>
       
       <AddLessonToCourse 
