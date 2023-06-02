@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Icons } from '../icons';
 
 export function AdminAnalytics() {
   const [totalStudents, setTotalStudents] = useState<number>()
@@ -10,14 +11,21 @@ export function AdminAnalytics() {
   const [totalCourses, setTotalCourses] = useState<number>()
   const [totalLessons, setTotalLessons] = useState<number>()
 
+  const [isLoadingStudents, setIsLoadingStudents] = useState<boolean>(false)
+  const [isLoadingProfessors, setIslLoadingProfessors] = useState<boolean>(false)
+  const [isLoadingCourses, setIslLoadingCourses] = useState<boolean>(false)
+  const [isLoadingLessons, setIsLoadingLessons] = useState<boolean>(false)
+
   useEffect(() => {
     async function getTotalStudents() {
+      setIsLoadingStudents(true)
       const response = await fetch('/api/users/total-students', {
         method: 'GET',
         next: { revalidate: 3600 }
       })
 
       setTotalStudents(await response.json())
+      setIsLoadingStudents(false)
     }
 
     getTotalStudents()
@@ -25,12 +33,14 @@ export function AdminAnalytics() {
 
   useEffect(() => {
     async function getTotalProfessors() {
+      setIslLoadingProfessors(true)
       const response = await fetch('/api/users/total-professors', {
         method: 'GET',
         next: { revalidate: 3600 }
       })
 
       setTotalProfessors(await response.json())
+      setIslLoadingProfessors(false)
     }
 
     getTotalProfessors()
@@ -38,12 +48,14 @@ export function AdminAnalytics() {
 
   useEffect(() => {
     async function getTotalCourses() {
+      setIslLoadingCourses(true)
       const response = await fetch('/api/courses/total-courses', {
         method: 'GET',
         next: { revalidate: 3600 }
       })
 
       setTotalCourses(await response.json())
+      setIslLoadingCourses(false)
     }
 
     getTotalCourses()
@@ -51,12 +63,14 @@ export function AdminAnalytics() {
 
   useEffect(() => {
     async function getTotalLessons() {
+      setIsLoadingLessons(true)
       const response = await fetch('/api/lessons/total-lessons', {
         method: 'GET',
         next: { revalidate: 3600 }
       })
 
       setTotalLessons(await response.json())
+      setIsLoadingLessons(false)
     }
 
     getTotalLessons()
@@ -71,7 +85,13 @@ export function AdminAnalytics() {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold">{totalStudents}</div>
+          <div className="text-2xl font-bold">
+            {isLoadingStudents ? (
+              <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+            ): (
+              totalStudents
+            )}
+          </div>
         </CardContent>
       </Card>
 
@@ -82,7 +102,13 @@ export function AdminAnalytics() {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold">{totalProfessors}</div>
+          <div className="text-2xl font-bold">
+            {isLoadingProfessors ? (
+              <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+            ): (
+              totalProfessors
+            )}
+          </div>
         </CardContent>
       </Card>
 
@@ -93,7 +119,13 @@ export function AdminAnalytics() {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold">{totalCourses}</div>
+          <div className="text-2xl font-bold">
+            {isLoadingCourses ? (
+              <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+            ): (
+              totalCourses
+            )}
+          </div>
         </CardContent>
       </Card>
 
@@ -104,7 +136,13 @@ export function AdminAnalytics() {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold">{totalLessons}</div>
+          <div className="text-2xl font-bold">
+            {isLoadingLessons ? (
+              <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+            ): (
+              totalLessons
+            )}
+          </div>
         </CardContent>
       </Card>
     </div> 
