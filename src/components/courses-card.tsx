@@ -61,8 +61,8 @@ async function deleteCourse(courseId: string) {
 
 interface CoursesCardProps {
   course: Pick<Courses, "id" | "title" | "imageURL" | "description" | "slug" | 'createdAt'>
-  lesson: Pick<Lessons, "id">[]
-  user: Pick<User, "role">
+  lesson?: Pick<Lessons, "id">[]
+  user?: Pick<User, "role">
 }
 
 export function CoursesCard({ course, lesson, user }: CoursesCardProps) {
@@ -89,7 +89,7 @@ export function CoursesCard({ course, lesson, user }: CoursesCardProps) {
           </CardTitle>
 
           <CardDescription>
-            {lesson.length} Lessons
+            {lesson?.length} Lessons
           </CardDescription>
         </CardHeader>
 
@@ -103,7 +103,7 @@ export function CoursesCard({ course, lesson, user }: CoursesCardProps) {
           <div className="text-muted-foreground">
             {formatDate(course.createdAt.toISOString())}
           </div>
-          {user.role === 'ADMIN' || user.role === "PROFESSOR" ? (
+          {user?.role === 'ADMIN' || user?.role === "PROFESSOR" ? (
             <Link href={`/dashboard/courses/edit/${course.id}`}>
               <Button>
                 Editar
@@ -119,7 +119,7 @@ export function CoursesCard({ course, lesson, user }: CoursesCardProps) {
         </CardFooter>
       </Card>
       
-      {user.role === "ADMIN" || user.role === 'PROFESSOR' ? (
+      {user?.role === "ADMIN" || user?.role === 'PROFESSOR' ? (
         <ContextMenuContent>
           <ContextMenuItem 
             onSelect={() => setShowDeleteAlert(true)}

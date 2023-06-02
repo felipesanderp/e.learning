@@ -7,6 +7,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { AdminAnalytics } from "@/components/admin/analytics";
 import { LatestCreatedUsers } from "@/components/admin/latest-created-users";
+import { DashboardShell } from "@/components/shell";
+import { DashboardHeader } from "@/components/header";
 
 export const metadata = {
   title: 'Dashboard | e.learning',
@@ -27,7 +29,9 @@ export default async function DashboardPage() {
       <Tabs defaultValue="overview" className="space-y-4">
         <TabsList>
           <TabsTrigger value="overview">Overview</TabsTrigger>
-          <TabsTrigger value="my-courses" disabled>My Courses</TabsTrigger>
+          {user.role === 'STUDENT' && (
+            <TabsTrigger value="my-courses">My Courses</TabsTrigger>
+          )}
         </TabsList>
 
         <TabsContent value="overview" className="space-y-4">
@@ -61,9 +65,13 @@ export default async function DashboardPage() {
                 </CardContent>
               </Card>
             ): ''}
-
           </div>
+        </TabsContent>
 
+        <TabsContent value="my-courses">
+          <div className="container grid w-full grid-cols-1 gap-x-4 gap-y-32 md:grid-cols-3 xl:grid-cols-3">
+            
+          </div>
         </TabsContent>
       </Tabs>
     </div>
