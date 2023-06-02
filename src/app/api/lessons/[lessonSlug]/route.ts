@@ -1,8 +1,10 @@
 import { getServerSession } from 'next-auth/next'
 import * as z from 'zod'
+import slugify from 'slugify'
 
 import { authOptions } from '@/lib/auth'
 import { db } from '@/lib/db'
+import { lessonPatchSchema } from '@/lib/validations/lesson'
 
 const routeContextSchema = z.object({
   params: z.object({
@@ -82,46 +84,46 @@ export async function DELETE(
   }
 }
 
-// export async function PATCH(
-//   req: Request,
-//   context: z.infer<typeof routeContextSchema>
-// ) {
-//   try {
-//     const { params } = routeContextSchema.parse(context)
+export async function PATCH(
+  req: Request,
+  context: z.infer<typeof routeContextSchema>
+) {
+  try {
+    const { params } = routeContextSchema.parse(context)
 
-//     const session = await getServerSession(authOptions)
+    const session = await getServerSession(authOptions)
 
-//     if (!session) {
-//       return new Response("Unauthorized", { status: 403 })
-//     }
+    if (!session) {
+      return new Response("Unauthorized", { status: 403 })
+    }
 
-//     const { user } = session
+    const { user } = session
 
-//     if (user.role !== 'ADMIN' && user.role !== 'PROFESSOR') {
-//       return new Response("Unauthorized", { status: 403 })
-//     }
+    if (user.role !== 'ADMIN' && user.role !== 'PROFESSOR') {
+      return new Response("Unauthorized", { status: 403 })
+    }
 
-//     const json = await req.json()
-//     const body = coursePatchSchema.parse(json)
+    const json = await req.json()
+    const body = lessonPatchSchema.parse(json)
 
-//     await db.courses.update({
-//       where: {
-//         id: params.courseId,
-//       },
-//       data: {
-//         title: body.title,
-//         slug: slugify(body.title!!),
-//         description: body.description,
-//         imageURL: body.imageURL,
-//       }
-//     })
+    await db.lessons.update({
+      where: {
+        slug: params.lessonSlug,
+      },
+      data: {
+        name: body.name,
+        slug: slugify(body.name!!, { lower: true }),
+        description: body.description,
+        video_id: body.video_id,
+      }
+    })
 
-//     return new Response(null, { status: 200 })
-//   } catch (error) {
-//     if (error instanceof z.ZodError) {
-//       return new Response(JSON.stringify(error.issues), { status: 422 })
-//     }
+    return new Response(null, { status: 200 })
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      return new Response(JSON.stringify(error.issues), { status: 422 })
+    }
 
-//     return new Response(null, { status: 500 })
-//   }
-// }
+    return new Response(null, { status: 500 })
+  }
+}
