@@ -8,6 +8,7 @@ export function AdminAnalytics() {
   const [totalStudents, setTotalStudents] = useState<number>()
   const [totalProfessors, setTotalProfessors] = useState<number>()
   const [totalCourses, setTotalCourses] = useState<number>()
+  const [totalLessons, setTotalLessons] = useState<number>()
 
   useEffect(() => {
     async function getTotalStudents() {
@@ -48,6 +49,19 @@ export function AdminAnalytics() {
     getTotalCourses()
   }, [])
 
+  useEffect(() => {
+    async function getTotalLessons() {
+      const response = await fetch('/api/lessons/total-lessons', {
+        method: 'GET',
+        next: { revalidate: 3600 }
+      })
+
+      setTotalLessons(await response.json())
+    }
+
+    getTotalLessons()
+  }, [])
+
   return (
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
       <Card>
@@ -80,6 +94,17 @@ export function AdminAnalytics() {
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold">{totalCourses}</div>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+          <CardTitle className="text-sm font-medium">
+            Total Lessons
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="text-2xl font-bold">{totalLessons}</div>
         </CardContent>
       </Card>
     </div> 
