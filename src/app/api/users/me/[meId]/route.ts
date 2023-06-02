@@ -37,7 +37,7 @@ export async function GET(
 
     return new Response(JSON.stringify(me))
   } catch (error) {
-    
+    return new Response(null, { status: 500 })
   }
 }
 

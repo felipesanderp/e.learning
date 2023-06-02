@@ -101,7 +101,9 @@ export function CoursesCard({ course, lesson, user }: CoursesCardProps) {
 
         <CardFooter className="justify-between p-2">
           <div className="text-muted-foreground">
-            {formatDate(course.createdAt.toISOString())}
+            {course.createdAt && (
+              formatDate(course.createdAt.toISOString())
+            )}
           </div>
           {user?.role === 'ADMIN' || user?.role === "PROFESSOR" ? (
             <Link href={`/dashboard/courses/edit/${course.id}`}>

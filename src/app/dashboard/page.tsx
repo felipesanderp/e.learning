@@ -1,14 +1,12 @@
 import { redirect } from "next/navigation"
 
 import { getCurrentUser } from "@/lib/session"
-import { MyCourses } from "@/components/my-courses";
+import { MyCourses } from "@/components/student/my-courses";
 import { Overview } from "@/components/overview";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { AdminAnalytics } from "@/components/admin/analytics";
 import { LatestCreatedUsers } from "@/components/admin/latest-created-users";
-import { DashboardShell } from "@/components/shell";
-import { DashboardHeader } from "@/components/header";
 
 export const metadata = {
   title: 'Dashboard | e.learning',
@@ -69,8 +67,10 @@ export default async function DashboardPage() {
         </TabsContent>
 
         <TabsContent value="my-courses">
-          <div className="container grid w-full grid-cols-1 gap-x-4 gap-y-32 md:grid-cols-3 xl:grid-cols-3">
-            
+          <div className="grid w-full grid-cols-1 gap-x-4 gap-y-32 md:grid-cols-3 xl:grid-cols-3">
+            <MyCourses 
+              user={{ id: user.id }}
+            />
           </div>
         </TabsContent>
       </Tabs>
