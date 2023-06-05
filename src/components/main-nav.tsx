@@ -36,15 +36,17 @@ export function MainNav({ user }: MainNavProps) {
         Home
       </Link>
 
-      <Link
-        href="/dashboard/courses"
-        className={cn(
-          "text-md transition-colors hover:text-primary",
-          pathname?.startsWith("/dashboard/courses") ? "font-bold text-primary" : "text-foreground/60"
-        )}
-      >
-        Courses
-      </Link>
+      {user.role === 'ADMIN' || user.role === 'PROFESSOR' ? (
+        <Link
+          href="/dashboard/courses"
+          className={cn(
+            "text-md transition-colors hover:text-primary",
+            pathname?.startsWith("/dashboard/courses") ? "font-bold text-primary" : "text-foreground/60"
+          )}
+        >
+          Courses
+        </Link>
+      ): ''}
 
       {user.role === 'ADMIN' || user.role === 'PROFESSOR' ?
         <Link

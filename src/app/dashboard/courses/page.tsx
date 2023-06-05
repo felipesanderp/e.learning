@@ -15,8 +15,8 @@ export const metadata = {
 export default async function CoursesPage() {
   const user = await getCurrentUser()
 
-  if (!user) {
-    redirect("/")
+  if (!user || user.role !== 'ADMIN' && user.role !== 'PROFESSOR') {
+    redirect("/dashboard")
   }
 
   const courses = await db.courses.findMany({
