@@ -43,6 +43,16 @@ export async function GET(
           select: {
             id: true,
             name: true,
+          },
+        },
+        enrolledOn: {
+          select: {
+            user: {
+              select: {
+                id: true,
+                name: true,
+              }
+            }
           }
         }
       }

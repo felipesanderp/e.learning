@@ -33,6 +33,12 @@ interface Course extends Courses {
   lessons: {
     id: string
     name: string,
+  }[],
+  enrolledOn: {
+    user: {
+      id: string,
+      name: string
+    }
   }[]
 }
 
@@ -103,9 +109,9 @@ export function EditCourseForm({ courseId }: EditCourseFormProps) {
     <>
       <form 
         onSubmit={form.handleSubmit(onSubmit)} 
-        className="grid grid-cols-1 gap-4 md:grid-cols-6"
+        className="grid max-w-screen-2xl grid-cols-1 gap-4 md:grid-cols-6"
       >
-        <Card className="md:col-span-6">
+        <Card className="md:col-span-4">
           <CardHeader>
             <CardTitle>Details</CardTitle>
           </CardHeader>
@@ -199,6 +205,16 @@ export function EditCourseForm({ courseId }: EditCourseFormProps) {
             </Button>
           </CardContent>
         </Card>
+        <div className="space-y-4 md:col-span-2">
+          <Card>
+            <CardHeader>
+              <CardTitle>Students</CardTitle>
+            </CardHeader>
+            <CardContent>
+              
+            </CardContent>
+          </Card>
+        </div>
         <div>
           <Button
             disabled={isSaving}
