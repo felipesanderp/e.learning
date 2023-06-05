@@ -30,7 +30,12 @@ async function getMyCourses(userId: User['id']) {
               description: true,
               slug: true,
               createdAt: true,
-            }
+              lessons: {
+                select: {
+                  id: true,
+                }
+              }
+            },
           }
         }
       }
@@ -101,6 +106,7 @@ export default async function DashboardPage() {
               <CoursesCard
                 key={courses.course.id}
                 course={courses.course}
+                lesson={courses.course.lessons}
               />
             ))}
           </div>
