@@ -24,6 +24,7 @@ import { Icons } from "@/components/icons";
 import { AddLessonToCourse } from "./add-lesson-to-course-form";
 import { coursePatchSchema } from "@/lib/validations/course";
 import { toast } from "@/hooks/use-toast";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
 interface EditCourseFormProps {
   courseId: string
@@ -32,12 +33,14 @@ interface EditCourseFormProps {
 interface Course extends Courses {
   lessons: {
     id: string
-    name: string,
+    name: string
   }[],
   enrolledOn: {
     user: {
-      id: string,
+      id: string
       name: string
+      email: string
+      image: string
     }
   }[]
 }
@@ -215,7 +218,22 @@ export function EditCourseForm({ courseId }: EditCourseFormProps) {
                 <div>
                   {course.enrolledOn.map((student) => (
                     <div key={student.user.id} className="divide-y divide-border rounded-md border p-2">
-                      <h2>{student.user.name}</h2>
+                      <div className="flex items-center gap-2">
+                        <Avatar>
+                          {student.user.image ? (
+                            <AvatarImage alt="Picture" src={student.user.image} />
+                          ) : (
+                            <AvatarFallback>
+                              <span className="sr-only">{student.user.name}</span>
+                              <Icons.user className="h-4 w-4" />
+                            </AvatarFallback>
+                          )}
+                        </Avatar>
+                        <div className="flex flex-col">
+                          <span className="text-sm font-medium leading-none">{student.user.name}</span>
+                          <span className="text-sm text-muted-foreground">{student.user.email}</span>
+                        </div>
+                      </div>
                     </div>
                   ))}
                 </div>
