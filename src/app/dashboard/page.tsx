@@ -1,4 +1,5 @@
 import { redirect } from "next/navigation"
+import { User } from "@prisma/client";
 
 import { getCurrentUser } from "@/lib/session"
 import { MyCourses } from "@/components/student/my-courses";
@@ -7,9 +8,35 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { AdminAnalytics } from "@/components/admin/analytics";
 import { LatestCreatedUsers } from "@/components/admin/latest-created-users";
+import { db } from "@/lib/db";
+import { CoursesCard } from "@/components/courses-card";
 
 export const metadata = {
   title: 'Dashboard | e.learning',
+}
+
+async function getMyCourses(userId: User['id']) {
+  return await db.user.findUnique({
+    where: {
+      id: userId,
+    },
+    include: {
+      enrollments: {
+        select: {
+          course: {
+            select: {
+              id: true,
+              title: true,
+              imageURL: true,
+              description: true,
+              slug: true,
+              createdAt: true,
+            }
+          }
+        }
+      }
+    }
+  })
 }
 
 export default async function DashboardPage() {
@@ -18,6 +45,9 @@ export default async function DashboardPage() {
   if (!user) {
     redirect("/")
   }
+
+  const myCourses = await getMyCourses(user.id)
+
 
   return (
     <div className="flex-1 space-y-4 p-8 pt-6">
@@ -68,9 +98,12 @@ export default async function DashboardPage() {
 
         <TabsContent value="my-courses">
           <div className="grid w-full grid-cols-1 gap-x-4 gap-y-32 md:grid-cols-3 xl:grid-cols-3">
-            <MyCourses 
-              user={{ id: user.id }}
-            />
+            {myCourses?.enrollments.map((courses) => (
+              <CoursesCard
+                key={courses.course.id}
+                course={courses.course}
+              />
+            ))}
           </div>
         </TabsContent>
       </Tabs>
