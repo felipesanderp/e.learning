@@ -2,7 +2,6 @@ import { redirect } from "next/navigation"
 import { User } from "@prisma/client";
 
 import { getCurrentUser } from "@/lib/session"
-import { MyCourses } from "@/components/student/my-courses";
 import { Overview } from "@/components/overview";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
