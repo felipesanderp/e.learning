@@ -210,8 +210,24 @@ export function EditCourseForm({ courseId }: EditCourseFormProps) {
             <CardHeader>
               <CardTitle>Students</CardTitle>
             </CardHeader>
-            <CardContent>
-              
+            <CardContent className="mb-2 flex flex-col gap-2">
+              {course?.enrolledOn.length ? (
+                <div>
+                  {course.enrolledOn.map((student) => (
+                    <div key={student.user.id} className="divide-y divide-border rounded-md border p-2">
+                      <h2>{student.user.name}</h2>
+                    </div>
+                  ))}
+                </div>
+              ) : 'No users.'}
+              <Button
+                type="button"
+                variant="link"
+                className="border-none text-blue-600"
+              >
+                <Icons.add className="h-4 w-4" />
+                Add User
+              </Button>
             </CardContent>
           </Card>
         </div>
