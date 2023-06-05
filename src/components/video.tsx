@@ -71,7 +71,7 @@ export function Video({ lessonSlug }: VideoProps) {
               </div>
             </div>
           </div>
-
+{/* 
           <div className="flex flex-col gap-4">
             <a href="#" className="text-secondary p-4 text-sm bg-green-500 flex items-center rounded font-bold uppercase gap-2 justify-center hover:bg-green-700 transition-colors">
               <Slack />
@@ -82,7 +82,7 @@ export function Video({ lessonSlug }: VideoProps) {
               <Lightbulb />
               Acesse o desafio
             </a>
-          </div>
+          </div> */}
         </div>
 
         <div className="gap-8 mt-20 grid grid-cols-2">
