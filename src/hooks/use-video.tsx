@@ -12,7 +12,10 @@ export const VideoPlayer: React.FC<{ videoUrl: string | undefined }> = ({ videoU
     const videoElement = videoRef.current;
 
     if (videoElement) {
-      const player = videojs(videoElement, { techOrder: ['youtube'], sources: [{ "type": "video/youtube", "src": videoUrl }] });
+      const player = videojs(videoElement, { 
+        techOrder: ['youtube'], 
+        sources: [{ "type": "video/youtube", "src": videoUrl }],
+      });
 
       return () => {
         player.dispose();
