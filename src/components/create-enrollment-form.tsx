@@ -1,7 +1,9 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import { useRouter } from 'next/navigation'
 import { zodResolver } from "@hookform/resolvers/zod"
+import * as z from 'zod'
 import { useForm } from "react-hook-form"
+import { User } from "@prisma/client"
 
 import {
   AlertDialog,
@@ -29,18 +31,70 @@ import {
 import { toast } from "@/hooks/use-toast"
 import { Icons } from "@/components/icons"
 
+const createEnrollmentSchema = z.object({
+  userId: z.string(),
+})
+
+type FormData = z.infer<typeof createEnrollmentSchema> 
+
 interface CreateEnrollmentFormParams {
+  student: Pick<User, "id" | "name">
   courseId: string
   showCreateEnrollmentAlert: boolean
   setShowCreateEnrollmentAlert: Dispatch<SetStateAction<boolean>>
 }
 
 export function CreateEnrollmentForm({
-  courseId, 
+  courseId,
+  student,
   setShowCreateEnrollmentAlert, 
   showCreateEnrollmentAlert
 }: CreateEnrollmentFormParams) {
-  const form = useForm()
+  const router = useRouter()
+  const [students, setStudents] = useState<typeof student[]>()
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+
+  const form = useForm<FormData>({
+    resolver: zodResolver(createEnrollmentSchema)
+  })
+
+  useEffect(() => {
+    async function getStudents() {
+      const response = await fetch('/api/users/students', {
+        method: 'GET',
+      })
+
+      setStudents(await response.json())
+    }
+
+    getStudents()
+  }, [])
+
+  async function onSubmit(data: FormData) {
+    setIsLoading(true)
+
+    const response = await fetch('/api/enrollments', {
+      method: 'POST',
+      body: JSON.stringify({
+        courseId: courseId,
+        userId: data.userId,
+      })
+    })
+
+    if (!response?.ok) {
+      toast({
+        title: "Something went wrong.",
+        description: "The enrollment was not created. Please try again.",
+        variant: "destructive",
+      })
+    }
+    
+    if(response.ok) {
+      setIsLoading(false)
+      setShowCreateEnrollmentAlert(false)
+      router.refresh()
+    }
+  } 
 
   return (
     <AlertDialog open={showCreateEnrollmentAlert} onOpenChange={setShowCreateEnrollmentAlert}>
@@ -54,11 +108,46 @@ export function CreateEnrollmentForm({
             </AlertDialogHeader>
             <div>
               <div>
-
+                <FormField 
+                  control={form.control}
+                  name="userId"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Aluno</FormLabel>
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Select a student..." />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {students?.map((student) => (
+                            <SelectItem
+                              key={student.id}
+                              value={student.id}
+                            >
+                              {student.name}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </FormItem>
+                  )}
+                />
               </div>
             </div>
             <AlertDialogFooter>
               <AlertDialogCancel>Cancelar</AlertDialogCancel>
+              <AlertDialogAction
+                onClick={form.handleSubmit(onSubmit)}
+              >
+                {isLoading ? (
+                  <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                ) : (
+                  <Icons.add className="mr-2 h-4 w-4" />
+                )}
+                Adicionar
+              </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>
         </form>
