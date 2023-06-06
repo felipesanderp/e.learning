@@ -218,7 +218,7 @@ export function EditCourseForm({ courseId }: EditCourseFormProps) {
             </CardHeader>
             <CardContent className="mb-2 flex flex-col gap-2">
               {course?.enrolledOn.length ? (
-                <div>
+                <div className="space-y-2">
                   {course.enrolledOn.map((student) => (
                     <div key={student.user.id} className="divide-y divide-border rounded-md border p-2">
                       <div className="flex items-center justify-between">
