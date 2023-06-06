@@ -38,7 +38,6 @@ const createEnrollmentSchema = z.object({
 type FormData = z.infer<typeof createEnrollmentSchema> 
 
 interface CreateEnrollmentFormParams {
-  student: Pick<User, "id" | "name">
   courseId: string
   showCreateEnrollmentAlert: boolean
   setShowCreateEnrollmentAlert: Dispatch<SetStateAction<boolean>>
@@ -46,12 +45,11 @@ interface CreateEnrollmentFormParams {
 
 export function CreateEnrollmentForm({
   courseId,
-  student,
   setShowCreateEnrollmentAlert, 
   showCreateEnrollmentAlert
 }: CreateEnrollmentFormParams) {
   const router = useRouter()
-  const [students, setStudents] = useState<typeof student[]>()
+  const [students, setStudents] = useState<Pick<User, "id" | "name">[]>()
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
   const form = useForm<FormData>({
