@@ -21,11 +21,12 @@ import { Separator } from "@/components/ui/separator";
 import { EditCourseLessonOperations } from "./edit-course-lesson-operations";
 import { Button } from "@/components/ui/button";
 import { Icons } from "@/components/icons";
-import { AddLessonToCourse } from "./add-lesson-to-course-form";
+import { AddLessonToCourse } from "@/components/add-lesson-to-course-form";
 import { coursePatchSchema } from "@/lib/validations/course";
 import { toast } from "@/hooks/use-toast";
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
-import { CreateEnrollmentForm } from "./create-enrollment-form";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { CreateEnrollmentForm } from "@/components/create-enrollment-form";
+import { EditCourseStudentOperations } from "@/components/edit-course-student-operations";
 
 interface EditCourseFormProps {
   courseId: string
@@ -220,21 +221,27 @@ export function EditCourseForm({ courseId }: EditCourseFormProps) {
                 <div>
                   {course.enrolledOn.map((student) => (
                     <div key={student.user.id} className="divide-y divide-border rounded-md border p-2">
-                      <div className="flex items-center gap-2">
-                        <Avatar>
-                          {student.user.image ? (
-                            <AvatarImage alt="Picture" src={student.user.image} />
-                          ) : (
-                            <AvatarFallback>
-                              <span className="sr-only">{student.user.name}</span>
-                              <Icons.user className="h-4 w-4" />
-                            </AvatarFallback>
-                          )}
-                        </Avatar>
-                        <div className="flex flex-col">
-                          <span className="text-sm font-medium leading-none">{student.user.name}</span>
-                          <span className="text-sm text-muted-foreground">{student.user.email}</span>
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <Avatar>
+                            {student.user.image ? (
+                              <AvatarImage alt="Picture" src={student.user.image} />
+                            ) : (
+                              <AvatarFallback>
+                                <span className="sr-only">{student.user.name}</span>
+                                <Icons.user className="h-4 w-4" />
+                              </AvatarFallback>
+                            )}
+                          </Avatar>
+                          <div className="flex flex-col">
+                            <span className="text-sm font-medium leading-none">{student.user.name}</span>
+                            <span className="text-sm text-muted-foreground">{student.user.email}</span>
+                          </div>
                         </div>
+                          <EditCourseStudentOperations 
+                            courseId={courseId}
+                            studentId={student.user.id}
+                          />
                       </div>
                     </div>
                   ))}
