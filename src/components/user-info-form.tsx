@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form"
 import * as z from "zod"
 
 import { cn } from "@/lib/utils"
-import { buttonVariants } from "@/components/ui/button"
+import { Button, buttonVariants } from "@/components/ui/button"
 import {
   Card,
   CardContent,
@@ -21,6 +21,7 @@ import { Label } from "@/components/ui/label"
 import { mePatchSchema } from "@/lib/validations/user"
 import { Icons } from "@/components/icons"
 import { toast } from "@/hooks/use-toast"
+import Uploader from "./uploader"
 
 interface UserInfoFormProps extends React.HTMLAttributes<HTMLFormElement> {
   user: {
@@ -96,6 +97,9 @@ export function UserInfoForm({ user, className, ...props }: UserInfoFormProps) {
         </CardHeader>
         <CardContent>
           <div className="flex flex-col gap-4">
+
+            <Uploader />
+            
             <Label htmlFor="name">
               Name
             </Label>
@@ -123,7 +127,7 @@ export function UserInfoForm({ user, className, ...props }: UserInfoFormProps) {
               <p className="px-1 text-xs text-red-600">{errors.name.message}</p>
             )} */}
 
-            <Label htmlFor="name">
+            {/* <Label htmlFor="name">
               Image
             </Label>
             <Input
@@ -132,23 +136,23 @@ export function UserInfoForm({ user, className, ...props }: UserInfoFormProps) {
               className="w-[400px]"
               size={32}
               {...register('image')}
-            />
+            /> */}
             {/* {errors?.name && (
               <p className="px-1 text-xs text-red-600">{errors.name.message}</p>
             )} */}
           </div>
         </CardContent>
         <CardFooter>
-          <button
+          <Button
             type="submit"
-            className={cn(buttonVariants(), className)}
             disabled={isSaving}
+            variant={'default'}
           >
             {isSaving && (
               <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
             )}
             <span>Save</span>
-          </button>
+          </Button>
         </CardFooter>
       </Card>
     </form>
