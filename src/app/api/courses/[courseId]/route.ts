@@ -46,14 +46,17 @@ export async function GET(
           },
         },
         enrolledOn: {
+          where: {
+            canceledAt: null,
+          },
           select: {
             user: {
               select: {
                 id: true,
                 name: true,
                 image: true,
-                email: true
-              }
+                email: true,
+              },
             }
           }
         }
