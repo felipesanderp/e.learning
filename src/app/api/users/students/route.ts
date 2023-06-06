@@ -23,6 +23,10 @@ export async function GET() {
         AND: {
           isActive: 'true'
         }
+      },
+      select: {
+        id: true,
+        name: true,
       }
     })
 
