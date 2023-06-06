@@ -104,7 +104,7 @@ export default async function DashboardPage() {
         </TabsContent>
 
         <TabsContent value="my-courses">
-          <div className="grid w-full grid-cols-1 gap-x-4 gap-y-32 md:grid-cols-3 xl:grid-cols-3">
+          <div className="container grid w-full grid-cols-1 gap-x-4 gap-y-8 md:grid-cols-3 xl:grid-cols-3">
             {myCourses?.enrollments.map((courses) => (
               <CoursesCard
                 key={courses.course.id}
