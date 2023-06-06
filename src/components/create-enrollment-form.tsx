@@ -53,7 +53,8 @@ export function CreateEnrollmentForm({
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
   const form = useForm<FormData>({
-    resolver: zodResolver(createEnrollmentSchema)
+    resolver: zodResolver(createEnrollmentSchema),
+    mode: 'all',
   })
 
   useEffect(() => {
