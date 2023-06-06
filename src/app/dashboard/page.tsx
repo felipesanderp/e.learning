@@ -33,10 +33,13 @@ async function getMyCourses(userId: User['id']) {
               lessons: {
                 select: {
                   id: true,
-                }
+                },
               }
             },
-          }
+          },
+        },
+        where: {
+          canceledAt: null
         }
       }
     }
