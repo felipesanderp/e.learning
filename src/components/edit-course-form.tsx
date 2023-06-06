@@ -25,6 +25,7 @@ import { AddLessonToCourse } from "./add-lesson-to-course-form";
 import { coursePatchSchema } from "@/lib/validations/course";
 import { toast } from "@/hooks/use-toast";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { CreateEnrollmentForm } from "./create-enrollment-form";
 
 interface EditCourseFormProps {
   courseId: string
@@ -52,6 +53,7 @@ export function EditCourseForm({ courseId }: EditCourseFormProps) {
   
   const [course, setCourse] = useState<Course>()
   const [showAddLessonAlert, setShowAddLessonAlert] = useState<boolean>(false)
+  const [showCreateEnrollmentAlert, setShowCreateEnrollmentAlert] = useState<boolean>(false)
   const [isSaving, setIsSaving] = useState<boolean>(false)
 
   const form = useForm<FormData>({
@@ -242,6 +244,7 @@ export function EditCourseForm({ courseId }: EditCourseFormProps) {
                 type="button"
                 variant="link"
                 className="border-none text-blue-600"
+                onClick={() => setShowCreateEnrollmentAlert(true)}
               >
                 <Icons.add className="h-4 w-4" />
                 Add User
@@ -266,6 +269,12 @@ export function EditCourseForm({ courseId }: EditCourseFormProps) {
         courseId={courseId}
         setShowAddLessonAlert={setShowAddLessonAlert}
         showAddLessonAlert={showAddLessonAlert}
+      />
+
+      <CreateEnrollmentForm 
+        courseId={courseId}
+        setShowCreateEnrollmentAlert={setShowCreateEnrollmentAlert}
+        showCreateEnrollmentAlert={showCreateEnrollmentAlert}
       />
     </>
   )
