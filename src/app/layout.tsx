@@ -1,5 +1,5 @@
 import '@/styles/globals.css';
-
+import { Analytics } from '@vercel/analytics/react';
 import { Inter as FontSans } from "next/font/google"
 
 import { cn } from '@/lib/utils';
@@ -33,6 +33,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
             </div>
           </div>
         </ThemeProvider>
+        <Analytics />
       </body>
     </html >
   )
