@@ -47,6 +47,7 @@ model User {
   password      String
   emailVerified DateTime?
   image         String?
+  imageKey      String?
   isActive      String    @default("true")
   role          ROLE      @default(STUDENT)
 

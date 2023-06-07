@@ -69,6 +69,7 @@ export async function PATCH(
         email: payload.email,
         name: payload.name,
         image: payload.image,
+        imageKey: payload.imageKey,
       }
     })
 
@@ -77,6 +78,7 @@ export async function PATCH(
     if (error instanceof z.ZodError) {
       return new Response(JSON.stringify(error.issues), { status: 422 })
     }
+    console.log(error)
 
     return new Response(null, { status: 500 })
   }

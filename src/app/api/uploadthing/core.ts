@@ -1,6 +1,7 @@
 /** app/api/uploadthing/core.ts */
 import { getCurrentUser } from "@/lib/session";
-import { createUploadthing, type FileRouter } from "uploadthing/server";
+import { createUploadthing, type FileRouter } from "uploadthing/next";
+
 const f = createUploadthing();
 
 const getUser = async () => await getCurrentUser()
@@ -15,7 +16,6 @@ export const ourFileRouter = {
     .middleware(async (req) => {
       // This code runs on your server before upload
       const user = await getUser();
-
       // If you throw, the user will not be able to upload
       if (!user) throw new Error("Unauthorized");
 

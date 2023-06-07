@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form"
 import * as z from "zod"
 
 import { cn } from "@/lib/utils"
-import { Button, buttonVariants } from "@/components/ui/button"
+import { Button } from "@/components/ui/button"
 import {
   Card,
   CardContent,
@@ -22,6 +22,7 @@ import { mePatchSchema } from "@/lib/validations/user"
 import { Icons } from "@/components/icons"
 import { toast } from "@/hooks/use-toast"
 import Uploader from "./uploader"
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
 
 interface UserInfoFormProps extends React.HTMLAttributes<HTMLFormElement> {
   user: {
@@ -29,7 +30,13 @@ interface UserInfoFormProps extends React.HTMLAttributes<HTMLFormElement> {
     name: string,
     email: string,
     image: string,
+    imageKey: string,
   }
+}
+
+type UserImage = {
+  fileUrl: string,
+  fileKey: string
 }
 
 type FormData = z.infer<typeof mePatchSchema>
@@ -45,13 +52,29 @@ export function UserInfoForm({ user, className, ...props }: UserInfoFormProps) {
     defaultValues: {
       name: user?.name || "",
       email: user?.email || "",
-      image: user?.image || ''
+      image: user?.image || "",
     },
   })
   const [isSaving, setIsSaving] = React.useState<boolean>(false)
+  const [userImage, setUserImage] = React.useState<UserImage>()
 
   async function onSubmit(data: FormData) {
     setIsSaving(true)
+
+    // if (user.imageKey !== userImage?.fileKey) {
+    //   await fetch('https://www.uploadthing.com/api/deleteFile', {
+    //     method: 'POST',
+    //     headers: {
+    //       Accept: "application/json",
+    //       "Content-Type": "application/json",
+    //       "x-uploadthing-api-key": 'sk_live_780619c122636bbb33d07e2f8f8745f44ac39ea9569328cf9e4eefff95b939e4',
+    //     },
+    //     mode: 'no-cors',
+    //     body: JSON.stringify({
+    //       fileKeys: [user.imageKey],
+    //     })
+    //   })
+    // }
 
     const response = await fetch(`/api/users/me/${user.id}`, {
       method: "PATCH",
@@ -61,7 +84,8 @@ export function UserInfoForm({ user, className, ...props }: UserInfoFormProps) {
       body: JSON.stringify({
         name: data.name,
         email: data.email,
-        image: data.image
+        image: userImage?.fileUrl,
+        imageKey: userImage?.fileKey
       }),
     })
 
@@ -98,7 +122,22 @@ export function UserInfoForm({ user, className, ...props }: UserInfoFormProps) {
         <CardContent>
           <div className="flex flex-col gap-4">
 
-            <Uploader />
+            <div className="max-w-[8.5rem] flex flex-col justify-center gap-2">
+              <Avatar className="h-32 w-32">
+                {user.image ? (
+                  <AvatarImage alt="Picture" src={user.image} />
+                ) : (
+                  <AvatarFallback>
+                    <span className="sr-only">{user.name}</span>
+                    <Icons.user className="h-4 w-4" />
+                  </AvatarFallback>
+                )}
+              </Avatar>
+              <Uploader 
+                setUserImage={setUserImage}
+                userImage={userImage}
+              />
+            </div>
             
             <Label htmlFor="name">
               Name

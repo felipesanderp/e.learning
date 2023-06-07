@@ -1,29 +1,55 @@
-"use client";
-
+import { useCallback, useState, Dispatch, SetStateAction } from "react";
 import { useDropzone } from "react-dropzone";
-import { OurFileRouter } from "@/app/api/uploadthing/core";
 import { generateReactHelpers } from "@uploadthing/react/hooks";
-import { useCallback, useState } from "react";
 import type { FileWithPath } from "react-dropzone";
 import { generateClientDropzoneAccept } from "uploadthing/client";
 
+import { OurFileRouter } from "@/app/api/uploadthing/core";
+
+import { cn } from "@/lib/utils";
+import { buttonVariants } from "@/components/ui/button";
+import { toast } from "@/hooks/use-toast";
+import { Icons } from "@/components/icons";
+
 const { useUploadThing } = generateReactHelpers<OurFileRouter>();
+
+type UserImage = {
+  fileUrl: string,
+  fileKey: string
+}
+
+
  
-export default function Uploader() {
+interface UploaderProps {
+  userImage: UserImage | undefined
+  setUserImage: Dispatch<SetStateAction<UserImage | undefined>>
+}
+
+export default function Uploader({
+  userImage, setUserImage
+}: UploaderProps) {
   const [files, setFiles] = useState<File[]>([]);
+  const [isUploading, setIsUploading] = useState(false)
+
   const onDrop = useCallback((acceptedFiles: FileWithPath[]) => {
     setFiles(acceptedFiles);
   }, []);
 
-  const { isUploading, startUpload, permittedFileInfo } = useUploadThing({
+  const { startUpload, permittedFileInfo } = useUploadThing({
     endpoint: 'imageUploader',
     onClientUploadComplete: () => {
-      alert("uploaded successfully!");
-    },
+      toast({
+        title: "Upload da foto completo.",
+        description: "Não esqueça de salvar as suas informações!",
+      })
+    }, 
     onUploadError: () => {
-      alert("error occurred while uploading");
+      toast({
+        title: "Algo deu errado.",
+        description: "o upload da sua foto não deu certo! Tente novamente.",
+        variant: "destructive",
+      })
     },
-
   })
 
   const { getRootProps, getInputProps } = useDropzone({
@@ -33,23 +59,43 @@ export default function Uploader() {
   
   return (
     <>
-      <div {...getRootProps()} className="border-border border-2 rounded-md border-dashed w-36 h-36">
-        <p className="items-center justify-center flex relative top-[50px] flex-col text-sm">
-          <span className="font-semibold mr-1">Click to upload</span>
-          <span>or drag and drop.</span>
-        </p>
+      {files.length > 0 ? (
+        <button
+          disabled={isUploading} 
+          type='button' 
+          className={cn(buttonVariants())} 
+          onClick={async () => {
+            setIsUploading(true)
+
+            const res = await startUpload(files)
+
+            setIsUploading(false)
+            setFiles([])
+            
+            if (res) {
+              setUserImage({
+                fileUrl: res[0].fileUrl,
+                fileKey: res[0].fileKey,
+              })
+            }
+          }}
+        >
+          {isUploading && (
+            <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+          )}
+          Upload photo
+        </button>
+      ) : (
+        <div {...getRootProps()} className={cn(buttonVariants({ variant: "link" }), 'p-0 border-none focus:border-none focus:ring-0')}>
+        <span>
+          Alterar Foto
+        </span>
         <input
           {...getInputProps()}
-          className="block relative z-10 h-[100px] border-2 opacity-0 w-full"
+          type='button'
         />
       </div>
-      <div>
-      {files.length > 0 && (
-        <button type='button' onClick={() => startUpload(files)}>
-          Upload {files.length} files
-        </button>
       )}
-    </div>
   </>
   );
 }

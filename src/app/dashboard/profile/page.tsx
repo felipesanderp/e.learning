@@ -25,7 +25,16 @@ export default async function Profile() {
         text="Manage your account."
       />
       <div>
-        <UserInfoForm user={{ id: user.id, name: user.name || "", email: user.email || "", image: user.image || "" }} />
+        <UserInfoForm 
+          user={
+            { id: user.id, 
+              name: user.name || "", 
+              email: user.email || "", 
+              image: user.image || "", 
+              imageKey: user.imageKey || "" 
+            }
+          } 
+        />
       </div>
     </DashboardShell>
   )

@@ -4,6 +4,7 @@ export const mePatchSchema = z.object({
   email: z.string().email().optional(),
   name: z.string().min(3).max(250).optional(),
   image: z.string().optional(),
+  imageKey: z.string().optional()
 })
 
 export const userPatchSchema = z.object({
