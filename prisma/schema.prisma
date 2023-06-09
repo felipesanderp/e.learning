@@ -102,7 +102,7 @@ model Lessons {
   course   Courses? @relation(fields: [courseId], references: [id], onDelete: Cascade)
   courseId String?
 
-  user   User   @relation(fields: [userId], references: [id])
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String
 
   createdAt DateTime @default(now())
@@ -116,10 +116,10 @@ model Lessons {
 model Enrollment {
   id String @id @default(cuid())
 
-  user   User   @relation(fields: [userId], references: [id])
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String
 
-  course   Courses @relation(fields: [courseId], references: [id])
+  course   Courses @relation(fields: [courseId], references: [id], onDelete: Cascade)
   courseId String
 
   canceledAt DateTime?

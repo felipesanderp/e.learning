@@ -33,16 +33,15 @@ async function deleteUser(userId: string) {
   })
 
   if(!response.ok) {
-    toast({
-      title: "Something went wrong.",
-      description: "The user was not deleted. Please try again.",
+    return toast({
+      title: "Algo deu errado.",
+      description: "O usuário não foi deletado. Por favor, tente novamente.",
       variant: "destructive",
     })
   }
 
   toast({
-    title: "User deleted.",
-    variant: "success"
+    title: "Usuário deletado.",
   })
 
   return true
@@ -68,20 +67,20 @@ export function DataTableRowActions<TData>({
             className="flex h-8 w-8 p-0 data-[state=open]:bg-muted"
           >
             <MoreHorizontal className="h-4 w-4" />
-            <span className="sr-only">Open menu</span>
+            <span className="sr-only">Abrir menu</span>
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-[160px]">
           <DropdownMenuItem>
             <Pen className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
-            Edit
+            Editar
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem
             onSelect={() => setShowDeleteAlert(true)}
           >
             <Trash className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
-            Delete
+            Deletar
             <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
           </DropdownMenuItem>
         </DropdownMenuContent>
@@ -121,7 +120,7 @@ export function DataTableRowActions<TData>({
               ) : (
                 <Icons.trash className="mr-2 h-4 w-4" />
               )}
-              <span>Delete</span>
+              <span>Deletar</span>
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

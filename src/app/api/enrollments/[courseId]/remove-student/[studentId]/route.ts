@@ -35,13 +35,13 @@ export async function PATCH(
         courseId: params.courseId,
         AND: {
           userId: params.studentId,
-        }
+        },
       },
       data: {
-        canceledAt: new Date(),
+        canceledAt: new Date()
       }
     })
-    
+
     return new Response(null, { status: 200 })
   } catch (error) {
     if (error instanceof z.ZodError) {
