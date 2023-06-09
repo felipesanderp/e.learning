@@ -7,11 +7,11 @@ export const dashboardConfig: DashboardConfig = {
       href: "/dashboard",
     },
     {
-      title: "Courses",
+      title: "Cursos",
       href: "/dashboard/courses"
     },
     {
-      title: "Lessons",
+      title: "Aulas",
       href: "/dashboard/lessons"
     }
   ],
@@ -22,12 +22,12 @@ export const dashboardConfig: DashboardConfig = {
       icon: "home",
     },
     {
-      title: "Courses",
+      title: "Cursos",
       href: "/dashboard/courses",
       icon: "graduationCap",
     },
     {
-      title: "Lessons",
+      title: "Aulas",
       href: "/dashboard/lessons",
       icon: "bookOpen",
     }

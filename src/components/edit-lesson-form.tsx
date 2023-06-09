@@ -54,14 +54,14 @@ export function EditLessonForm({ lesson }: EditLessonForm) {
 
     if (!response?.ok) {
       return toast({
-        title: "Something went wrong.",
-        description: "The lesson was not updated. Please try again.",
+        title: "Algo deu errado.",
+        description: "A aula não foi atualizada. Por favor, tente novamente.",
         variant: "destructive",
       })
     }
 
     toast({
-      description: "The lesson has been updated.",
+      description: "A aula foi atualizada.",
     })
 
     router.refresh()
@@ -76,14 +76,14 @@ export function EditLessonForm({ lesson }: EditLessonForm) {
         <Card className="md:col-span-6">
           <CardHeader>
             <CardTitle>
-              Details
+              Detalhes
             </CardTitle>
           </CardHeader>
           <CardContent>
             <section className="space-y-4">
               <div className="grid grid-cols-2 items-end gap-6">
                 <div className="space-y-2">
-                  <Label>Name</Label>
+                  <Label>Nome</Label>
                   <Input
                     type="text"
                     {...form.register('name')}
@@ -103,7 +103,7 @@ export function EditLessonForm({ lesson }: EditLessonForm) {
                 </div>
               </div>
               <div className="space-y-2">
-                <Label>Video Link</Label>
+                <Label>Link da aula</Label>
                 <Input 
                   type="text"
                   {...form.register('video_id')}
@@ -115,7 +115,7 @@ export function EditLessonForm({ lesson }: EditLessonForm) {
                 )}
               </div>
               <div className="space-y-2">
-                <Label>Description</Label>
+                <Label>Descrição</Label>
                 <Textarea 
                   {...form.register('description')}
                 />
@@ -138,7 +138,7 @@ export function EditLessonForm({ lesson }: EditLessonForm) {
             {isSaving && (
               <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
             )}
-            Update Lesson
+            Atualizar Aula
           </Button>
         </div>
       </form>

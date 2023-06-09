@@ -93,14 +93,14 @@ export function UserInfoForm({ user, className, ...props }: UserInfoFormProps) {
 
     if (!response?.ok) {
       return toast({
-        title: "Something went wrong.",
-        description: "Your profile was not updated. Please try again.",
+        title: "Algo deu errado.",
+        description: "Seu perfil não foi atualizado. Por favor, tente novamente.",
         variant: "destructive",
       })
     }
 
     toast({
-      description: "Your profile has been updated.",
+      description: "Perfil atualizado com sucesso.",
     })
 
     router.refresh()
@@ -114,9 +114,9 @@ export function UserInfoForm({ user, className, ...props }: UserInfoFormProps) {
     >
       <Card>
         <CardHeader>
-          <CardTitle>Your Infos</CardTitle>
+          <CardTitle>Suas informações</CardTitle>
           <CardDescription>
-            Please enter your new infos or what you are comfortable with. 
+            Por favor, entre com suas novas informações. 
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -140,7 +140,7 @@ export function UserInfoForm({ user, className, ...props }: UserInfoFormProps) {
             </div>
             
             <Label htmlFor="name">
-              Name
+              Nome
             </Label>
             <Input
               id="name"
@@ -190,7 +190,7 @@ export function UserInfoForm({ user, className, ...props }: UserInfoFormProps) {
             {isSaving && (
               <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
             )}
-            <span>Save</span>
+            <span>Salvar</span>
           </Button>
         </CardFooter>
       </Card>

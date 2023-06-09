@@ -4,12 +4,11 @@ import { db } from "@/lib/db"
 import { DashboardHeader } from "@/components/header";
 import { DashboardShell } from "@/components/shell";
 import { getCurrentUser } from "@/lib/session";
-import { CreateCourse } from "@/components/create-course";
 import { CoursesCard } from "@/components/courses-card";
 import { CreateCourseForm } from "@/components/create-course-form";
 
 export const metadata = {
-  title: 'Courses | e.learning',
+  title: 'Cursos | e.learning',
 }
 
 export default async function CoursesPage() {
@@ -45,8 +44,8 @@ export default async function CoursesPage() {
   return (
     <DashboardShell>
       <DashboardHeader
-        heading="Courses"
-        text={user?.role === "ADMIN" || user?.role === 'PROFESSOR' ? "Create and manage courses." : "See the available courses."}
+        heading="Cursos"
+        text="Crie e gerencie cursos."
       >
         {user?.role === 'ADMIN' || user?.role === 'PROFESSOR' ?
           <CreateCourseForm 

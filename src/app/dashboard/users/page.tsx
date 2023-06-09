@@ -39,8 +39,8 @@ export default async function Users() {
   return (
     <DashboardShell>
       <DashboardHeader
-        heading='Users'
-        text='Create and manage users.'
+        heading='Usuários'
+        text='Crie e gerencie usuários.'
       >
         {user?.role === 'ADMIN' || user?.role === 'PROFESSOR' ?
           <CreateUserForm /> : ''

@@ -92,7 +92,7 @@ export default async function DashboardPage() {
               <Card className="col-span-3">
                 <CardHeader>
                   <CardTitle>
-                    Latest created users
+                    Últimos usuários criados
                   </CardTitle>
                 </CardHeader>
                 <CardContent>

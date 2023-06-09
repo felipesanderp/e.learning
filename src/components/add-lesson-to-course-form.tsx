@@ -81,8 +81,8 @@ export function AddLessonToCourse({
 
     if (!response?.ok) {
       toast({
-        title: "Something went wrong.",
-        description: "The lesson was not removed. Please try again.",
+        title: "Algo deu errado.",
+        description: "A aula não foi removida. or favor, tente novamente.",
         variant: "destructive",
       })
     }
@@ -115,7 +115,7 @@ export function AddLessonToCourse({
                         <Select onValueChange={field.onChange} defaultValue={field.value}>
                           <FormControl>
                             <SelectTrigger>
-                              <SelectValue placeholder="Select a lesson..." />
+                              <SelectValue placeholder="Selecione uma aula..." />
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent>

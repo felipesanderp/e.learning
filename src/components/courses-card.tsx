@@ -45,14 +45,14 @@ async function deleteCourse(courseId: string) {
 
   if(!response.ok) {
     toast({
-      title: "Something went wrong.",
-      description: "The course was not deleted. Please try again.",
+      title: "Algo deu errado.",
+      description: "O curso não foi deletado. Por favor, tente novamente.",
       variant: "destructive",
     })
   }
 
   toast({
-    title: "Course deleted.",
+    title: "Curso deletado.",
     variant: "success"
   })
 
@@ -145,7 +145,7 @@ export function CoursesCard({ course, lesson, user }: CoursesCardProps) {
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogCancel>Cancelar</AlertDialogCancel>
             <AlertDialogAction
               onClick={async (event) => {
                 event?.preventDefault()
@@ -166,7 +166,7 @@ export function CoursesCard({ course, lesson, user }: CoursesCardProps) {
               ) : (
                 <Icons.trash className="mr-2 h-4 w-4" />
               )}
-              <span>Delete</span>
+              <span>Deletar</span>
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

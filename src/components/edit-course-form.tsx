@@ -98,14 +98,14 @@ export function EditCourseForm({ courseId }: EditCourseFormProps) {
 
     if (!response?.ok) {
       return toast({
-        title: "Something went wrong.",
-        description: "The course was not updated. Please try again.",
-        variant: "destructive",
+        title: "Algo deu errado.",
+        description: "O curso não foi atualizado! Por favor, tente novamente.",
+        variant: "destructive"
       })
     }
 
     toast({
-      description: "The course has been updated.",
+      description: "O curso foi atualizado.",
     })
 
     router.refresh()
@@ -119,13 +119,13 @@ export function EditCourseForm({ courseId }: EditCourseFormProps) {
       >
         <Card className="md:col-span-4">
           <CardHeader>
-            <CardTitle>Details</CardTitle>
+            <CardTitle>Detalhes</CardTitle>
           </CardHeader>
           <CardContent>
             <section className="space-y-4">
               <div className="grid grid-cols-2 items-end gap-6">
                 <div className="space-y-2">
-                  <Label>Title</Label>
+                  <Label>Titulo</Label>
                   <Input 
                     type="text"
                     {...form.register('title')}
@@ -145,7 +145,7 @@ export function EditCourseForm({ courseId }: EditCourseFormProps) {
                 </div>
               </div>
               <div className="space-y-2">
-                <Label>Image</Label>
+                <Label>Imagem</Label>
                 <Input 
                   type="text"
                   {...form.register('imageURL')}
@@ -157,7 +157,7 @@ export function EditCourseForm({ courseId }: EditCourseFormProps) {
                 )}
               </div>
               <div className="space-y-2">
-                <Label>Description</Label>
+                <Label>Descrição</Label>
                 <Textarea 
                   {...form.register('description')}
                 />
@@ -172,7 +172,7 @@ export function EditCourseForm({ courseId }: EditCourseFormProps) {
             <Separator className="my-8" />
 
             <section>
-              <CardTitle className="mb-4">Lessons</CardTitle>
+              <CardTitle className="mb-4">Aulas</CardTitle>
             </section>
             <div className="mb-2 space-y-4">
               {course?.lessons.length ? (
@@ -207,14 +207,14 @@ export function EditCourseForm({ courseId }: EditCourseFormProps) {
               onClick={() => setShowAddLessonAlert(true)}
             >
               <Icons.add className="h-4 w-4" />
-              Add Lesson
+              Adicionar aula
             </Button>
           </CardContent>
         </Card>
         <div className="space-y-4 md:col-span-2">
           <Card>
             <CardHeader>
-              <CardTitle>Students</CardTitle>
+              <CardTitle>Alunos</CardTitle>
             </CardHeader>
             <CardContent className="mb-2 flex flex-col gap-2">
               {course?.enrolledOn.length ? (
@@ -254,7 +254,7 @@ export function EditCourseForm({ courseId }: EditCourseFormProps) {
                 onClick={() => setShowCreateEnrollmentAlert(true)}
               >
                 <Icons.add className="h-4 w-4" />
-                Add User
+                Adicionar aluno
               </Button>
             </CardContent>
           </Card>
@@ -267,7 +267,7 @@ export function EditCourseForm({ courseId }: EditCourseFormProps) {
             {isSaving && (
               <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
             )}
-            Update Course
+            Atualizar Curso
           </Button>
         </div>
       </form>

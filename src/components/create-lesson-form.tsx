@@ -94,15 +94,15 @@ export function CreateLessonForm({ professors }: CreateLessonFormProps) {
 
     if (!response.ok) {
       return toast({
-        title: "Something went wrong.",
-        description: "The lesson was not created! Please, try again.",
+        title: "Algo deu errado.",
+        description: "A aula não foi criada! Por favor, tente novamente.",
         variant: "destructive"
       })
     }
     
     toast({
-      title: "Lesson created.",
-      description: "The lesson was created! Check the lessons page.",
+      title: "Aula criada.",
+      description: "A aula foi criada! Verifique a página das aulas.",
       variant: 'success'
     })
     
@@ -276,14 +276,14 @@ export function CreateLessonForm({ professors }: CreateLessonFormProps) {
           )}
         >
           <Icons.add className="mr-2 h-4 w-4" />
-          New Lesson
+          Nova aula
         </Button>
       </SheetTrigger>
       <SheetContent position="right" size="default">
         <SheetHeader className="mb-4">
-          <SheetTitle>Create Lesson</SheetTitle>
+          <SheetTitle>Crie Aula</SheetTitle>
           <SheetDescription>
-            Create a new lesson!
+            Crie uma nova aula!
           </SheetDescription>
         </SheetHeader>
         <Form {...form}>

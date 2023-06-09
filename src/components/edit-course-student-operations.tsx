@@ -30,8 +30,8 @@ async function cancelStudentEnrollment(courseId: string, studentId: string) {
 
   if (!response?.ok) {
     toast({
-      title: "Something went wrong.",
-      description: "The enrollment was not canceled. Please try again.",
+      title: "Algo deu errado.",
+      description: "O aluno não foi removido desse curso. Por favor, tente novamente.",
       variant: "destructive",
     })
   }
@@ -60,20 +60,20 @@ export function EditCourseStudentOperations(
             className="flex h-8 w-8 p-0 data-[state=open]:bg-muted"
           >
             <Icons.moreDots className="h-4 w-4" />
-            <span className="sr-only">Open menu</span>
+            <span className="sr-only">Abrir menu</span>
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-[160px]">
           <DropdownMenuItem>
             <Icons.pen className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
-            Edit
+            Editar
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem
             onSelect={() => setShowRemoveAlert(true)}
           >
             <Icons.trash className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
-            Remove
+            Remover
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
@@ -108,7 +108,7 @@ export function EditCourseStudentOperations(
               ) : (
                 <Icons.trash className="mr-2 h-4 w-4" />
               )}
-              Remove
+              Remover
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

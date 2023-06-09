@@ -48,17 +48,17 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 
       if (!signInResult?.ok) {
         return toast({
-          title: "Something went wrong.",
-          description: "Your sign in request failed. Please try again.",
+          title: "Algo deu errado.",
+          description: "E-mail ou senha errados. Por favor, verifique suas credencias e tente novamente.",
           variant: "destructive",
         })
       }  
     } catch {
       setIsLoading(false)
       return toast({
-        title: "Erro no Login!",
-        description: "Verifique seu e-mail ou senha e tente novamente!",
-        variant: "destructive"
+        title: "Algo deu errado.",
+        description: "E-mail ou senha errados. Por favor, verifique suas credencias e tente novamente.",
+        variant: "destructive",
       })
     }
   }

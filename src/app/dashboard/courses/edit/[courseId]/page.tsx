@@ -12,8 +12,8 @@ export default async function EditCoursePage({ params }:EditCoursePageProps) {
   return (
     <DashboardShell>
       <DashboardHeader 
-        heading="Manage Course"
-        text="Edit, delete and add new items to this course only."
+        heading="Gerencie esse curso"
+        text="Edite, delete e adicione novos items à esse curso somente."
       >
         <Link href={`/dashboard/courses/${params.courseId}`}>
           <Button variant="link">Preview</Button>

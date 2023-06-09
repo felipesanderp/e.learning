@@ -44,7 +44,7 @@ export function MainNav({ user }: MainNavProps) {
             pathname?.startsWith("/dashboard/courses") ? "font-bold text-primary" : "text-foreground/60"
           )}
         >
-          Courses
+          Cursos
         </Link>
       ): ''}
 
@@ -56,7 +56,7 @@ export function MainNav({ user }: MainNavProps) {
             pathname?.startsWith("/dashboard/lessons") ? "font-bold text-primary" : "text-foreground/60"
           )}
         >
-          Lessons
+          Aulas
         </Link> : ''}
 
       {user.role === 'ADMIN' || user.role === 'PROFESSOR' ? 
@@ -67,7 +67,7 @@ export function MainNav({ user }: MainNavProps) {
             pathname?.startsWith("/dashboard/users") ? "font-bold text-primary" : "text-foreground/60"
           )}
         >
-          Users
+          Usuários
         </Link> : ''}
 
       <Link
@@ -77,7 +77,7 @@ export function MainNav({ user }: MainNavProps) {
           pathname?.startsWith("/dashboard/profile") ? "font-bold text-primary" : "text-foreground/60"
         )}
       >
-        Profile
+        Meu Perfil
       </Link>
     </nav>
   )

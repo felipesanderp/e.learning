@@ -44,8 +44,8 @@ export default async function EditLessonPage({ params }: EditLessonPageProps) {
   return (
     <DashboardShell>
       <DashboardHeader 
-        heading="Manage Lesson"
-        text="Edit, delete and add new items to this lesson only."
+        heading="Gerencie Aula"
+        text="Edite, delete e adicione novos items à esse aula somente."
       />
 
       <EditLessonForm 

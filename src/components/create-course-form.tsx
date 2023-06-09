@@ -30,8 +30,7 @@ import {
 } from "@/components/ui/select"
 import { 
   Form, 
-  FormControl, 
-  FormDescription, 
+  FormControl,
   FormField, 
   FormItem, 
   FormLabel, 
@@ -91,15 +90,15 @@ export function CreateCourseForm({ lessons }: CreateCourseFormProps) {
 
       if (!response.ok) {
         return toast({
-          title: "Something went wrong.",
-          description: "The course was not created! Please, try again.",
+          title: "Algo deu errado.",
+          description: "O curso não foi criado! Por favor, tente novamente.",
           variant: "destructive"
         })
       }
 
       toast({
-        title: "Course created.",
-        description: "The course was created! Check the lessons page.",
+        title: "Curso criado.",
+        description: "O curso foi criado! Verifique a página de cursos.",
         variant: 'success'
       })
     } else {
@@ -117,15 +116,15 @@ export function CreateCourseForm({ lessons }: CreateCourseFormProps) {
 
       if (!response.ok) {
         return toast({
-          title: "Something went wrong.",
-          description: "The course was not created! Please, try again.",
+          title: "Algo deu errado.",
+          description: "O curso não foi criado! Por favor, tente novamente.",
           variant: "destructive"
         })
       }
 
       toast({
-        title: "Course created.",
-        description: "The course was created! Check the lessons page.",
+        title: "Curso criado.",
+        description: "O curso foi criado! Verifique a página de cursos.",
         variant: 'success'
       })
     }
@@ -305,14 +304,14 @@ export function CreateCourseForm({ lessons }: CreateCourseFormProps) {
           )}
         >
           <Icons.add className="mr-2 h-4 w-4" />
-          New Course
+          Novo curso
         </Button>
       </SheetTrigger>
       <SheetContent position="right" size="default">
         <SheetHeader className="mb-4">
-          <SheetTitle>Create Course</SheetTitle>
+          <SheetTitle>Criar curso</SheetTitle>
           <SheetDescription>
-            Create a new course!
+            Crie um novo curso!
           </SheetDescription>
         </SheetHeader>
         <Form {...form}>

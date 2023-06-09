@@ -92,15 +92,15 @@ export function CreateUserForm() {
     
     if (!response.ok) {
       return toast({
-        title: "Something went wrong.",
-        description: "The user was not created! Please, try again.",
+        title: "Algo deu errado.",
+        description: "O usuário não foi criado! Por favor, tente novamente.",
         variant: "destructive"
       })
     }
     
     toast({
-      title: "User created.",
-      description: "The was created! Check the users page.",
+      title: "Usuário criado.",
+      description: "O usuário foi criado! Verifique a página de usuários.",
       variant: 'success'
     })
     
@@ -257,17 +257,17 @@ export function CreateUserForm() {
                 name="role"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Role</FormLabel>
+                    <FormLabel>Função</FormLabel>
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder="Select a role..." />
+                          <SelectValue placeholder="Selecione a função..." />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
                         <SelectItem value="ADMIN">Admin</SelectItem>
                         <SelectItem value="PROFESSOR">Professor</SelectItem>
-                        <SelectItem value="STUDENT">Student</SelectItem>
+                        <SelectItem value="STUDENT">Aluno</SelectItem>
                       </SelectContent>
                     </Select>
                     <FormMessage />
@@ -319,14 +319,14 @@ export function CreateUserForm() {
           )}
         >
           <Icons.add className="mr-2 h-4 w-4" />
-          New User
+          Novo usuário
         </Button>
       </SheetTrigger>
       <SheetContent position="right" size="default">
         <SheetHeader className="mb-4">
-          <SheetTitle>Create User</SheetTitle>
+          <SheetTitle>Crie usuário</SheetTitle>
           <SheetDescription>
-            Create a new user!
+            Crie um novo usuário!
           </SheetDescription>
         </SheetHeader>
         <Form {...form}>

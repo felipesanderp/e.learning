@@ -21,8 +21,8 @@ export default async function Profile() {
   return (
     <DashboardShell>
       <DashboardHeader 
-        heading="Profile"
-        text="Manage your account."
+        heading="Meu Perfil"
+        text="Gerencie sua conta."
       />
       <div>
         <UserInfoForm 

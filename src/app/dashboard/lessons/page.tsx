@@ -46,8 +46,8 @@ export default async function LessonsPage() {
   return (
     <DashboardShell>
       <DashboardHeader
-        heading="Lessons"
-        text='Create and manage lessons.'
+        heading="Aulas"
+        text='Crie e gerencie aulas.'
       >
         {user?.role === 'ADMIN' || user?.role === 'PROFESSOR' ?
           <CreateLessonForm 

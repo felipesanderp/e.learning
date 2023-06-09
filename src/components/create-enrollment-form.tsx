@@ -81,10 +81,10 @@ export function CreateEnrollmentForm({
     })
 
     if (!response?.ok) {
-      toast({
-        title: "Something went wrong.",
-        description: "The enrollment was not created. Please try again.",
-        variant: "destructive",
+      return toast({
+        title: "Algo deu errado.",
+        description: "O aluno não foi inscrito nesse curso! Por favor, tente novamente.",
+        variant: "destructive"
       })
     }
     
@@ -116,7 +116,7 @@ export function CreateEnrollmentForm({
                       <Select onValueChange={field.onChange} defaultValue={field.value}>
                         <FormControl>
                           <SelectTrigger>
-                            <SelectValue placeholder="Select a student..." />
+                            <SelectValue placeholder="Selecione um estudante..." />
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
