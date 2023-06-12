@@ -102,13 +102,14 @@ export default async function DashboardPage() {
               </Card>
             ) : (
               <Card className="col-span-3">
-                <CardHeader>
+                <CardHeader className="flex-row justify-between space-y-0">
                   <CardTitle>
                     Meus Eventos
                   </CardTitle>
+                  <MyCalendar />
                 </CardHeader>
                 <CardContent>
-                  <MyCalendar />
+                  
                 </CardContent>
               </Card>
             )}
