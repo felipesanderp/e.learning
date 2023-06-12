@@ -9,6 +9,7 @@ import { AdminAnalytics } from "@/components/admin/analytics";
 import { LatestCreatedUsers } from "@/components/admin/latest-created-users";
 import { db } from "@/lib/db";
 import { CoursesCard } from "@/components/courses-card";
+import { MyCalendar } from "@/components/student/my-calendar";
 
 export const metadata = {
   title: 'Dashboard | e.learning',
@@ -99,7 +100,18 @@ export default async function DashboardPage() {
                   <LatestCreatedUsers />
                 </CardContent>
               </Card>
-            ): ''}
+            ) : (
+              <Card className="col-span-3">
+                <CardHeader>
+                  <CardTitle>
+                    Meus Eventos
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <MyCalendar />
+                </CardContent>
+              </Card>
+            )}
           </div>
         </TabsContent>
 
