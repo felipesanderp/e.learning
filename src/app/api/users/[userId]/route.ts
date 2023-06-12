@@ -69,26 +69,26 @@ export async function PATCH(
     const json = await req.json()
     const body = userPatchSchema.parse(json)
 
-    const passwordHash = await hash(body?.password!!, 10)
+      await db.user.update({
+         where: {
+          id: params.userId as string,
+        },
+        data: {
+          email: body.email,
+          name: body.name,
+          role: body.role,
+          image: body.image,
+        }
+      })
 
-    await db.user.update({
-      where: {
-        id: params.userId as string,
-      },
-      data: {
-        email: body.email,
-        name: body.name,
-        password: passwordHash,
-        role: body.role,
-        image: body.image,
-      }
-    })
 
     return new Response(null, { status: 200 })
   } catch (error) {
     if (error instanceof z.ZodError) {
       return new Response(JSON.stringify(error.issues), { status: 422 })
     }
+
+    console.log(error)
 
     return new Response(null, { status: 500 })
   }
