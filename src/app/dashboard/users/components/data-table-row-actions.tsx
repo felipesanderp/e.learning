@@ -71,7 +71,14 @@ export function DataTableRowActions<TData>({
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-[160px]">
-          <DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={async (event) => {
+              event.preventDefault()
+
+              // @ts-expect-error
+              router.push(`/dashboard/users/edit/${row.original.id}`)
+            }}
+          >
             <Pen className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
             Editar
           </DropdownMenuItem>
