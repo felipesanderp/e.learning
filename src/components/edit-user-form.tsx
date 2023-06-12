@@ -28,6 +28,7 @@ interface EditeUserFormProps {
     id: string
     name: string
     email: string
+    password: string
     role: ROLE
     enrollments: {
       course: {
@@ -48,67 +49,38 @@ export function EditUseForm({ user }: EditeUserFormProps) {
       name: user.name,
       email: user.email,
       role: user.role,
-      newPassword: undefined,
+      password: user.password,
     }
   })
 
   async function onSubmit(data: FormData) {
-    if (data.newPassword !== undefined) {
-      setIsSaving(true)
-      const response = await fetch(`/api/users/${user.id}`, {
-        method: 'PATCH',
-        body: JSON.stringify({
-          name: data.name,
-          email: data.email,
-          image: data.image,
-          password: data.newPassword,
-          role: data.role,
-        })
+    setIsSaving(true)
+    const response = await fetch(`/api/users/${user.id}`, {
+      method: 'PATCH',
+      body: JSON.stringify({
+        name: data.name,
+        email: data.email,
+        image: data.image,
+        password: data.password,
+        role: data.role,
       })
+    })
 
-      setIsSaving(false)
+    setIsSaving(false)
 
-      if (!response.ok) {
-        return toast({
-          title: "Algo deu errado.",
-          description: "O usuário não foi atualizado! Por favor, tente novamente.",
-          variant: "destructive"
-        })
-      }
-
-      toast({
-        description: "O usuário foi atualizado.",
+    if (!response.ok) {
+      return toast({
+        title: "Algo deu errado.",
+        description: "O usuário não foi atualizado! Por favor, tente novamente.",
+        variant: "destructive"
       })
-
-      router.refresh()
-    } else {
-      setIsSaving(true)
-      const response = await fetch(`/api/users/${user.id}`, {
-        method: 'PATCH',
-        body: JSON.stringify({
-          name: data.name,
-          email: data.email,
-          image: data.image,
-          role: data.role,
-        })
-      })
-
-      setIsSaving(false)
-
-      if (!response.ok) {
-        return toast({
-          title: "Algo deu errado.",
-          description: "O usuário não foi atualizado! Por favor, tente novamente.",
-          variant: "destructive"
-        })
-      }
-
-      toast({
-        description: "O usuário foi atualizado.",
-      })
-
-      router.refresh()
     }
+
+    toast({
+      description: "O usuário foi atualizado.",
+    })
+
+    router.refresh()
   }
 
   return (
@@ -138,13 +110,13 @@ export function EditUseForm({ user }: EditeUserFormProps) {
                     {...form.register('email')}
                   />
                 </div>
-                {/* <div className="space-y-2">
+                <div className="space-y-2">
                   <Label>Nova senha</Label>
                   <Input 
                     type="password"
-                    {...form.register('newPassword')}
+                    {...form.register('password')}
                   />
-                </div> */}
+                </div>
               </div>
             </section>
           </CardContent>

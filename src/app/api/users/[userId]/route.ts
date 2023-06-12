@@ -77,6 +77,7 @@ export async function PATCH(
           email: body.email,
           name: body.name,
           role: body.role,
+          password: await hash(body.password!!, 10),
           image: body.image,
         }
       })

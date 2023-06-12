@@ -63,6 +63,7 @@ export default async function EditUserPage({ params }:EditUserPageProps) {
           name: user.name,
           email: user.email || '',
           role: user.role,
+          password: user.password,
           enrollments: user.enrollments
         }}
       />

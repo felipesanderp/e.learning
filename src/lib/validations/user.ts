@@ -11,7 +11,7 @@ export const userPatchSchema = z.object({
   email: z.string().email().optional(),
   name: z.string().min(3).max(250).optional(),
   image: z.string().optional(),
-  newPassword: z.string().optional(),
+  password: z.string().optional(),
   role: z.enum(['ADMIN', 'PROFESSOR', 'STUDENT']).optional(),
 })
 
