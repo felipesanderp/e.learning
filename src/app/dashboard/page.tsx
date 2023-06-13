@@ -10,6 +10,7 @@ import { LatestCreatedUsers } from "@/components/admin/latest-created-users";
 import { db } from "@/lib/db";
 import { CoursesCard } from "@/components/courses-card";
 import { MyCalendar } from "@/components/student/my-calendar";
+import { StudentAnalytics } from "@/components/student/analytics";
 
 export const metadata = {
   title: 'Dashboard | e.learning',
@@ -74,7 +75,9 @@ export default async function DashboardPage() {
           <div>
             {user.role === "ADMIN" || user.role === "PROFESSOR" ? (
               <AdminAnalytics />
-            ): ''}
+            ) : (
+              <StudentAnalytics />
+            )}
           </div>
 
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
