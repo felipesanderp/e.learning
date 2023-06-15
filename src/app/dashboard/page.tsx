@@ -65,7 +65,10 @@ export default async function DashboardPage() {
       </div>
       <Tabs defaultValue={user.role === 'ADMIN' || user.role === 'PROFESSOR' ? 'overview' : 'my-courses'} className="space-y-4">
         <TabsList>
-          {user.role === 'ADMIN' || user.role === 'PROFESSOR' && (
+          {user.role === 'ADMIN'&& (
+            <TabsTrigger value="overview">Overview</TabsTrigger>
+          )}
+          {user.role === 'PROFESSOR' && (
             <TabsTrigger value="overview">Overview</TabsTrigger>
           )}
           {user.role === 'STUDENT' && (
