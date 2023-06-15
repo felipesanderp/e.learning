@@ -83,6 +83,7 @@ export function AdminAnalytics() {
           <CardTitle className="text-sm font-medium">
             Total de Alunos
           </CardTitle>
+          <Icons.user className="h-4 w-4 text-muted-foreground" />
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold">
@@ -100,6 +101,7 @@ export function AdminAnalytics() {
           <CardTitle className="text-sm font-medium">
             Total de Professores
           </CardTitle>
+          <Icons.users className="h-4 w-4 text-muted-foreground" />
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold">
@@ -117,6 +119,7 @@ export function AdminAnalytics() {
           <CardTitle className="text-sm font-medium">
             Total de Cursos
           </CardTitle>
+          <Icons.graduationCap className="h-4 w-4 text-muted-foreground" />
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold">
@@ -134,6 +137,7 @@ export function AdminAnalytics() {
           <CardTitle className="text-sm font-medium">
             Total de Aulas
           </CardTitle>
+          <Icons.bookOpen className="h-4 w-4 text-muted-foreground" />
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold">

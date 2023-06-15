@@ -12,12 +12,13 @@ import {
   BookOpen,
   Facebook,
   User,
+  Users,
   LogOut,
   Home,
   AlertTriangle,
   Trash,
   Pen,
-  MoreHorizontal
+  MoreHorizontal,
 } from "lucide-react"
 
 export type Icon = LucideIcon
@@ -35,10 +36,11 @@ export const Icons = {
   bookOpen: BookOpen,
   facebook: Facebook,
   user: User,
+  users: Users,
   logOut: LogOut,
   home: Home,
   warning: AlertTriangle,
   trash: Trash,
   pen: Pen,
-  moreDots: MoreHorizontal
+  moreDots: MoreHorizontal,
 }
