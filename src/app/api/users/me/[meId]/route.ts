@@ -69,6 +69,7 @@ export async function PATCH(
         email: payload.email,
         name: payload.name,
         image: payload.image,
+        bio: payload.bio,
         imageKey: payload.imageKey,
       }
     })
