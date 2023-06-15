@@ -1,16 +1,17 @@
 import '@/styles/globals.css';
 import { Analytics } from '@vercel/analytics/react';
-import { Inter as FontSans } from "next/font/google"
+import { Roboto  } from "next/font/google"
 
 import { cn } from '@/lib/utils';
 
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/toaster"
 
-const fontSans = FontSans({
-  subsets: ["latin"],
-  variable: "--font-sans",
-  display: "swap",
+const roboto = Roboto({
+ weight: ['400', '500', '700'],
+ subsets: ['latin'],
+ display: 'swap',
+ variable: '--font-roboto'
 })
 interface RootLayoutProps {
   children: React.ReactNode
@@ -22,7 +23,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
       <body
         className={cn(
           "bg-background font-sans antialiased",
-          fontSans.variable
+          roboto.variable
         )}
       >
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem>

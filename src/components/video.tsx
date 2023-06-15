@@ -39,20 +39,17 @@ export function Video({ lessonSlug }: VideoProps) {
   return (
     <div className="flex-1">
       <div className="flex justify-center">
-        <div className="h-full w-full max-w-[1100px] max-h-[60vh] aspect-video">
+        <div className="h-full w-full max-w-[1100px] max-h-[60vh] aspect-video border border-primary">
           {lesson && <VideoPlayer key="1" videoUrl={lesson.video_id} />}
         </div>
       </div>
 
-      <div className="p-8 max-w-[1100px] mx-auto">
+      <div className="max-w-[1100px] mx-auto">
         <div className="flex items-start gap-16">
           <div className="flex-1">
             <h1 className="text-2xl font-bold">
               {lesson?.name}
             </h1>
-            <p className="mt-4 text-primary leading-relaxed">
-              {lesson?.description}
-            </p>
 
             <div className="flex items-center gap-4 mt-6">
               <Avatar>
@@ -70,6 +67,16 @@ export function Video({ lessonSlug }: VideoProps) {
                 <strong>{lesson?.user.name}</strong>
               </div>
             </div>
+            <div className="mt-8">
+              <div className="border-b border-b-primary">
+                <h2 className="text-primary pb-4 font-medium">
+                  Descrição
+                </h2>
+              </div>
+              <p className="mt-4 text-muted-foreground leading-relaxed">
+                {lesson?.description}
+              </p>
+            </div>
           </div>
 {/* 
           <div className="flex flex-col gap-4">
@@ -85,7 +92,7 @@ export function Video({ lessonSlug }: VideoProps) {
           </div> */}
         </div>
 
-        <div className="gap-8 mt-20 grid grid-cols-2">
+        {/* <div className="gap-8 mt-20 grid grid-cols-2">
           <a 
             href="#" 
             className="bg-accent rounded overflow-hidden flex items-stretch gap-6 transition-colors border border-accent-foreground hover:bg-card"
@@ -121,7 +128,7 @@ export function Video({ lessonSlug }: VideoProps) {
               <ArrowRight />
             </div>
           </a>
-        </div>
+        </div> */}
       </div>
     </div>
   )
