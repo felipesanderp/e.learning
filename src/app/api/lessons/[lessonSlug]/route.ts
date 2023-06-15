@@ -38,6 +38,7 @@ export async function GET(
           select: {
             name: true,
             image: true,
+            bio: true,
           }
         }
       }

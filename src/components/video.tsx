@@ -15,6 +15,7 @@ type Lesson = {
   user: {
     name: string
     image: string
+    bio: string
   }
 }
 
@@ -64,12 +65,15 @@ export function Video({ lessonSlug }: VideoProps) {
               </Avatar>
 
               <div className="flex flex-col leading-relaxed">
-                <strong>{lesson?.user.name}</strong>
+                <strong className="font-bold text-lg">{lesson?.user.name}</strong>
+                {lesson?.user.bio && (
+                  <span className="text-sm text-muted-foreground">{lesson.user.bio}</span>
+                )}
               </div>
             </div>
             <div className="mt-8">
               <div className="border-b border-b-primary">
-                <h2 className="text-primary pb-4 font-medium">
+                <h2 className="text-primary pb-2 font-medium border-b-2 border-purple-500 max-w-fit">
                   Descrição
                 </h2>
               </div>
