@@ -23,6 +23,7 @@ import { Icons } from "@/components/icons"
 import { toast } from "@/hooks/use-toast"
 import Uploader from "./uploader"
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
+import { Textarea } from "./ui/textarea"
 
 interface UserInfoFormProps extends React.HTMLAttributes<HTMLFormElement> {
   user: {
@@ -31,6 +32,7 @@ interface UserInfoFormProps extends React.HTMLAttributes<HTMLFormElement> {
     email: string,
     image: string,
     imageKey: string,
+    bio: string
   }
 }
 
@@ -41,7 +43,7 @@ type UserImage = {
 
 type FormData = z.infer<typeof mePatchSchema>
 
-export function UserInfoForm({ user, className, ...props }: UserInfoFormProps) {
+export function UserInfoForm({ user }: UserInfoFormProps) {
   const router = useRouter()
   const {
     handleSubmit,
@@ -53,6 +55,7 @@ export function UserInfoForm({ user, className, ...props }: UserInfoFormProps) {
       name: user?.name || "",
       email: user?.email || "",
       image: user?.image || "",
+      bio: user.bio || "",
     },
   })
   const [isSaving, setIsSaving] = React.useState<boolean>(false)
@@ -85,7 +88,8 @@ export function UserInfoForm({ user, className, ...props }: UserInfoFormProps) {
         name: data.name,
         email: data.email,
         image: userImage?.fileUrl,
-        imageKey: userImage?.fileKey
+        imageKey: userImage?.fileKey,
+        bio: data.bio,
       }),
     })
 
@@ -109,10 +113,9 @@ export function UserInfoForm({ user, className, ...props }: UserInfoFormProps) {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className={cn(className)}
-      {...props}
+      className="grid max-w-screen-2xl grid-cols-1 gap-4 md:grid-cols-6"
     >
-      <Card>
+      <Card className="md:col-span-4">
         <CardHeader>
           <CardTitle>Suas informações</CardTitle>
           <CardDescription>
@@ -120,65 +123,63 @@ export function UserInfoForm({ user, className, ...props }: UserInfoFormProps) {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="flex flex-col gap-4">
-
-            <div className="max-w-[8.5rem] flex flex-col justify-center gap-2">
-              <Avatar className="h-32 w-32">
-                {user.image ? (
-                  <AvatarImage alt="Picture" src={user.image} />
-                ) : (
-                  <AvatarFallback>
-                    <span className="sr-only">{user.name}</span>
-                    <Icons.user className="h-4 w-4" />
-                  </AvatarFallback>
-                )}
-              </Avatar>
-              <Uploader 
-                setUserImage={setUserImage}
-                userImage={userImage}
-              />
-            </div>
+          <div className="flex flex-col items-center gap-2 mb-4">
+            <Avatar className="h-32 w-32">
+              {user.image ? (
+                <AvatarImage alt="Picture" src={user.image} />
+              ) : (
+                <AvatarFallback>
+                  <span className="sr-only">{user.name}</span>
+                  <Icons.user className="h-4 w-4" />
+                </AvatarFallback>
+              )}
+            </Avatar>
+            <Uploader 
+              setUserImage={setUserImage}
+              userImage={userImage}
+            />
+          </div>
             
-            <Label htmlFor="name">
-              Nome
-            </Label>
-            <Input
-              id="name"
-              className="w-[400px]"
-              size={32}
-              {...register("name")}
-            />
-            {/* {errors?.name && (
-              <p className="px-1 text-xs text-red-600">{errors.name.message}</p>
-            )} */}
+          <section className="space-y-4">
+            <div className="grid grid-cols-2 items-end gap-6">
+              <div className="space-y-2">
+                <Label htmlFor="name">
+                  Nome
+                </Label>
+                <Input
+                  id="name"
+                  className="w-[400px]"
+                  size={32}
+                  {...register("name")}
+                />
+                {/* {errors?.name && (
+                  <p className="px-1 text-xs text-red-600">{errors.name.message}</p>
+                )} */}
+              </div>
 
-            <Label htmlFor="name">
-              E-mail
-            </Label>
-            <Input
-              id="email"
-              type="email"
-              className="w-[400px]"
-              size={32}
-              {...register("email")}
-            />
-            {/* {errors?.name && (
-              <p className="px-1 text-xs text-red-600">{errors.name.message}</p>
-            )} */}
+              <div className="space-y-2">
+                <Label htmlFor="name">
+                  E-mail
+                </Label>
+                <Input
+                  id="email"
+                  type="email"
+                  className="w-[400px]"
+                  size={32}
+                  {...register("email")}
+                />
+                {/* {errors?.name && (
+                  <p className="px-1 text-xs text-red-600">{errors.name.message}</p>
+                )} */}
+              </div>
+            </div>
+          </section>
 
-            {/* <Label htmlFor="name">
-              Image
-            </Label>
-            <Input
-              id="image"
-              type="text"
-              className="w-[400px]"
-              size={32}
-              {...register('image')}
-            /> */}
-            {/* {errors?.name && (
-              <p className="px-1 text-xs text-red-600">{errors.name.message}</p>
-            )} */}
+          <div className="mt-2 space-y-2">
+            <Label>Bio</Label>
+            <Textarea 
+              {...register('bio')}
+            />
           </div>
         </CardContent>
         <CardFooter>

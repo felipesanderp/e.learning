@@ -14,12 +14,14 @@ declare module "next-auth" {
       id: string;
       role: ROLE;
       imageKey: string | null;
+      bio: string | null;
     } & DefaultSession["user"];
   }
 
   interface User {
     id: string;
     role: ROLE;
+    bio: string | null;
     imageKey: string | null;
   }
 }
@@ -30,6 +32,7 @@ declare module "next-auth/jwt" {
     image: string | null
     role: ROLE;
     imageKey: string | null;
+    bio: string | null;
   }
 }
 
@@ -80,6 +83,7 @@ export const authOptions: NextAuthOptions = {
         session.user.image = token.image
         session.user.role = token.role
         session.user.imageKey = token.imageKey
+        session.user.bio = token.bio
 
         return session
 
@@ -97,6 +101,7 @@ export const authOptions: NextAuthOptions = {
             token.picture = user?.image
             token.role = user?.role
             token.imageKey = user?.imageKey
+            token.bio = user?.bio
           }
 
           return token
@@ -109,6 +114,7 @@ export const authOptions: NextAuthOptions = {
           image: dbUser.image,
           role: dbUser.role,
           imageKey: dbUser.imageKey,
+          bio: dbUser.bio,
         }
       },
     },

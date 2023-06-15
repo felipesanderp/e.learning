@@ -31,7 +31,8 @@ export default async function Profile() {
               name: user.name || "", 
               email: user.email || "", 
               image: user.image || "", 
-              imageKey: user.imageKey || "" 
+              imageKey: user.imageKey || "",
+              bio: user.bio || "",
             }
           } 
         />
