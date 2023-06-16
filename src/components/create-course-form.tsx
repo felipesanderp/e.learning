@@ -89,6 +89,7 @@ export function CreateCourseForm({ lessons }: CreateCourseFormProps) {
       })
 
       if (!response.ok) {
+        setIsSaving(false)
         return toast({
           title: "Algo deu errado.",
           description: "O curso não foi criado! Por favor, tente novamente.",
@@ -115,6 +116,7 @@ export function CreateCourseForm({ lessons }: CreateCourseFormProps) {
       })
 
       if (!response.ok) {
+        setIsSaving(false)
         return toast({
           title: "Algo deu errado.",
           description: "O curso não foi criado! Por favor, tente novamente.",
