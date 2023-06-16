@@ -28,11 +28,11 @@ export function LessonCard({ name, slug, courseId }: LessonCard) {
           <header className="flex items-center justify-between">
             <span className="text-sm font-medium flex items-center gap-2">
               <CheckCircle />
-              Conteúdo liberado
+              Conteúdo Liberado
             </span>
           </header>
 
-          <strong className="mt-5 block">
+          <strong className="flex items-start mt-5">
             {name}
           </strong>
         </div>
