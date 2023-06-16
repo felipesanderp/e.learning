@@ -22,3 +22,16 @@ export const createUserSchema = z.object({
   password: z.string().min(8).max(50).optional(),
   role: z.enum(['ADMIN', 'PROFESSOR', 'STUDENT']).optional(),
 })
+
+export const userAlterPassword = z.object({
+  password: z.string().min(8),
+  newPassword: z.string().min(8),
+  confirmPassword: z.string().min(8),
+}).superRefine(({ newPassword, confirmPassword }, ctx) => {
+  if (newPassword !== confirmPassword) {
+    ctx.addIssue({
+      code:'custom',
+      message: 'Senhas não conferem!'
+    })
+  }
+})
