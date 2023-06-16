@@ -54,7 +54,7 @@ export default async function CoursesPage() {
         }
       </DashboardHeader>
       
-      <div className="container grid w-full grid-cols-1 gap-x-4 gap-y-8 md:grid-cols-3 xl:grid-cols-3">
+      <div className="grid w-full grid-cols-1 gap-x-4 gap-y-8 md:grid-cols-3 xl:grid-cols-3">
         {courses.map((course) => (
           <CoursesCard 
             key={course.id}
