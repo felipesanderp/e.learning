@@ -4,7 +4,6 @@ import * as z from 'zod'
 import { authOptions } from '@/lib/auth'
 import { db } from '@/lib/db'
 import { userPatchSchema } from "@/lib/validations/user"
-import { hash } from 'bcrypt'
 
 const routeContextSchema = z.object({
   params: z.object({
@@ -77,7 +76,6 @@ export async function PATCH(
           email: body.email,
           name: body.name,
           role: body.role,
-          password: await hash(body.password!!, 10),
           image: body.image,
         }
       })

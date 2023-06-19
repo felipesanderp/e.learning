@@ -20,6 +20,10 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/hooks/use-toast';
 import { Icons } from "@/components/icons";
+import { Separator } from "@/components/ui/separator";
+import { Textarea } from "@/components/ui/textarea";
+
+import { ResetUserPasswordForm } from "@/components/reset-user-password-form";
 
 type FormData = z.infer<typeof userPatchSchema>
 
@@ -49,7 +53,6 @@ export function EditUseForm({ user }: EditeUserFormProps) {
       name: user.name,
       email: user.email,
       role: user.role,
-      password: user.password,
     }
   })
 
@@ -61,7 +64,6 @@ export function EditUseForm({ user }: EditeUserFormProps) {
         name: data.name,
         email: data.email,
         image: data.image,
-        password: data.password,
         role: data.role,
       })
     })
@@ -84,12 +86,12 @@ export function EditUseForm({ user }: EditeUserFormProps) {
   }
 
   return (
-    <>
+    <div className="grid max-w-screen-2xl grid-cols-1 gap-4 md:grid-cols-6">
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="grid max-w-screen-2xl grid-cols-1 gap-4 md:grid-cols-6"
+        className="md:col-span-4 space-y-4"
       >
-        <Card className="md:col-span-4">
+        <Card>
           <CardHeader>
             <CardTitle>Detalhes</CardTitle>
           </CardHeader>
@@ -110,33 +112,28 @@ export function EditUseForm({ user }: EditeUserFormProps) {
                     {...form.register('email')}
                   />
                 </div>
-                <div className="space-y-2">
-                  <Label>Nova senha</Label>
-                  <Input 
-                    type="password"
-                    {...form.register('password')}
-                  />
-                </div>
+              </div>
+            </section>
+
+            <div className="mt-2 space-y-2">
+              <Label>Bio</Label>
+              <Textarea />
+            </div> 
+
+            <Separator className="my-8" />
+
+            <section>
+              <CardTitle className="mb-4">Cursos</CardTitle>
+              <div>
+                {user.enrollments.map((course) => (
+                  <h2 key={course.course.title}>
+                    {course.course.title}
+                  </h2>
+                ))}
               </div>
             </section>
           </CardContent>
         </Card>
-        <div className="space-y-4 md:col-span-2">
-          <Card>
-            <CardHeader>
-              <CardTitle>
-                Cursos
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              {user.enrollments.map((course) => (
-                <h1 key={course.course.title}>
-                  {course.course.title}
-                </h1>
-              ))}
-            </CardContent>
-          </Card>
-        </div>
         <div>
           <Button
             disabled={isSaving}
@@ -149,6 +146,12 @@ export function EditUseForm({ user }: EditeUserFormProps) {
           </Button>
         </div>
       </form>
-    </>
+
+      <ResetUserPasswordForm 
+        user={{
+          id: user.id
+        }}
+      />
+    </div>
   )
 }
