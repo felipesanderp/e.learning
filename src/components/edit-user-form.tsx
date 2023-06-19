@@ -32,7 +32,7 @@ interface EditeUserFormProps {
     id: string
     name: string
     email: string
-    password: string
+    bio: string
     role: ROLE
     enrollments: {
       course: {
@@ -53,6 +53,7 @@ export function EditUseForm({ user }: EditeUserFormProps) {
       name: user.name,
       email: user.email,
       role: user.role,
+      bio: user.bio,
     }
   })
 
@@ -117,7 +118,9 @@ export function EditUseForm({ user }: EditeUserFormProps) {
 
             <div className="mt-2 space-y-2">
               <Label>Bio</Label>
-              <Textarea />
+              <Textarea 
+                {...form.register('bio')}
+              />
             </div> 
 
             <Separator className="my-8" />

@@ -19,7 +19,7 @@ async function getUser(userId: User['id']) {
       email: true,
       image: true,
       name: true,
-      password: true,
+      bio: true,
       role: true,
       enrollments: {
         select: {
@@ -63,7 +63,7 @@ export default async function EditUserPage({ params }:EditUserPageProps) {
           name: user.name,
           email: user.email || '',
           role: user.role,
-          password: user.password,
+          bio: user.bio || '',
           enrollments: user.enrollments
         }}
       />
