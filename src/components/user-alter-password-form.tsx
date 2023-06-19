@@ -1,8 +1,11 @@
 'use client'
 
+import * as React from 'react'
+import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form";
 import * as z from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { User } from "@prisma/client";
 
 import { 
   Card, 
@@ -14,17 +17,62 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { userAlterPassword } from '@/lib/validations/user'
+import { toast } from "@/hooks/use-toast";
+import { Icons } from './icons';
 
 type FormData = z.infer<typeof userAlterPassword>
 
-export function UserAlterPasswordForm() {
+interface UserAlterPasswordFormProps {
+  user: Pick<User, 'id'>
+}
+
+export function UserAlterPasswordForm({ user }: UserAlterPasswordFormProps) {
+  const router = useRouter()
+  const [isSaving, setIsSaving] = React.useState<boolean>(false)
+
   const form = useForm<FormData>({
     resolver: zodResolver(userAlterPassword),
     mode: 'all',
   })
 
   async function onSubmit(data: FormData) {
-    console.log(data);
+    setIsSaving(true)
+
+    const dataParse = userAlterPassword.parse(data)
+    
+    const response = await fetch(`/api/users/me/${user.id}/reset-password`, {
+      method: "PATCH",
+      body: JSON.stringify({
+        password: dataParse.password,
+        newPassword: dataParse.newPassword,
+        confirmPassword: dataParse.confirmPassword,
+      })
+    })
+
+    setIsSaving(false)
+
+    if(response.status === 403 && response.statusText === 'Password does not match!') {
+      return toast({
+        title: "Algo deu errado.",
+        description: "A senha antiga não confere. Por favor, tente novamente.",
+        variant: "destructive",
+      })
+    }
+
+    if(!response.ok) {
+      return toast({
+        title: "Algo deu errado.",
+        description: "Sua senha não foi atualizada. Por favor, tente novamente.",
+        variant: "destructive",
+      })
+    }
+
+    toast({
+      description: "Senha atualizada com sucesso.",
+    })
+
+    form.reset()
+    router.refresh()
   }
 
   return (
@@ -78,16 +126,15 @@ export function UserAlterPasswordForm() {
                   {form.formState.errors.confirmPassword.message}
                 </p>
               )}
-              {form.formState.errors.root && (
-                <p className="text-sm font-medium text-destructive">
-                  {form.formState.errors.root.message}
-                </p>
-              )}
             </div>
 
             <Button
+              disabled={isSaving}
               type="submit"
             >
+              {isSaving && (
+                <Icons.spinner className="h-4 w-4 mr-2 animate-spin" />
+              )}
               Alterar Senha
             </Button>
           </section>

@@ -199,7 +199,9 @@ export function UserInfoForm({ user }: UserInfoFormProps) {
         </Card>
       </form>
 
-      <UserAlterPasswordForm />
+      <UserAlterPasswordForm 
+        user={user}
+      />
     </div>
   )
 }

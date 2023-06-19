@@ -27,11 +27,7 @@ export const userAlterPassword = z.object({
   password: z.string().min(8),
   newPassword: z.string().min(8),
   confirmPassword: z.string().min(8),
-}).superRefine(({ newPassword, confirmPassword }, ctx) => {
-  if (newPassword !== confirmPassword) {
-    ctx.addIssue({
-      code:'custom',
-      message: 'Senhas não conferem!'
-    })
-  }
+}).refine((data) => data.newPassword === data.confirmPassword, {
+  path: ['confirmPassword'],
+  message: 'Senhas não conferem!'
 })
