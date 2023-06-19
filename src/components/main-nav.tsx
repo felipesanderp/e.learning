@@ -30,7 +30,7 @@ export function MainNav({ user }: MainNavProps) {
         href="/dashboard"
         className={cn(
           "text-md transition-colors hover:text-primary",
-          pathname === '/dashboard' ? "font-bold text-primary" : "text-foreground/60"
+          pathname === '/dashboard' ? "font-bold text-primary border-b-2 border-purple-500 max-w-fit" : "text-foreground/60"
         )}
       >
         Home
@@ -41,7 +41,7 @@ export function MainNav({ user }: MainNavProps) {
           href="/dashboard/courses"
           className={cn(
             "text-md transition-colors hover:text-primary",
-            pathname?.startsWith("/dashboard/courses") ? "font-bold text-primary" : "text-foreground/60"
+            pathname?.startsWith("/dashboard/courses") ? "font-bold text-primary border-b-2 border-purple-500 max-w-fit" : "text-foreground/60"
           )}
         >
           Cursos
@@ -53,7 +53,7 @@ export function MainNav({ user }: MainNavProps) {
           href="/dashboard/lessons"
           className={cn(
             "text-md transition-colors hover:text-primary",
-            pathname?.startsWith("/dashboard/lessons") ? "font-bold text-primary" : "text-foreground/60"
+            pathname?.startsWith("/dashboard/lessons") ? "font-bold text-primary border-b-2 border-purple-500 max-w-fit" : "text-foreground/60"
           )}
         >
           Aulas
@@ -64,7 +64,7 @@ export function MainNav({ user }: MainNavProps) {
           href="/dashboard/users"
           className={cn(
             "text-md transition-colors hover:text-primary",
-            pathname?.startsWith("/dashboard/users") ? "font-bold text-primary" : "text-foreground/60"
+            pathname?.startsWith("/dashboard/users") ? "font-bold text-primary border-b-2 border-purple-500 max-w-fit" : "text-foreground/60"
           )}
         >
           Usuários
@@ -74,7 +74,7 @@ export function MainNav({ user }: MainNavProps) {
         href="/dashboard/profile"
         className={cn(
           "text-md transition-colors hover:text-primary",
-          pathname?.startsWith("/dashboard/profile") ? "font-bold text-primary" : "text-foreground/60"
+          pathname?.startsWith("/dashboard/profile") ? "font-bold text-primary border-b-2 border-purple-500 max-w-fit" : "text-foreground/60"
         )}
       >
         Meu Perfil
