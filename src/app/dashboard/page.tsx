@@ -11,6 +11,7 @@ import { db } from "@/lib/db";
 import { CoursesCard } from "@/components/courses-card";
 import { MyCalendar } from "@/components/student/my-calendar";
 import { StudentAnalytics } from "@/components/student/analytics";
+import { NoCourses } from '@/components/no-courses'
 
 export const metadata = {
   title: 'Dashboard | e.learning',
@@ -125,14 +126,20 @@ export default async function DashboardPage() {
         </TabsContent>
 
         <TabsContent value="my-courses">
-          <div className="container grid w-full grid-cols-1 gap-x-4 gap-y-8 md:grid-cols-3 xl:grid-cols-3">
-            {myCourses?.enrollments.map((courses) => (
-              <CoursesCard
-                key={courses.course.id}
-                course={courses.course}
-                lesson={courses.course.lessons}
-              />
-            ))}
+          <div>
+            {myCourses && myCourses.enrollments.length > 0 ? (
+                <div className="container grid w-full grid-cols-1 gap-x-4 gap-y-8 md:grid-cols-3 xl:grid-cols-3">
+                  {myCourses?.enrollments.map((courses) => (
+                  <CoursesCard
+                    key={courses.course.id}
+                    course={courses.course}
+                    lesson={courses.course.lessons}
+                  />
+                ))}
+              </div>
+            ): (
+              <NoCourses />
+            )}
           </div>
         </TabsContent>
       </Tabs>
