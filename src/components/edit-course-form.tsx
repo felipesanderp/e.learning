@@ -222,7 +222,7 @@ export function EditCourseForm({ courseId }: EditCourseFormProps) {
                   {course.enrolledOn.map((student) => (
                     <div key={student.user.id} className="divide-y divide-border rounded-md border p-2">
                       <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-4">
                           <Avatar>
                             {student.user.image ? (
                               <AvatarImage alt="Picture" src={student.user.image} />
