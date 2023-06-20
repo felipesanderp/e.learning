@@ -24,6 +24,7 @@ import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
 
 import { ResetUserPasswordForm } from "@/components/reset-user-password-form";
+import { EditCourseStudentOperations } from "./edit-course-student-operations";
 
 type FormData = z.infer<typeof userPatchSchema>
 
@@ -36,6 +37,7 @@ interface EditeUserFormProps {
     role: ROLE
     enrollments: {
       course: {
+        id: string
         title: string
       }
     }[]
@@ -127,14 +129,31 @@ export function EditUseForm({ user }: EditeUserFormProps) {
 
             <section>
               <CardTitle className="mb-4">Cursos</CardTitle>
-              <div>
-                {user.enrollments.map((course) => (
-                  <h2 key={course.course.title}>
-                    {course.course.title}
-                  </h2>
-                ))}
-              </div>
             </section>
+            <div className="mb-2 space-y-4">
+              {user.enrollments.length ? (
+                <div className="space-y-2">
+                  {user.enrollments.map((course, index) => (
+                    <div key={index} className="divide-y divide-border rounded-md border">
+                      <div  className="flex items-center justify-between p-2">
+                        <div className="grid gap-1">
+                          <p className="font-semibold"
+                          >
+                            {course.course.title}
+                          </p>
+                        </div>
+                        <EditCourseStudentOperations 
+                          studentId={user.id}
+                          courseId={course.course.id}
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <h2>Sem cursos.</h2>
+              )}
+            </div>
           </CardContent>
         </Card>
         <div>

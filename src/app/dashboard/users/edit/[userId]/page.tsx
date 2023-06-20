@@ -25,9 +25,13 @@ async function getUser(userId: User['id']) {
         select: {
           course: {
             select: {
+              id: true,
               title: true,
             }
           }
+        },
+        where: {
+          canceledAt: null
         }
       }
     }
