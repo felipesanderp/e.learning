@@ -39,7 +39,7 @@ export const columns: ColumnDef<Lesson>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Name" />
     ),
-    cell: ({ row }) => <div className="w-[80px]">{row.getValue("name")}</div>,
+    cell: ({ row }) => <div className="w-[200px]">{row.getValue("name")}</div>,
     enableHiding: false,
   },
   {
