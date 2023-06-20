@@ -41,7 +41,7 @@ export const columns: ColumnDef<User>[] = [
     ),
     cell: ({ row }) => {
       return (
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-4">
           <Avatar>
             {row.original.image ? (
               <AvatarImage alt="Picture" src={row.original.image}/>
