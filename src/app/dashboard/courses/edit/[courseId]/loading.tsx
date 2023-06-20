@@ -1,4 +1,4 @@
-import { CardSkeleton } from "@/components/card-skeleton"
+import { EditCourseSkeleton } from "@/components/edit-course-skeleton"
 import { DashboardHeader } from "@/components/header"
 import { DashboardShell } from "@/components/shell"
 
@@ -10,7 +10,7 @@ export default function DashboardEditCourseLoading() {
         text="Edite, delete e adicione novos items à esse curso somente."
       />
       <div className="grid gap-10">
-        <CardSkeleton />
+        <EditCourseSkeleton />
       </div>
     </DashboardShell>
   )
