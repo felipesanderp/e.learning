@@ -96,7 +96,7 @@ export function DataTableRowActions<TData>({
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>
-              Você tem certeza que deseja deletar este usuário?
+              Você tem certeza que deseja deletar esta aula?
             </AlertDialogTitle>
             <AlertDialogDescription>
               Essa ação não poderá ser desfeita.
