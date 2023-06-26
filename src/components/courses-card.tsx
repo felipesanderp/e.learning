@@ -89,7 +89,11 @@ export function CoursesCard({ course, lesson, user }: CoursesCardProps) {
           </CardTitle>
 
           <CardDescription>
-            {lesson?.length} Lessons
+            {lesson && lesson?.length > 1 ? (
+              <p>{lesson.length} Aulas</p>
+            ) : (
+              <p>{lesson?.length} Aula</p>
+            )}
           </CardDescription>
         </CardHeader>
 
