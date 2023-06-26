@@ -246,20 +246,33 @@ export function CreateLessonForm({ professors }: CreateLessonFormProps) {
         )
       case 5:
         return (
-          <div>
-            <h1>{form.getValues('name')}</h1>
-            <h1>{form.getValues('description')}</h1>
-            <h1>{form.getValues('video_id')}</h1>
-            <h1>{form.getValues('user_id')}</h1>
-            <Button 
-              type="submit"
-              disabled={isSaving}
-            >
-              {isSaving && (
-                <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-              )}
-              Enviar
-            </Button>
+          <div className="flex flex-col gap-4">
+            <p className="text-md font-semibold text-slate-900 dark:text-slate-50">
+              Verifique as informações da aula. Estão corretas?
+            </p>
+            <div>
+              <h2 className="text-lg text-primary font-medium">Nome</h2>
+              <p>{form.getValues('name')}</p>
+            </div>
+            <div>
+              <h2 className="text-lg text-primary font-medium">Descrição</h2>
+              <p>{form.getValues('description')}</p>
+            </div>
+            <div>
+              <h2 className="text-lg text-primary font-medium">URL da video aula</h2>
+              <p>{form.getValues('video_id')}</p>
+            </div>
+            <div className="flex items-center gap-4">
+              <Button onClick={prevStep}>Voltar</Button>
+              <Button 
+                type="submit"
+              >
+                {isSaving && (
+                  <Icons.spinner className="h-4 m-4 mr-2" />
+                )}
+                Enviar
+              </Button>
+            </div>
           </div>
         )
       default:

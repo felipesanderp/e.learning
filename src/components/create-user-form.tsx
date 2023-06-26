@@ -38,6 +38,7 @@ import {
 import { toast } from "@/hooks/use-toast"
 import { Icons } from "@/components/icons"
 import { cn } from "@/lib/utils"
+import { Badge } from "./ui/badge"
 
 type FormData = z.infer<typeof createUserSchema>
 
@@ -128,19 +129,6 @@ export function CreateUserForm() {
                   {form.formState.errors.name.message}
                 </p>
               )}
-              {/* <FormField 
-                control={form.control}
-                name="name"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-right">Nome</FormLabel>
-                    <FormControl>
-                      <Input {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              /> */}
               <Button
                 type="button"
                 disabled={form.formState.errors.name ? true : false} 
@@ -171,19 +159,6 @@ export function CreateUserForm() {
                   {form.formState.errors.email.message}
                 </p>
               )}
-              {/* <FormField 
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-right">E-mail</FormLabel>
-                    <FormControl>
-                      <Input type="email" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              /> */}
               <div className="flex items-center gap-4">
                 <Button onClick={prevStep}>Voltar</Button>
                 <Button
@@ -218,19 +193,6 @@ export function CreateUserForm() {
                   {form.formState.errors.password.message}
                 </p>
               )}
-              {/* <FormField 
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-right">Password</FormLabel>
-                    <FormControl>
-                      <Input type="password" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              /> */}
               <div className="flex items-center gap-4">
                 <Button onClick={prevStep}>Voltar</Button>
                 <Button
@@ -288,22 +250,38 @@ export function CreateUserForm() {
         )
       case 5:
         return (
-          <div>
-            <h1>{form.getValues('name')}</h1>
-            <h1>{form.getValues('email')}</h1>
-            <h1>{form.getValues('password')}</h1>
-            <h1>{form.getValues('role')}</h1>
-            <Button 
-              type="submit"
-              disabled={isSaving}
-            >
-              {isSaving && (
-                <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-              )}
-              Enviar
-            </Button>
+          <div className="flex flex-col gap-4">
+            <p className="text-md font-semibold text-slate-900 dark:text-slate-50">
+              Verifique as informações do usuário. Estão corretas?
+            </p>
+            <div>
+              <h2 className="text-lg text-primary font-medium">Nome</h2>
+              <p>{form.getValues('name')}</p>
+            </div>
+            <div>
+              <h2 className="text-lg text-primary font-medium">E-mail</h2>
+              <p>{form.getValues('email')}</p>
+            </div>
+            <div>
+              <h2 className="text-lg text-primary font-medium">Senha inicial</h2>
+              <p>{form.getValues('password')}</p>
+            </div>
+            <div className="flex gap-2">
+              <h2 className="text-lg text-primary font-medium">Função:</h2>
+              <Badge>{form.getValues('role')}</Badge>
+            </div>
+            <div className="flex items-center gap-4">
+              <Button onClick={prevStep}>Voltar</Button>
+              <Button 
+                  type="submit"
+              >
+                {isSaving && (
+                  <Icons.spinner className="h-4 m-4 mr-2" />
+                )}
+                Enviar
+              </Button>
+            </div>
           </div>
-          
         )
       default:
         return null
