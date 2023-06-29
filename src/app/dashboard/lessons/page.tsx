@@ -7,7 +7,6 @@ import { DashboardHeader } from "@/components/header";
 import { DashboardShell } from "@/components/shell";
 import { DataTable } from "./components/data-table";
 import { columns } from '@/app/dashboard/lessons/components/columns'
-import { CreateLesson } from "@/components/create-lesson";
 import { CreateLessonForm } from "@/components/create-lesson-form";
 
 export const metadata = {

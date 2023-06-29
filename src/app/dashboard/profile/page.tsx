@@ -5,7 +5,6 @@ import { getCurrentUser } from "@/lib/session"
 import { DashboardHeader } from "@/components/header";
 import { DashboardShell } from "@/components/shell";
 import { UserInfoForm } from "@/components/user-info-form";
-import Uploader from "@/components/uploader";
 
 export const metadata = {
   title: 'Profile | e.learning',
